@@ -25,7 +25,7 @@ var ui = (function() {
 	function loadState() {
 
 		// Activate word counter
-		if ( localStorage['wordCount'] !== "0") {			
+		if ( localStorage['wordCount'] && localStorage['wordCount'] !== "0") {			
 			wordCountValue = parseInt(localStorage['wordCount']);
 			wordCountElement.value = localStorage['wordCount'];
 			wordCounter.className = "word-counter active";
@@ -46,7 +46,6 @@ var ui = (function() {
 
 	function saveState() {
 		
-		console.log( "save state!" );
 		localStorage[ 'darkLayout' ] = darkLayout;
 		localStorage[ 'wordCount' ] = wordCountElement.value;
 	}
@@ -137,7 +136,7 @@ var ui = (function() {
 	}
 
 	function onWordCountChange( event ) {
-		
+
 		// Set wordcount ui to active
 		if ( parseInt(this.value) > 0) {
 			wordCountValue = parseInt(this.value);
