@@ -8,7 +8,7 @@
 }
 
 html {
-	overflow: scroll;
+	overflow: hidden;
 }
 
 
@@ -26,7 +26,7 @@ body {
 	padding-top: 20px;
 	width: 100%;
 	min-width: 800px;
-	overflow: scroll;
+	overflow-y: scroll;
 
 	-webkit-transition: all 600ms;
 	-moz-transition: all 600ms;
@@ -137,7 +137,7 @@ article a:hover {
 }
 
 .quote {
-	line-height: 68px !important;
+	line-height: 60px !important;
 	font-size: 49px !important;
 	height: 27px !important;
 }
@@ -240,6 +240,8 @@ article a:hover {
 
 .options button {
 	font-family: 'Lora', serif;
+	float: left;
+	width: 28px;
 	opacity: 0.7;
 }
 

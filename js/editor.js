@@ -51,13 +51,13 @@ var editor = (function() {
 		var selection = window.getSelection();
 
 		// Check selections exist
-		if ( selection.type === "Caret" && lastType === "Range" ) {
+		if ( selection.isCollapsed === true && lastType === false ) {
 
 			onSelectorBlur();
 		}
 		
 		// Text is selected
-		if ( selection.type === "Range" && hasNode( findNodes( selection.focusNode ), 'ARTICLE' ) ) {
+		if ( selection.isCollapsed === false && hasNode( findNodes( selection.focusNode ), 'ARTICLE' ) ) {
 
 			// Find if highlighting is in the editable area
 			var range = selection.getRangeAt(0);
@@ -68,7 +68,7 @@ var editor = (function() {
 			textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 		}
 
-		lastType = selection.type;
+		lastType = selection.isCollapsed;
 
 	}
 
