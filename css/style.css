@@ -1,0 +1,290 @@
+* {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+*:focus {
+	outline: none;
+}
+
+html {
+	overflow: scroll;
+}
+
+
+html, body {
+	font-family: 'Lora', serif;
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+}
+
+body {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 40px;
+	padding-top: 20px;
+	width: 100%;
+	min-width: 800px;
+	overflow: scroll;
+
+	-webkit-transition: all 600ms;
+	-moz-transition: all 600ms;
+	-ms-transition: all 600ms;
+	-o-transition: all 600ms;
+	transition: all 600ms;
+}
+
+section {
+	max-width: 600px;
+	height: 100%;
+	margin: auto;
+}
+
+header {
+	font-weight: bold;
+	font-size: 38px;
+}
+
+article {
+	padding-bottom: 50px;
+	font-size: 22px;
+	min-height: 90%;
+	line-height: 1.30em;
+	display: block;
+}
+
+article b {
+	line-height: 1.25em;
+}
+
+blockquote {
+	border-left: 4px solid deepskyblue;
+	margin-left: -19px;
+	padding-left: 15px;
+	margin-right: 0px;
+}
+
+.useicons {
+	font-family: 'icomoon';
+	font-size: 20px !important;
+}
+
+.yin {
+	color: #111;
+	background: #fafafa;
+}
+
+.yang {
+	color: #fafafa;
+	background-color: #111;
+}
+
+.ui {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 65px;
+	padding: 20px;
+	bottom: 0px;
+}
+
+.ui:hover button {
+	opacity: 0.4;
+}
+
+.ui button:hover {
+	opacity: 1;
+}
+
+.ui button, .text-options button {
+
+	-webkit-transition: opacity 400ms;
+	-moz-transition: opacity 400ms;
+	-ms-transition: opacity 400ms;
+	-o-transition: opacity 400ms;
+	transition: opacity 400ms;
+
+	color: inherit;
+	opacity: 0.1;
+	font-size: 25px;
+	width: 25px;
+	border: 0px;
+	padding: 0px;
+	background: none;
+	cursor: pointer;
+	height: 32px;
+}
+
+article a {
+	color: deepskyblue;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+article a:hover {
+	text-decoration: underline;
+}
+
+.overlay {
+	position: fixed;
+	display: none;
+	height: 100%;
+	width: 100%;
+	z-index: 3;
+	left: 0px;
+	top: 0px;
+}
+
+.quote {
+	line-height: 68px !important;
+	font-size: 49px !important;
+	height: 27px !important;
+}
+
+.modal {
+	width: 400px;
+	height: 101px;
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	background-color: rgba(0,0,0,0.8);
+	padding: 15px;
+	margin-left: -200px;
+	color: #fff;
+	border-radius: 3px;
+	display: none;
+}
+
+.modal h1 {
+	text-align: center;
+	font-size: 20px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.modal div {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.modal input[type="text"] {
+	font-size: 16px;
+	padding: 5px;
+	width: 100%;
+}
+
+.modal input[type="number"] {
+	width: 150px;
+	font-size: 16px;
+	padding: 5px;
+	margin: auto;
+	display: block;
+}
+
+.wordcount {
+	width: 300px;
+	margin-left: -150px;
+}
+
+.word-counter {
+	position: fixed;
+	top: 0px;
+	right: -6px;
+	width: 6px;
+	box-shadow: inset 0px 0px 9px -2px rgba(0,0,0,0.9);
+	height: 100%;
+}
+
+.word-counter.active {
+	right: 0px;
+}
+
+.word-counter .progress {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	background-color: deepskyblue;
+	height: 0%;
+	-webkit-transition: all 400ms ease-in-out;
+	-moz-transition: all 400ms ease-in-out;
+	-ms-transition: all 400ms ease-in-out;
+	-o-transition: all 400ms ease-in-out;
+	transition: all 400ms ease-in-out;
+}
+
+.progress.complete{
+	background-color: greenyellow;
+}
+
+.text-options {
+	position: absolute;
+	color: #fff;
+	width: 0px;
+	height: 0px;
+	z-index: 5;
+	left: -999px;
+	top: -999px;
+}
+
+.options {
+	background-color: rgba(0,0,0,0.9);
+	width: 95px;
+	z-index: 1000;
+	position: absolute;
+	margin-top: -46px;
+	padding: 5px;
+	border-radius: 3px;
+	margin-left: -47px;
+}
+
+.options button {
+	font-family: 'Lora', serif;
+	opacity: 0.7;
+}
+
+.options button:hover {
+	opacity: 1;
+}
+
+.options:before {
+	content: "";
+	width: 0px;
+	position: absolute;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	height: 5px;
+	border-top: 5px solid rgba(0,0,0,0.9);
+	border-bottom: 5px solid transparent;
+	bottom: -15px;
+	left: 43px;
+}
+
+.yang .options {
+	background-color: rgba(255,255,255,0.9);
+	color: #000;
+}
+
+.yang .options:before {
+	border-top: 5px solid rgba(255,255,255,0.9);
+}
+
+.top {
+	position: absolute;
+	top: 0px;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0px;
+}
+
+.about {
+	font-family: 'Lora', serif;
+	font-size: 28px !important
+}
+
+.wrapper {
+	position: relative;
+	height: 100%;
+}

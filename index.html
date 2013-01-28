@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+
+	<head>
+
+		<!-- MISC/META -->
+		<title> ZenPen ~ Minimal distraction, Maxiumim Zen </title>
+
+		<!-- CSS -->
+		<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/fonts.css" rel="stylesheet">
+
+		<!-- LIBS -->
+		<script src="js/libs/fullScreen.js"></script>
+		<script src="js/libs/rawinflate.js"></script>
+		<script src="js/libs/rawdeflate.js"></script>
+
+		<!-- JS -->
+		<script src="js/utils.js"></script>
+		<script src="js/ui.js"></script>
+		<script src="js/editor.js"></script>
+
+	</head>
+
+	<body class="yin">
+
+		<div class="overlay">
+			<div class="share modal">
+				<h1>Save + Share URL</h1>
+				<div class="editable">
+					<input type="text" onclick="javascript:select();"></input>
+				</div>
+			</div>
+			<div class="wordcount modal">
+				<h1>Target Word Count</h1>
+				<div class="editable">
+					<input type="number" name="quantity" value="0" min="0"></input>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-options">
+			<div class="options">
+				<button class="bold">b</button>
+				<button class="italic"><i>i</i></button>
+				<button class="quote">&rdquo;</button>
+			</div>
+		</div>
+
+		<div class="ui">
+
+			<div class="wrapper">
+				<div class="top">
+					<button class="fullscreen useicons">
+						&#xe006;
+					</buttom>
+
+					<button class="color-flip useicons">
+						&#xe000;
+					</button>
+
+					<button class="target useicons">
+						&#xe002;
+					</button>
+
+					<button class="link useicons">
+						&#xe001;
+					</button>
+
+				</div>
+
+				<div class="bottom">
+					<button class="about">
+						?
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="word-counter">
+			<span class="progress"></span>
+		</div>
+
+		<section>
+			
+			<header contenteditable="true" class="header">
+				This is ZenPen
+			</header>
+			
+			<article contenteditable="true" class="content">
+
+				<p>
+					A minimalist writing zone, where you can block out all distractions and get to whats important. The writing!
+				</p>
+				<p>
+					To get started, all you need to do is delete this text, and fill it with your own fantastic words. The editing interface has been heavily inspired by Medium's - although is a little more minimal. 
+				</p>
+				<p>
+					You can use <b>bold</b>, <i>italics</i> or <b><i>both!</i></b>
+				</p>
+
+				<blockquote>
+					As well as quotes.
+				</blockquote>
+
+				<p>
+					Then save and share your writings... everything is passed via url, so none of your information is stored :)
+				</p>
+
+			</article>
+
+		</section>
+
+		<script>
+			editor.init();
+			ui.init();
+		</script>
+
+	</body>
+
+</html>
