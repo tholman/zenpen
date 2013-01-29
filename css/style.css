@@ -20,13 +20,13 @@ html, body {
 }
 
 body {
-	padding-left: 10px;
-	padding-right: 10px;
 	padding-bottom: 40px;
-	padding-top: 20px;
-	width: 100%;
-	min-width: 800px;
+	padding-right: 10px;
 	overflow-y: scroll;
+	padding-left: 10px;
+	padding-top: 20px;
+	min-width: 800px;
+	width: 100%;
 
 	-webkit-transition: all 600ms;
 	-moz-transition: all 600ms;
@@ -48,9 +48,9 @@ header {
 
 article {
 	padding-bottom: 50px;
-	font-size: 22px;
-	min-height: 90%;
 	line-height: 1.30em;
+	min-height: 90%;
+	font-size: 22px;
 	display: block;
 }
 
@@ -66,27 +66,27 @@ blockquote {
 }
 
 .useicons {
-	font-family: 'icomoon';
 	font-size: 20px !important;
+	font-family: 'icomoon';
 }
 
 .yin {
-	color: #111;
 	background: #fafafa;
+	color: #111;
 }
 
 .yang {
-	color: #fafafa;
 	background-color: #111;
+	color: #fafafa;
 }
 
 .ui {
 	position: fixed;
-	top: 0px;
-	left: 0px;
-	width: 65px;
 	padding: 20px;
+	width: 65px;
 	bottom: 0px;
+	left: 0px;
+	top: 0px;
 }
 
 .ui:hover button {
@@ -105,20 +105,20 @@ blockquote {
 	-o-transition: opacity 400ms;
 	transition: opacity 400ms;
 
-	color: inherit;
-	opacity: 0.1;
-	font-size: 25px;
-	width: 25px;
-	border: 0px;
-	padding: 0px;
 	background: none;
 	cursor: pointer;
+	font-size: 25px;
+	color: inherit;
+	opacity: 0.1;
+	padding: 0px;
 	height: 32px;
+	width: 25px;
+	border: 0px;
 }
 
 article a {
-	color: deepskyblue;
 	text-decoration: none;
+	color: deepskyblue;
 	cursor: pointer;
 }
 
@@ -143,17 +143,17 @@ article a:hover {
 }
 
 .modal {
-	width: 400px;
-	height: 101px;
-	position: absolute;
-	bottom: 10px;
-	left: 50%;
 	background-color: rgba(0,0,0,0.8);
-	padding: 15px;
 	margin-left: -200px;
-	color: #fff;
+	position: absolute;
 	border-radius: 3px;
+	height: 101px;
+	padding: 15px;
 	display: none;
+	width: 400px;
+	bottom: 10px;
+	color: #fff;
+	left: 50%;
 }
 
 .modal h1 {
@@ -175,25 +175,25 @@ article a:hover {
 }
 
 .modal input[type="number"] {
-	width: 150px;
 	font-size: 16px;
-	padding: 5px;
-	margin: auto;
 	display: block;
+	margin: auto;
+	width: 150px;
+	padding: 5px;
 }
 
 .wordcount {
-	width: 300px;
 	margin-left: -150px;
+	width: 300px;
 }
 
 .word-counter {
+	box-shadow: inset 0px 0px 9px -2px rgba(0,0,0,0.9);
 	position: fixed;
-	top: 0px;
+	height: 100%;
 	right: -6px;
 	width: 6px;
-	box-shadow: inset 0px 0px 9px -2px rgba(0,0,0,0.9);
-	height: 100%;
+	top: 0px;
 }
 
 .word-counter.active {
@@ -201,16 +201,17 @@ article a:hover {
 }
 
 .word-counter .progress {
-	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	background-color: deepskyblue;
-	height: 0%;
 	-webkit-transition: all 400ms ease-in-out;
 	-moz-transition: all 400ms ease-in-out;
 	-ms-transition: all 400ms ease-in-out;
 	-o-transition: all 400ms ease-in-out;
 	transition: all 400ms ease-in-out;
+	
+	background-color: deepskyblue;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 0%;
 }
 
 .progress.complete{
@@ -219,23 +220,23 @@ article a:hover {
 
 .text-options {
 	position: absolute;
-	color: #fff;
-	width: 0px;
-	height: 0px;
-	z-index: 5;
 	left: -999px;
 	top: -999px;
+	color: #fff;
+	height: 0px;
+	width: 0px;
+	z-index: 5;
 }
 
 .options {
 	background-color: rgba(0,0,0,0.9);
-	width: 95px;
-	z-index: 1000;
 	position: absolute;
-	margin-top: -46px;
-	padding: 5px;
 	border-radius: 3px;
 	margin-left: -47px;
+	margin-top: -46px;
+	z-index: 1000;
+	padding: 5px;
+	width: 95px;
 }
 
 .options button {
@@ -251,14 +252,14 @@ article a:hover {
 
 .options:before {
 	content: "";
-	width: 0px;
-	position: absolute;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	height: 5px;
 	border-top: 5px solid rgba(0,0,0,0.9);
 	border-bottom: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	position: absolute;
 	bottom: -15px;
+	height: 5px;
+	width: 0px;
 	left: 43px;
 }
 
