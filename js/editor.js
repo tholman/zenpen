@@ -10,7 +10,7 @@ var editor = (function() {
 		// Something is being passed via URL
 		if ( !isCleanSlate() ) {
 
-			inflate( window.location.hash.substr(1) );
+			inflate( window.location.hash.replace('%23', '#').substr(1) );
 
 		} else {
 
