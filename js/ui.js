@@ -67,9 +67,9 @@ var ui = (function() {
 		targetElement.onclick = onTargetClick;
 
 		document.addEventListener( "fullscreenchange", function () {
-    		if ( document.fullscreenEnabled === false ) {
-    			exitFullscreen();
-    		}
+			if ( document.fullscreenEnabled === false ) {
+				exitFullscreen();
+			}
 		}, false);
 
 		// UI elements for save/share
@@ -95,6 +95,9 @@ var ui = (function() {
 
 		aboutButton = document.querySelector( '.about' );
 		aboutButton.onclick = onAboutButtonClick;
+
+		header = document.querySelector( '.header' );
+		header.onkeypress = onHeaderKeyPress;
 	}
 
 	function onScreenSizeClick( event ) {
@@ -133,6 +136,23 @@ var ui = (function() {
 
 	function onAboutButtonClick( event ) {
 		window.open( 'http://www.zenpen.io/index.html#4+IEgvDUnOT83FSFknyFqNS8gNQ8AA==#nVRNb9QwED3TXzHKhcvuRoBQRUkjOADdG4eeuDnJZD3U9gR73G366xknbVUOSNtGOTj+eH7z3pucnb3Rp5naJk0mQJLZ4WXlKODWIh2sXMD7893H6e5z1V7RBvZvPTTUNgZ6DoL6DiSmK4dG4xJWYCOOl5UVmS7qWiw7b8KuZ1+11+ThavluatM2NbWwhV8YfmIASmDAkYhDOCLeYBhgivwbe9mAMKQ+GumtbhrxCKRDTLAHa251P4kFzwPGAIJ3AoUTx7SDr4riOSJMJgr12ZnoZjigCIUDUFBgsUbgGGmZueeAu6YuUig/FeUkXfYC3twonweYBGjSvLC2JuIGjNLAW61S5wljWekjGnnVXUmV95NDQS3lJB+SGnFQjXJXfHj0pL7HMGGoWrWTdQCJc+wROMCPdXNxqDgF3xEdjBFxYa73ReqyaGEpd54Euqw1c4SIfzImUYuM5Ijp5eVdW4ScVCK8mzASBiVkTYIOS0ZCmijiAN2sOTg1gj4OzGvlD4FKtRXv1pDUVVvyrKF6qvY1mnaOD/W7D+eftqrq9iEH25LJRd+e2b0MvxDX5ezX1lEMJT9kJf+EU1IlqhcpmnaPpnyM7GGvB5jDK6I1wsx5bSkTZli8JMXeFG8V1SvltOzpFSunbNzaTeqGZmoAHsEj3NIJ5nhDTvhCyLPYeXfcraH8cigLa83Fl2/lEx5LVhoK/O8PRptfMK7BPq4g1f/uXiCv1xOPmM91Ois/w78=' );
+	}
+
+	function onHeaderKeyPress( event ) {
+
+		if ( event.keyCode === 13 ) {
+			event.preventDefault();
+			article.focus();
+
+			// Move caret to end of content
+			var range = document.createRange();
+			var selection = window.getSelection();
+			range.selectNodeContents(article);
+			range.collapse(false);
+			selection.removeAllRanges();
+			selection.addRange(range);
+
+		}
 	}
 
 	function onWordCountChange( event ) {
@@ -184,7 +204,7 @@ var ui = (function() {
 		overlay.style.display = "block";
 		shareBox.style.display = "block";
 		shareText.focus();
-   		shareText.select();
+		shareText.select();
 	}
 
 	return {
