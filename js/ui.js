@@ -143,14 +143,6 @@ var ui = (function() {
 		if ( event.keyCode === 13 ) {
 			event.preventDefault();
 			article.focus();
-
-			// Move caret to start of content
-			var range = document.createRange();
-			var selection = window.getSelection();
-			range.selectNodeContents( article.firstChild, 0 );
-			range.collapse( false );
-			selection.removeAllRanges();
-			selection.addRange( range );
 		}
 	}
 
