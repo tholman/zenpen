@@ -19,7 +19,7 @@ var ui = (function() {
 			loadState();
 		}
 
-		console.log( "Checkin under the hood eh? We've probably got a lot in common. ZenPen is open source on github (https://github.com/tholman/zenpen). You should probably follow me on twitter too - http://twitter.com/twholman" );
+		console.log( "Checkin under the hood eh? We've probably got a lot in common. ZenPen is open source on github (https://github.com/tholman/zenpen)." );
 	}
 
 	function loadState() {
