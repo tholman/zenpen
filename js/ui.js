@@ -186,7 +186,7 @@ var ui = (function() {
 		shareText.focus();
 		shareText.select();
 
-		request('https://www.googleapis.com/urlshortener/v1/url', 'POST', '{"longUrl": "http://zenpen.io/#' + shareText.value + '"}', function(err, response) {
+		request('https://www.googleapis.com/urlshortener/v1/url', 'POST', '{"longUrl": "' + shareText.value + '"}', function(err, response) {
 			if(err) {
 				// fail silently
 			} else {
