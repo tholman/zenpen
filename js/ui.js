@@ -184,11 +184,31 @@ var ui = (function() {
 		overlay.style.display = "block";
 		shareBox.style.display = "block";
 		shareText.focus();
-   		shareText.select();
+		shareText.select();
+
+		request('https://www.googleapis.com/urlshortener/v1/url', 'POST', '{"longUrl": "' + shareText.value + '"}', function(err, response) {
+			if(err) {
+				// fail silently
+			} else {
+				var json = {};
+				if(response) {
+					try {
+						json = JSON.parse(response);
+					} catch(e) {
+						//fail silently
+					}
+					if(json.id) {
+						shareText.value = json.id;
+						shareText.focus();
+						shareText.select();
+					}
+				}
+			}
+		});
 	}
 
 	return {
 		init: init
-	}
+	};
 
 })();
