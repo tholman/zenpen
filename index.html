@@ -15,24 +15,7 @@
 		<!-- LIBS -->
 		<script src="js/libs/head.min.js"></script>
 		
-		<!-- JS -->
-		<script type="text/javascript">
-
-			// Load required scripts.	
-			head.js( "js/libs/fullScreen.js",
-				"js/libs/rawinflate.js",
-				"js/libs/rawdeflate.js",
-				"js/utils.js",
-				"js/ui.js",
-				"js/editor.js",
-	        	function(){
-	            	
-	            	// Initiate ZenPen
-	            	editor.init();
-	    			ui.init();
-	            }
-	        );
-        </script>
+		<!-- JS loading in footer -->
 
     </head>
 
@@ -126,7 +109,7 @@
 			</article>
 
 		</section>
-
+		
 		<script type="text/javascript">
 		  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', 'UA-38039699-1']);
@@ -138,5 +121,24 @@
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		  })();
 		</script>
+
+		<!-- JS -->
+		<script type="text/javascript">
+
+			// Load required scripts.	
+			head.js( "js/libs/fullScreen.js",
+				"js/libs/rawinflate.js",
+				"js/libs/rawdeflate.js",
+				"js/utils.js",
+				"js/ui.js",
+				"js/editor.js",
+	        	function(){
+	            	
+	            	// Initiate ZenPen
+	            	editor.init();
+	    			ui.init();
+	            }
+	        );
+        </script>
 	</body>
 </html>
