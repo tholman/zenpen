@@ -232,11 +232,11 @@ article a:hover {
 	background-color: rgba(0,0,0,0.9);
 	position: absolute;
 	border-radius: 3px;
-	margin-left: -47px;
+	margin-left: -61px;
 	margin-top: -46px;
 	z-index: 1000;
 	padding: 5px;
-	width: 95px;
+	width: 122px;
 }
 
 .options button {
@@ -260,7 +260,7 @@ article a:hover {
 	bottom: -15px;
 	height: 5px;
 	width: 0px;
-	left: 43px;
+	left: 56px;
 }
 
 .yang .options {
