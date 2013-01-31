@@ -172,7 +172,13 @@ var editor = (function() {
 	}
 
 	function getWordCount() {
-		return get_text(contentField).split(/\s+/).length;
+		var text = get_text( contentField );
+
+		if ( text === "" ) {
+			return 0
+		} else {
+			return text.split(/\s+/).length;
+		}
 	}
 
 	return {
