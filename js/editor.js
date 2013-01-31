@@ -159,6 +159,7 @@ var editor = (function() {
 
 		var selection = window.getSelection();
 		var href = window.prompt( 'URL: ' );
+		
 		if ( href ) {
 			document.execCommand( 'insertHTML', false, '<i><a href="' + href + '">' + selection + '</a></i>' );
 			selection.baseNode.parentNode.contentEditable = 'false';
