@@ -131,6 +131,9 @@ var editor = (function() {
 
 		quoteButton = textOptions.querySelector( '.quote' );
 		quoteButton.onclick = onQuoteClick;
+
+		urlButton = textOptions.querySelector( '.url' );
+		urlButton.onclick = onURLClick;
 	}
 
 	function onBoldClick() {
@@ -149,6 +152,16 @@ var editor = (function() {
 			document.execCommand( 'formatBlock', false, 'p' );
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
+		}
+	}
+
+	function onURLClick() {
+
+		var selection = window.getSelection();
+		var href = window.prompt( 'URL: ' );
+		if ( href ) {
+			document.execCommand( 'insertHTML', false, '<i><a href="' + href + '">' + selection + '</a></i>' );
+			selection.baseNode.parentNode.contentEditable = 'false';
 		}
 	}
 
