@@ -1,6 +1,6 @@
 var editor = (function() {
 
-	var headerField, contentField, cleanSlate, textOptions, boldButton, italicButton, lastType;
+	var headerField, contentField, cleanSlate, textOptions, boldButton, italicButton, quoteButton, lastType, currentNodeList;
 
 	function init() {
 
@@ -57,34 +57,74 @@ var editor = (function() {
 		}
 		
 		// Text is selected
-		if ( selection.isCollapsed === false && hasNode( findNodes( selection.focusNode ), 'ARTICLE' ) ) {
+		if ( selection.isCollapsed === false ) {
+
+			currentNodeList = findNodes( selection.focusNode );
 
 			// Find if highlighting is in the editable area
-			var range = selection.getRangeAt(0);
-			var boundary = range.getBoundingClientRect();
-			
-			// Insert
-			textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-			textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+			if ( hasNode( currentNodeList, "ARTICLE") ) {
+
+				var range = selection.getRangeAt(0);
+				var boundary = range.getBoundingClientRect();
+				
+				updateBubbleStates();
+
+				// Show the ui bubble
+				textOptions.className = "text-options active";
+				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+			}
 		}
 
 		lastType = selection.isCollapsed;
+	}
 
+	function updateBubbleStates() {
+
+		// It would be possible to use classList here, but I feel that the
+		// browser support isn't quite there, and this functionality doesn't
+		// warrent a shim.
+
+		if ( hasNode( currentNodeList, 'B') ) {
+			boldButton.className = "bold active"
+		} else {
+			boldButton.className = "bold"
+		}
+
+		if ( hasNode( currentNodeList, 'I') ) {
+			italicButton.className = "italic active"
+		} else {
+			italicButton.className = "italic"
+		}
+
+		if ( hasNode( currentNodeList, 'BLOCKQUOTE') ) {
+			quoteButton.className = "quote active"
+		} else {
+			quoteButton.className = "quote"
+		}
 	}
 
 	function onSelectorBlur() {
 		
-		textOptions.style.top = '-999px';
-		textOptions.style.left = '-999px';
+		textOptions.className = "text-options fade";
+		setTimeout( function() {
+
+			if (textOptions.className == "text-options fade") {
+
+				textOptions.className = "text-options";
+				textOptions.style.top = '-999px';
+				textOptions.style.left = '-999px';
+			}
+		}, 260 )
 	}
 
 	function findNodes( element ) {
 
-		var nodeNames = [];
+		var nodeNames = {};
 
 		while ( element.parentNode ) {
 
-			nodeNames.push( element.nodeName );
+			nodeNames[element.nodeName] = true;
 			element = element.parentNode;
 		}
 
@@ -93,13 +133,7 @@ var editor = (function() {
 
 	function hasNode( nodeList, name ) {
 
-		var i;
-		for( i = 0; i < nodeList.length; i++ ) {
-			if ( nodeList[i] === name ){
-				return true
-			}
-		}
-		return false;
+		return !!nodeList[ name ];
 	}
 
 	function saveState( event ) {
