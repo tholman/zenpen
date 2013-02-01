@@ -63,7 +63,8 @@ var editor = (function() {
 			var range = selection.getRangeAt(0);
 			var boundary = range.getBoundingClientRect();
 			
-			// Insert
+			// Show the ui bubble
+			textOptions.className = "text-options active";
 			textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
 			textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 		}
@@ -74,8 +75,16 @@ var editor = (function() {
 
 	function onSelectorBlur() {
 		
-		textOptions.style.top = '-999px';
-		textOptions.style.left = '-999px';
+		textOptions.className = "text-options fade";
+		setTimeout( function() {
+
+			if (textOptions.className == "text-options fade") {
+
+				textOptions.className = "text-options";
+				textOptions.style.top = '-999px';
+				textOptions.style.left = '-999px';
+			}
+		}, 260 )
 	}
 
 	function findNodes( element ) {
