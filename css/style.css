@@ -279,7 +279,7 @@ article a:hover {
 }
 
 .yang .options button.active {
-	background-color: rgba(0,0,0,0.4);
+	background-color: rgba(0,0,0,0.3);
 }
 
 .options button:hover {
