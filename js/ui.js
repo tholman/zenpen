@@ -4,6 +4,7 @@ var ui = (function() {
 
 	var article, wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
 
+
 	var expandScreenIcon = '&#xe006;';
 	var shrinkScreenIcon = '&#xe005;';
 

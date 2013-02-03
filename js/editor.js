@@ -1,6 +1,10 @@
 var editor = (function() {
 
-	var headerField, contentField, cleanSlate, textOptions, boldButton, italicButton, quoteButton, lastType, currentNodeList;
+	// Editor elements
+	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
+
+	// Editor Bubble elements
+	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
 	function init() {
 
@@ -26,8 +30,8 @@ var editor = (function() {
 		if ( supportsHtmlStorage() && isCleanSlate() ) {
 
 			loadState();
-			document.onkeyup = function() {
-				checkTextHighlighting();
+			document.onkeyup = function( event ) {
+				checkTextHighlighting( event );
 				saveState();
 			}
 
@@ -41,14 +45,43 @@ var editor = (function() {
 		document.onmouseup = function( event ) {
 
 			setTimeout( function() {
-				checkTextHighlighting();
+				checkTextHighlighting( event );
 			}, 1);
 		};
+	}
+
+	function bindElements() {
+
+		headerField = document.querySelector( '.header' );
+		contentField = document.querySelector( '.content' );
+		textOptions = document.querySelector( '.text-options' );
+
+		optionsBox = textOptions.querySelector( '.options' );
+
+		boldButton = textOptions.querySelector( '.bold' );
+		boldButton.onclick = onBoldClick;
+
+		italicButton = textOptions.querySelector( '.italic' );
+		italicButton.onclick = onItalicClick;
+
+		quoteButton = textOptions.querySelector( '.quote' );
+		quoteButton.onclick = onQuoteClick;
+
+		urlButton = textOptions.querySelector( '.url' );
+		urlButton.onclick = onUrlClick;
+
+		urlInput = textOptions.querySelector( '.url-input' );
+		urlInput.onblur = onUrlInputBlur;
+		urlInput.onkeydown = onUrlInputKeyDown;
 	}
 
 	function checkTextHighlighting( event ) {
 
 		var selection = window.getSelection();
+
+		if ( event.target.className === "url-input" ) {
+			return;
+		}
 
 		// Check selections exist
 		if ( selection.isCollapsed === true && lastType === false ) {
@@ -102,6 +135,14 @@ var editor = (function() {
 		} else {
 			quoteButton.className = "quote"
 		}
+
+		if ( hasNode( currentNodeList, 'A') ) {
+			urlButton.className = "url useicons active"
+		} else {
+			urlButton.className = "url useicons"
+		}
+
+		console.log( currentNodeList );
 	}
 
 	function onSelectorBlur() {
@@ -126,6 +167,11 @@ var editor = (function() {
 
 			nodeNames[element.nodeName] = true;
 			element = element.parentNode;
+
+			if ( element.nodeName === 'A' ) {
+				console.log( element.href );
+				nodeNames.url = element.href;
+			}
 		}
 
 		return nodeNames;
@@ -151,22 +197,6 @@ var editor = (function() {
 		}
 	}
 
-	function bindElements() {
-
-		headerField = document.querySelector( '.header' );
-		contentField = document.querySelector( '.content' );
-		textOptions = document.querySelector( '.text-options' );
-
-		boldButton = textOptions.querySelector( '.bold' );
-		boldButton.onclick = onBoldClick;
-
-		italicButton = textOptions.querySelector( '.italic' );
-		italicButton.onclick = onItalicClick;
-
-		quoteButton = textOptions.querySelector( '.quote' );
-		quoteButton.onclick = onQuoteClick;
-	}
-
 	function onBoldClick() {
 		document.execCommand( 'bold', false );
 	}
@@ -184,6 +214,70 @@ var editor = (function() {
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
+	}
+
+	function onUrlClick() {
+
+		if ( optionsBox.className == 'options' ) {	
+
+			optionsBox.className = 'options url-mode';
+
+			setTimeout( function() {
+
+				var nodeNames = findNodes( window.getSelection().focusNode );
+
+				if ( hasNode( nodeNames , "A" ) ) {
+					urlInput.value = nodeNames.url;
+				} else {
+					// Symbolize text turning into a link, which is temporary, and will never be seen.
+					document.execCommand( 'createLink', false, '/' );
+				}
+
+				// Since typing in the input box kills the highlighted text we need
+				// to save this selection, to add the url link if it is provided.
+				lastSelection = window.getSelection().getRangeAt(0);
+				lastType = false;
+
+				urlInput.focus();
+					
+			}, 1)
+			
+		} else {
+
+			optionsBox.className = 'options';
+		}
+	}
+
+	function onUrlInputKeyDown( event ) {
+
+		if ( event.keyCode === 13 ) {
+			event.preventDefault();
+			applyURL( urlInput.value );
+			urlInput.blur();
+		}
+	}
+
+	function onUrlInputBlur( event ) {
+		optionsBox.className = 'options';
+		applyURL( urlInput.value );
+		urlInput.value = '';
+	}
+
+	function applyURL( url ) {
+
+		rehighlightLastSelection();
+
+		// Unlink any current links
+		document.execCommand( 'unlink', false );
+
+		if (url !== "") {
+			document.execCommand( 'createLink', false, url );
+		}
+	}
+
+	function rehighlightLastSelection() {
+
+		window.getSelection().addRange( lastSelection );
 	}
 
 	function inflate( string ) {
