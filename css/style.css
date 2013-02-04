@@ -78,6 +78,20 @@ blockquote {
 	margin-right: 0px;
 }
 
+.no-overflow {
+	overflow: hidden;
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+/* Used by the ui bubble to stop wrapping */
+.lengthen {
+	display: block;
+	width: 500px;
+	height: 100%;
+}
+
 .useicons {
 	font-size: 20px !important;
 	font-family: 'icomoon' !important;
