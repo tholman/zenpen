@@ -134,6 +134,7 @@ var ui = (function() {
 	function onTargetClick( event ) {
 		overlay.style.display = "block";
 		wordCountBox.style.display = "block";
+		wordCountElement.focus();
 	}
 
 	function onAboutButtonClick( event ) {
