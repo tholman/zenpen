@@ -68,7 +68,7 @@ var editor = (function() {
 		quoteButton.onclick = onQuoteClick;
 
 		urlButton = textOptions.querySelector( '.url' );
-		urlButton.onclick = onUrlClick;
+		urlButton.onmousedown = onUrlClick;
 
 		urlInput = textOptions.querySelector( '.url-input' );
 		urlInput.onblur = onUrlInputBlur;
@@ -79,7 +79,7 @@ var editor = (function() {
 
 		var selection = window.getSelection();
 
-		if ( event.target.className === "url-input" ) {
+		if ( event.target.className === "url-input" || event.target.classList.contains( "url" ) ) {
 			return;
 		}
 
@@ -141,8 +141,6 @@ var editor = (function() {
 		} else {
 			urlButton.className = "url useicons"
 		}
-
-		console.log( currentNodeList );
 	}
 
 	function onSelectorBlur() {
@@ -218,10 +216,11 @@ var editor = (function() {
 
 	function onUrlClick() {
 
-		if ( optionsBox.className == 'options' ) {	
+		if ( optionsBox.className == 'options' ) {
 
 			optionsBox.className = 'options url-mode';
 
+			// Set timeout here to debounce the focus action
 			setTimeout( function() {
 
 				var nodeNames = findNodes( window.getSelection().focusNode );
@@ -239,8 +238,8 @@ var editor = (function() {
 				lastType = false;
 
 				urlInput.focus();
-					
-			}, 1)
+
+			}, 10)
 			
 		} else {
 
@@ -258,9 +257,13 @@ var editor = (function() {
 	}
 
 	function onUrlInputBlur( event ) {
+
 		optionsBox.className = 'options';
 		applyURL( urlInput.value );
 		urlInput.value = '';
+
+		currentNodeList = findNodes( window.getSelection().focusNode );
+		updateBubbleStates();
 	}
 
 	function applyURL( url ) {
