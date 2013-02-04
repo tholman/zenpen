@@ -189,8 +189,10 @@ var editor = (function() {
 	function loadState() {
 
 		if ( localStorage[ 'header' ] ) {
-
 			headerField.innerHTML = localStorage[ 'header' ];
+		}
+
+		if ( localStorage[ 'content' ] ) {
 			contentField.innerHTML = localStorage[ 'content' ];
 		}
 	}

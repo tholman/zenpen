@@ -90,6 +90,7 @@ var ui = (function() {
 		wordCountBox = overlay.querySelector( '.wordcount' );
 		wordCountElement = wordCountBox.querySelector( 'input' );
 		wordCountElement.onchange = onWordCountChange;
+		wordCountElement.onkeyup = onWordCountKeyUp;
 
 		wordCounter = document.querySelector( '.word-counter' );
 		wordCounterProgress = wordCounter.querySelector( '.progress' );
@@ -147,11 +148,29 @@ var ui = (function() {
 		}
 	}
 
+	function onWordCountKeyUp( event ) {
+		
+		if ( event.keyCode === 13 ) {
+			event.preventDefault();
+			
+			setWordCount( parseInt(this.value) );
+
+			removeOverlay();
+
+			article.focus();
+		}
+	}
+
 	function onWordCountChange( event ) {
 
+		setWordCount( parseInt(this.value) );
+	}
+
+	function setWordCount( count ) {
+
 		// Set wordcount ui to active
-		if ( parseInt(this.value) > 0) {
-			wordCountValue = parseInt(this.value);
+		if ( count > 0) {
+			wordCountValue = count;
 			wordCounter.className = "word-counter active";
 			updateWordCount();
 		} else {
@@ -184,10 +203,14 @@ var ui = (function() {
 	function onOverlayClick( event ) {
 
 		if ( event.target.className === "overlay" ) {
-			overlay.style.display = "none";
-			shareBox.style.display = "none";
-			wordCountBox.style.display = "none";
+			removeOverlay();
 		}
+	}
+
+	function removeOverlay() {
+		overlay.style.display = "none";
+		shareBox.style.display = "none";
+		wordCountBox.style.display = "none";
 	}
 
 	function onShareClick() {
