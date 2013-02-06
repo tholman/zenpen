@@ -6,6 +6,9 @@ var editor = (function() {
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
+	// Edit mode (true by default)
+	var editMode = true;
+
 	function init() {
 
 		lastRange = 0;
@@ -15,6 +18,17 @@ var editor = (function() {
 		if ( !isCleanSlate() ) {
 
 			inflate( window.location.hash.replace('%23', '#').substr(1) );
+
+			// Set the elements editable (or not)
+			if(!editMode) {
+				headerField.setAttribute("contenteditable","false");
+				contentField.setAttribute("contenteditable","false");
+			}
+			else
+			{
+				headerField.setAttribute("contenteditable","true");
+				contentField.setAttribute("contenteditable","true");
+			}
 
 		} else {
 
@@ -103,9 +117,11 @@ var editor = (function() {
 				updateBubbleStates();
 
 				// Show the ui bubble
-				textOptions.className = "text-options active";
-				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				if (editMode) {
+					textOptions.className = "text-options active";
+					textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+					textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				}
 			}
 		}
 
@@ -182,8 +198,10 @@ var editor = (function() {
 
 	function saveState( event ) {
 		
-		localStorage[ 'header' ] = headerField.innerHTML;
-		localStorage[ 'content' ] = contentField.innerHTML;
+		if ( supportsHtmlStorage() ) {
+			localStorage[ 'header' ] = headerField.innerHTML;
+			localStorage[ 'content' ] = contentField.innerHTML;
+		}
 	}
 
 	function loadState() {
@@ -293,6 +311,15 @@ var editor = (function() {
 		// Set contents from URL
 		headerField.innerHTML = RawDeflate.inflate( window.atob( stringData[0] ) );
 		contentField.innerHTML = RawDeflate.inflate( window.atob( stringData[1] ) );
+
+		// Check for edit mode
+		if ( stringData[2] === "edit" ) {
+			editMode = true;
+		}
+		else
+		{
+			editMode = false;
+		}
 	}
 
 	function deflate() {
@@ -301,6 +328,8 @@ var editor = (function() {
 
 		deflatedHeader = window.btoa( RawDeflate.deflate( headerField.innerHTML ) );
 		deflatedContent = window.btoa( RawDeflate.deflate( contentField.innerHTML ) );
+		deflatedMode = window.btoa( "share" );
+
 		return deflatedHeader + '#' + deflatedContent;
 	}
 
