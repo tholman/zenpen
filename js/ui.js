@@ -46,9 +46,11 @@ var ui = (function() {
 	}
 
 	function saveState() {
-		
-		localStorage[ 'darkLayout' ] = darkLayout;
-		localStorage[ 'wordCount' ] = wordCountElement.value;
+
+		if ( supportsHtmlStorage() ) {
+			localStorage[ 'darkLayout' ] = darkLayout;
+			localStorage[ 'wordCount' ] = wordCountElement.value;
+		}
 	}
 
 	function bindElements() {
@@ -128,6 +130,7 @@ var ui = (function() {
 			document.body.className = 'yin';
 		}
 		darkLayout = !darkLayout;
+
 		saveState();
 	}
 
@@ -178,6 +181,7 @@ var ui = (function() {
 			wordCountValue = 0;
 			wordCounter.className = "word-counter";
 		}
+		
 		saveState();
 	}
 
