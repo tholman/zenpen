@@ -6,8 +6,8 @@ var editor = (function() {
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
-	// Edit mode (false by default)
-	var editMode = false;
+	// Edit mode (true by default)
+	var editMode = true;
 
 	function init() {
 
@@ -117,9 +117,11 @@ var editor = (function() {
 				updateBubbleStates();
 
 				// Show the ui bubble
-				textOptions.className = "text-options active";
-				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				if (editMode) {
+					textOptions.className = "text-options active";
+					textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+					textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				}
 			}
 		}
 
@@ -313,6 +315,10 @@ var editor = (function() {
 		// Check for edit mode
 		if ( stringData[2] === "edit" ) {
 			editMode = true;
+		}
+		else
+		{
+			editMode = false;
 		}
 	}
 
