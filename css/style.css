@@ -67,10 +67,6 @@ article {
 	display: block;
 }
 
-article b, article i {
-	line-height: 1.25em;
-}
-
 blockquote {
 	border-left: 4px solid deepskyblue;
 	margin-left: -19px;
