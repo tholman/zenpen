@@ -88,8 +88,6 @@ var editor = (function() {
 			return;
 		}
 
-		console.log( "checking!", event.target.parentNode.classList );
-
 		// Check selections exist
 		if ( selection.isCollapsed === true && lastType === false ) {
 
@@ -173,7 +171,6 @@ var editor = (function() {
 			element = element.parentNode;
 
 			if ( element.nodeName === 'A' ) {
-				console.log( element.href );
 				nodeNames.url = element.href;
 			}
 		}
