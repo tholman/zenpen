@@ -10,7 +10,7 @@ var editor = (function() {
 
 		lastRange = 0;
 		bindElements();
-		
+
 		// Something is being passed via URL
 		if ( !isCleanSlate() ) {
 
@@ -88,7 +88,7 @@ var editor = (function() {
 
 			onSelectorBlur();
 		}
-		
+
 		// Text is selected
 		if ( selection.isCollapsed === false ) {
 
@@ -99,13 +99,17 @@ var editor = (function() {
 
 				var range = selection.getRangeAt(0);
 				var boundary = range.getBoundingClientRect();
-				
+
 				updateBubbleStates();
 
-				// Show the ui bubble
-				textOptions.className = "text-options active";
-				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				// Show the ui bubble, don't update the position once it's set
+				if ( textOptions.className != "text-options active" ) {
+
+					textOptions.className = "text-options active";
+					textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+					textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+
+				}
 			}
 		}
 
@@ -144,7 +148,7 @@ var editor = (function() {
 	}
 
 	function onSelectorBlur() {
-		
+
 		textOptions.className = "text-options fade";
 		setTimeout( function() {
 
@@ -181,7 +185,7 @@ var editor = (function() {
 	}
 
 	function saveState( event ) {
-		
+
 		localStorage[ 'header' ] = headerField.innerHTML;
 		localStorage[ 'content' ] = contentField.innerHTML;
 	}
@@ -208,7 +212,7 @@ var editor = (function() {
 	function onQuoteClick() {
 
 		var nodeNames = findNodes( window.getSelection().focusNode );
-		
+
 		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
 			document.execCommand( 'formatBlock', false, 'p' );
 		} else {
@@ -242,7 +246,7 @@ var editor = (function() {
 				urlInput.focus();
 
 			}, 10)
-			
+
 		} else {
 
 			optionsBox.className = 'options';
