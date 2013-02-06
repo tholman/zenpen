@@ -79,9 +79,16 @@ var editor = (function() {
 
 		var selection = window.getSelection();
 
-		if ( event.target.className === "url-input" || event.target.classList.contains( "url" ) ) {
+		if ( event.target.className === "url-input" ||
+		     event.target.classList.contains( "url" ) ||
+		     event.target.parentNode.classList.contains( "ui-inputs") ) {
+
+			currentNodeList = findNodes( selection.focusNode );
+			updateBubbleStates();
 			return;
 		}
+
+		console.log( "checking!", event.target.parentNode.classList );
 
 		// Check selections exist
 		if ( selection.isCollapsed === true && lastType === false ) {
@@ -102,14 +109,9 @@ var editor = (function() {
 
 				updateBubbleStates();
 
-				// Show the ui bubble, don't update the position once it's set
-				if ( textOptions.className != "text-options active" ) {
-
-					textOptions.className = "text-options active";
-					textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-					textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
-
-				}
+				textOptions.className = "text-options active";
+				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 			}
 		}
 

@@ -67,7 +67,7 @@ article {
 	display: block;
 }
 
-article b {
+article b, article i {
 	line-height: 1.25em;
 }
 
@@ -319,6 +319,10 @@ article a:hover {
 	overflow: hidden;
 	margin-right: 0px;
 	opacity: 0px;
+}
+
+.options .italic {
+	font-style: italic;
 }
 
 .options button {
