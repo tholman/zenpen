@@ -168,6 +168,7 @@ var editor = (function() {
 
 		deflatedHeader = window.btoa( RawDeflate.deflate( headerField.innerHTML ) );
 		deflatedContent = window.btoa( RawDeflate.deflate( contentField.innerHTML ) );
+
 		return deflatedHeader + '#' + deflatedContent;
 	}
 
@@ -180,6 +181,6 @@ var editor = (function() {
 		deflate: deflate,
 		saveState: saveState,
 		getWordCount: getWordCount
-	}
+	};
 
 })();

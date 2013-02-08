@@ -1,11 +1,11 @@
 var ui = (function() {
 
-	var body, screenSizeElement, colorLayoutElement, shareElement, targetElement, overlay, shareText, shareBox, aboutButton;
+	var body, screenSizeElement, colorLayoutElement, shareElement, targetElement, overlay, shareText, shareBox, aboutButton, shorten;
 
 	var article, wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
 
-	var expandScreenIcon = '&#xe006;';
-	var shrinkScreenIcon = '&#xe005;';
+	var expandScreenIcon = '&#xe003;';
+	var shrinkScreenIcon = '&#xe002;';
 
 	var darkLayout = false;
 
@@ -25,7 +25,7 @@ var ui = (function() {
 	function loadState() {
 
 		// Activate word counter
-		if ( localStorage['wordCount'] && localStorage['wordCount'] !== "0") {			
+		if ( localStorage['wordCount'] && localStorage['wordCount'] !== "0") {
 			wordCountValue = parseInt(localStorage['wordCount']);
 			wordCountElement.value = localStorage['wordCount'];
 			wordCounter.className = "word-counter active";
@@ -82,6 +82,8 @@ var ui = (function() {
 
 		shareText = overlay.querySelector( 'input' );
 		shareBox = overlay.querySelector( '.share' );
+		shortenUrl = shareBox.querySelector( '.shorten button' );
+		shortenUrl.onclick = onShortenClick;
 
 		article = document.querySelector( '.content' );
 		article.onkeyup = onArticleKeyUp;
@@ -186,25 +188,18 @@ var ui = (function() {
 		shareText.focus();
 		shareText.select();
 
-		request('https://www.googleapis.com/urlshortener/v1/url', 'POST', '{"longUrl": "' + shareText.value + '"}', function(err, response) {
-			if(err) {
-				// fail silently
-			} else {
-				var json = {};
-				if(response) {
-					try {
-						json = JSON.parse(response);
-					} catch(e) {
-						//fail silently
-					}
-					if(json.id) {
-						shareText.value = json.id;
-						shareText.focus();
-						shareText.select();
-					}
-				}
-			}
-		});
+	}
+
+	function onShortenClick() {
+		var service = this.id;
+
+		if( typeof urlShorteners[service] === 'function' ) {
+			urlShorteners[service]( shareText.value, function(shortUrl) {
+				shareText.value = shortUrl;
+				shareText.focus();
+				shareText.select();
+			});
+		}
 	}
 
 	return {
