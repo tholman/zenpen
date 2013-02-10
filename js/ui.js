@@ -1,8 +1,14 @@
 var ui = (function() {
 
-	var body, screenSizeElement, colorLayoutElement, shareElement, targetElement, overlay, shareText, shareBox, aboutButton;
+	// Base elements
+	var body, article, uiContainer, overlay, shareText, shareBox, aboutButton;
 
-	var article, wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
+	// Buttons
+	var screenSizeElement, colorLayoutElement, shareElement, targetElement, newButton, editButton;
+
+	// Work Counter
+	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
+
 
 	var expandScreenIcon = '&#xe006;';
 	var shrinkScreenIcon = '&#xe005;';
@@ -45,15 +51,19 @@ var ui = (function() {
 	}
 
 	function saveState() {
-		
-		localStorage[ 'darkLayout' ] = darkLayout;
-		localStorage[ 'wordCount' ] = wordCountElement.value;
+
+		if ( supportsHtmlStorage() ) {
+			localStorage[ 'darkLayout' ] = darkLayout;
+			localStorage[ 'wordCount' ] = wordCountElement.value;
+		}
 	}
 
 	function bindElements() {
 
 		// Body element for light/dark styles
 		body = document.body;
+
+		uiContainer = document.querySelector( '.ui' );
 
 		// UI element for color flip
 		colorLayoutElement = document.querySelector( '.color-flip' );
@@ -89,6 +99,7 @@ var ui = (function() {
 		wordCountBox = overlay.querySelector( '.wordcount' );
 		wordCountElement = wordCountBox.querySelector( 'input' );
 		wordCountElement.onchange = onWordCountChange;
+		wordCountElement.onkeyup = onWordCountKeyUp;
 
 		wordCounter = document.querySelector( '.word-counter' );
 		wordCounterProgress = wordCounter.querySelector( '.progress' );
@@ -98,6 +109,23 @@ var ui = (function() {
 
 		header = document.querySelector( '.header' );
 		header.onkeypress = onHeaderKeyPress;
+
+		newButton = document.querySelector( '.new' );
+		newButton.onclick = onNewButtonClick;
+
+		editButton = document.querySelector( '.edit' );
+		editButton.onclick = onEditButtonClick;
+	}
+
+	function onNewButtonClick( event ) {
+		editor.setEditMode( true );
+		editor.toggleEventBindings( true );
+		editor.resetContent();
+	}
+
+	function onEditButtonClick( event ) {
+		editor.toggleEventBindings( true )
+		editor.setEditMode( true );
 	}
 
 	function onScreenSizeClick( event ) {
@@ -126,16 +154,18 @@ var ui = (function() {
 			document.body.className = 'yin';
 		}
 		darkLayout = !darkLayout;
+
 		saveState();
 	}
 
 	function onTargetClick( event ) {
 		overlay.style.display = "block";
 		wordCountBox.style.display = "block";
+		wordCountElement.focus();
 	}
 
 	function onAboutButtonClick( event ) {
-		window.open( 'http://www.zenpen.io/index.html#4+IEgvDUnOT83FSFknyFqNS8gNQ8AA==#nVRNb9QwED3TXzHKhcvuRoBQRUkjOADdG4eeuDnJZD3U9gR73G366xknbVUOSNtGOTj+eH7z3pucnb3Rp5naJk0mQJLZ4WXlKODWIh2sXMD7893H6e5z1V7RBvZvPTTUNgZ6DoL6DiSmK4dG4xJWYCOOl5UVmS7qWiw7b8KuZ1+11+ThavluatM2NbWwhV8YfmIASmDAkYhDOCLeYBhgivwbe9mAMKQ+GumtbhrxCKRDTLAHa251P4kFzwPGAIJ3AoUTx7SDr4riOSJMJgr12ZnoZjigCIUDUFBgsUbgGGmZueeAu6YuUig/FeUkXfYC3twonweYBGjSvLC2JuIGjNLAW61S5wljWekjGnnVXUmV95NDQS3lJB+SGnFQjXJXfHj0pL7HMGGoWrWTdQCJc+wROMCPdXNxqDgF3xEdjBFxYa73ReqyaGEpd54Euqw1c4SIfzImUYuM5Ijp5eVdW4ScVCK8mzASBiVkTYIOS0ZCmijiAN2sOTg1gj4OzGvlD4FKtRXv1pDUVVvyrKF6qvY1mnaOD/W7D+eftqrq9iEH25LJRd+e2b0MvxDX5ezX1lEMJT9kJf+EU1IlqhcpmnaPpnyM7GGvB5jDK6I1wsx5bSkTZli8JMXeFG8V1SvltOzpFSunbNzaTeqGZmoAHsEj3NIJ5nhDTvhCyLPYeXfcraH8cigLa83Fl2/lEx5LVhoK/O8PRptfMK7BPq4g1f/uXiCv1xOPmM91Ois/w78=' );
+		window.open( 'http://zenpen.io/?h=4+IEgqgAAA==&c=hVQ9b9swEJ3rX3Hw0C62haJDUccR2qFtvHXw1I2SzhYbkqcej3aUX9+jJAdBYKieBPH47n3Ji8U7/e268sGuYP/Bvw9V7O52ttwZaBmP98tWpNsWhbTkvAmbmnyxhCi9w/tlnTgSb6EjGwT5blkerIeHYXJXmHJX2HJEXMNvDL8wgI1gwFkRh3BBfMTQQMf0B2tZgRDEmo3UrQ4d8QJWHzHCHlpz1nkrLXhqkAMIPglgY4U4buCbonhihM6w2Do5w66HE4rYcAIlRyCtEbiwHd48U8DNruhKVb4X8OZRt0yHEdDEfuDSGsYVGAXHs3LX9xY5n9SMRl4hRFBfOoeCrp8sfO1fVANPSj5Vg3+Tl8Uzhg7DjJuaA+kEREpcI1CAnyNKNjYbPO76gejgyIgDNQrCtkqizGOqvBWokooiBsa/CaOos0YSY7zyP7QIKaoyfOqQLQbd1ZoIFebAQuwsYwNVD+aGNpXmuSEapU1RxqIV78Z45uqiAjXmqxqYM61ydCo+fvr8Za22raes1rkN8/g1kbu9IDNXisn/r9SKorqapLpekHIpRH2z6rdWWqt3ZPKwVyii8NKMI/SUxvaa0MPgv9Ubq5yHznoMWp48U5ugISTjxuLqB6AtaYCO4BHO9q313lgntBXrSdp+c9mMnfp6ygdZ0Lye73lsgpwkEd9OV/Sz03tjcy/jmnnww3jjCjyYsch/NP8A' );
 	}
 
 	function onHeaderKeyPress( event ) {
@@ -146,17 +176,36 @@ var ui = (function() {
 		}
 	}
 
+	function onWordCountKeyUp( event ) {
+		
+		if ( event.keyCode === 13 ) {
+			event.preventDefault();
+			
+			setWordCount( parseInt(this.value) );
+
+			removeOverlay();
+
+			article.focus();
+		}
+	}
+
 	function onWordCountChange( event ) {
 
+		setWordCount( parseInt(this.value) );
+	}
+
+	function setWordCount( count ) {
+
 		// Set wordcount ui to active
-		if ( parseInt(this.value) > 0) {
-			wordCountValue = parseInt(this.value);
+		if ( count > 0) {
+			wordCountValue = count;
 			wordCounter.className = "word-counter active";
 			updateWordCount();
 		} else {
 			wordCountValue = 0;
 			wordCounter.className = "word-counter";
 		}
+		
 		saveState();
 	}
 
@@ -183,23 +232,39 @@ var ui = (function() {
 	function onOverlayClick( event ) {
 
 		if ( event.target.className === "overlay" ) {
-			overlay.style.display = "none";
-			shareBox.style.display = "none";
-			wordCountBox.style.display = "none";
+			removeOverlay();
 		}
+	}
+
+	function removeOverlay() {
+		overlay.style.display = "none";
+		shareBox.style.display = "none";
+		wordCountBox.style.display = "none";
 	}
 
 	function onShareClick() {
 
-		shareText.value = window.location.href.split('#')[0] + '#' + editor.deflate();
+		shareText.value = window.location.href.split('?')[0] + editor.deflate();
 		overlay.style.display = "block";
 		shareBox.style.display = "block";
 		shareText.focus();
 		shareText.select();
 	}
 
+	function setEditMode( value ) {
+
+		// Turn edit mode on
+		if ( value ) {
+			uiContainer.className = 'ui edit-mode';
+		// Turn edit mode off
+		} else {
+			uiContainer.className = 'ui view-mode';
+		}
+	}
+
 	return {
-		init: init
+		init: init,
+		setEditMode: setEditMode
 	}
 
 })();

@@ -1,3 +1,16 @@
+/*!
+ * ZenPen
+ * http://www.zenpen.io
+ * MIT licensed
+ *
+ * Copyright (C) Tim Holman, http://tholman.com
+ */
+
+
+/*********************************************
+ * BASE STYLES
+ *********************************************/
+
 * {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -54,10 +67,6 @@ article {
 	display: block;
 }
 
-article b {
-	line-height: 1.25em;
-}
-
 blockquote {
 	border-left: 4px solid deepskyblue;
 	margin-left: -19px;
@@ -65,9 +74,23 @@ blockquote {
 	margin-right: 0px;
 }
 
+.no-overflow {
+	overflow: hidden;
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+/* Used by the ui bubble to stop wrapping */
+.lengthen {
+	display: block;
+	width: 300px;
+	height: 100%;
+}
+
 .useicons {
 	font-size: 20px !important;
-	font-family: 'icomoon';
+	font-family: 'icomoon' !important;
 }
 
 .yin {
@@ -105,6 +128,7 @@ blockquote {
 	-o-transition: opacity 400ms;
 	transition: opacity 400ms;
 
+	font-family: inherit;
 	background: none;
 	cursor: pointer;
 	font-size: 25px;
@@ -119,7 +143,6 @@ blockquote {
 article a {
 	text-decoration: none;
 	color: deepskyblue;
-	cursor: pointer;
 }
 
 article a:hover {
@@ -139,6 +162,68 @@ article a:hover {
 .quote {
 	line-height: 60px !important;
 	font-size: 49px !important;
+}
+
+.edit-mode .viewing, .view-mode .editing {
+	display: none;
+}
+
+.view-mode button {
+	opacity: 0.3;
+}
+
+.view-mode button:hover {
+	opacity: 0.8;
+}
+
+label {
+
+	-webkit-transition: all 400ms;
+	-moz-transition: all 400ms;
+	-ms-transition: all 400ms;
+	-o-transition: all 400ms;
+	transition: all 400ms;
+
+	background-color: rgba(0,0,0,0.8);
+	text-transform: uppercase;
+	font-family: helvetica;
+	position: absolute;
+	border-radius: 3px;
+	margin-top: -30px;
+	margin-left: 27px;
+	font-size: 10px;
+	height: 28px;
+	padding: 8px;
+	color: #fff;
+	opacity: 0;
+}
+
+label:before {
+	content: "";
+	border-right: 6px solid rgba(0,0,0,0.8);
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid transparent;
+	border-top: 6px solid transparent;
+	position: absolute;
+	display: block;
+	height: 0px;
+	left: -12px;
+	width: 0px;
+	top: 8px;
+}
+
+.view-mode label:hover, .view-mode label:active, .view-mode button:hover+label {
+    opacity: 0.8;
+    margin-left: 30px;
+}
+
+/*********************************************
+ * MODAL
+ *********************************************/
+
+.yang .modal {
+	background-color: rgba(255,255,255,0.8);
+	color: #111;
 }
 
 .modal {
@@ -181,6 +266,10 @@ article a:hover {
 	padding: 5px;
 }
 
+/*********************************************
+ * WORK COUNT
+ *********************************************/
+
 .wordcount {
 	margin-left: -150px;
 	width: 300px;
@@ -217,6 +306,10 @@ article a:hover {
 	background-color: greenyellow;
 }
 
+/*********************************************
+ * UI BUBBLE
+ *********************************************/
+
 .text-options {
 
 	-webkit-transition: opacity 250ms, margin 250ms;
@@ -250,27 +343,75 @@ article a:hover {
 	background-color: rgba(0,0,0,0.9);
 	position: absolute;
 	border-radius: 5px;
-	margin-left: -48px;
+	margin-left: -63px;
 	margin-top: -46px;
 	z-index: 1000;
 	padding: 5px 4px 5px 5px;
-	width: 96px;
+	width: 125px;
+	height: 40px;
+
+	-webkit-transition: all 300ms ease-in-out;
+	-moz-transition: all 300ms ease-in-out;
+	-ms-transition: all 300ms ease-in-out;
+	-o-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+}
+
+.options.url-mode {
+	width: 275px;
+	margin-left: -137px;
+}
+
+.options.url-mode .bold, .options.url-mode .italic, .options.url-mode .quote {
+	width: 0px;
+	overflow: hidden;
+	margin-right: 0px;
+	opacity: 0;
+}
+
+.options .italic {
+	font-style: italic;
 }
 
 .options button {
-	-webkit-transition: background-color 200ms;
-	-moz-transition: background-color 200ms;
-	-ms-transition: background-color 200ms;
-	-o-transition: background-color 200ms;
-	transition: background-color 200ms;
+	-webkit-transition: all 250ms ease-in-out;
+	-moz-transition: all 250ms ease-in-out;
+	-ms-transition: all 250ms ease-in-out;
+	-o-transition: all 250ms ease-in-out;
+	transition: all 250ms ease-in-out;
 
-	font-family: 'Lora', serif;
 	float: left;
 	width: 28px;
 	opacity: 0.7;
 	height: 30px;
 	border-radius: 3px;
 	margin-right: 1px;
+	font-family: 'Lora', serif;
+}
+
+.options.url-mode input{
+	border-left: 2px solid transparent;
+	padding-right: 5px;
+	padding-left: 5px;
+	width: 236px;
+}
+
+.options input {
+	-webkit-transition: all 300ms ease-in-out;
+	-moz-transition: all 300ms ease-in-out;
+	-ms-transition: all 300ms ease-in-out;
+	-o-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+
+	border-radius: 3px;
+	overflow: hidden;
+	outline: 0px;
+	height: 30px;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	float: left;
+	width: 0px;
 }
 
 .options button.active {
@@ -293,10 +434,11 @@ article a:hover {
 	border-right: 5px solid transparent;
 	border-left: 5px solid transparent;
 	position: absolute;
+	margin-left: -5px;
 	bottom: -15px;
 	height: 5px;
 	width: 0px;
-	left: 43px;
+	left: 50%;
 }
 
 .yang .options {
@@ -306,6 +448,10 @@ article a:hover {
 
 .yang .options:before {
 	border-top: 5px solid rgba(255,255,255,0.9);
+}
+
+.url {
+	-webkit-font-smoothing: antialiased;
 }
 
 .top {
