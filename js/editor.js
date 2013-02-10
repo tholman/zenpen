@@ -6,6 +6,8 @@ var editor = (function() {
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
+	var editMode = true;
+
 	function init() {
 
 		lastRange = 0;
@@ -14,7 +16,12 @@ var editor = (function() {
 		// Something is being passed via URL
 		if ( !isCleanSlate() ) {
 
-			inflate( window.location.hash.replace('%23', '#').substr(1) );
+			inflate();
+
+			if ( getURLParameter( 'e' ) === '1' ) {
+				setEditMode( true );
+				toggleEventBindings( true )
+			}
 
 		} else {
 
@@ -24,30 +31,65 @@ var editor = (function() {
 			range.setStart(headerField, 1);
 			selection.removeAllRanges();
 			selection.addRange(range);
+
+			toggleEventBindings( true );
+			setEditMode( true );
+
+			// Local saving if supported and user is on the root domain
+			if ( supportsHtmlStorage() ) {
+				loadState();
+			}
 		}
+	}
 
-		// Local saving if supported and user is on the root domain
-		if ( supportsHtmlStorage() && isCleanSlate() ) {
+	function toggleEventBindings( on ) {
 
-			loadState();
-			document.onkeyup = function( event ) {
-				checkTextHighlighting( event );
-				saveState();
+		if ( on ) {
+
+			// Key up bindings
+			if ( supportsHtmlStorage() ) {
+
+				document.onkeyup = function( event ) {
+					checkTextHighlighting( event );
+					saveState();
+				}
+
+			} else {
+				document.onkeyup = checkTextHighlighting;
 			}
 
+			// Mouse bindings
+			document.onmousedown = checkTextHighlighting;
+			document.onmouseup = function( event ) {
+
+				setTimeout( function() {
+					checkTextHighlighting( event );
+				}, 1);
+			};
+
 		} else {
-			document.onkeyup = checkTextHighlighting;
+
+			document.onkeyup = null;
+			document.onmousedown = null;
+			document.onmouseup = null;
 		}
 
-		document.onmousedown = checkTextHighlighting;
+	}
 
-		// Debounce mouse up event.
-		document.onmouseup = function( event ) {
+	function setEditMode( value ) {
+		
+		// Set the elements editable (or not)
+		if ( value ) {
 
-			setTimeout( function() {
-				checkTextHighlighting( event );
-			}, 1);
-		};
+			headerField.setAttribute( "contenteditable", "true" );
+			contentField.setAttribute( "contenteditable", "true" );
+			ui.setEditMode( true );
+
+		} else {
+
+			headerField.setAttribute( "contenteditable", "false" );
+			contentField.setAttribute( "contenteditable", "false" );
+		}
 	}
 
 	function bindElements() {
@@ -79,9 +121,9 @@ var editor = (function() {
 
 		var selection = window.getSelection();
 
-		if ( event.target.className === "url-input" ||
+		if ( (event.target.className === "url-input" ||
 		     event.target.classList.contains( "url" ) ||
-		     event.target.parentNode.classList.contains( "ui-inputs") ) {
+		     event.target.parentNode.classList.contains( "ui-inputs")) ) {
 
 			currentNodeList = findNodes( selection.focusNode );
 			updateBubbleStates();
@@ -107,9 +149,12 @@ var editor = (function() {
 
 				updateBubbleStates();
 
-				textOptions.className = "text-options active";
-				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				// Show the ui bubble
+				if (editMode) {
+					textOptions.className = "text-options active";
+					textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+					textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				}
 			}
 		}
 
@@ -184,9 +229,11 @@ var editor = (function() {
 	}
 
 	function saveState( event ) {
-
-		localStorage[ 'header' ] = headerField.innerHTML;
-		localStorage[ 'content' ] = contentField.innerHTML;
+		
+		if ( supportsHtmlStorage() ) {
+			localStorage[ 'header' ] = headerField.innerHTML;
+			localStorage[ 'content' ] = contentField.innerHTML;
+		}
 	}
 
 	function loadState() {
@@ -288,14 +335,36 @@ var editor = (function() {
 		window.getSelection().addRange( lastSelection );
 	}
 
-	function inflate( string ) {
+	function inflate() {
 
-		// Seperate header and content
-		var stringData = string.split( '#' );
+		// Check old formatting
+		var stringData = window.location.hash.replace('%23', '#').substr(1)
+		stringData = stringData.split( '#' );
+		
+		if ( stringData.length > 1 ) {
+			
+			// Set contents from URL
+			headerField.innerHTML = RawDeflate.inflate( window.atob( stringData[0] ) );
+			contentField.innerHTML = RawDeflate.inflate( window.atob( stringData[1] ) );
 
-		// Set contents from URL
-		headerField.innerHTML = RawDeflate.inflate( window.atob( stringData[0] ) );
-		contentField.innerHTML = RawDeflate.inflate( window.atob( stringData[1] ) );
+			// Check for edit mode
+			if ( stringData[2] ) {
+				editMode = ( stringData[2] === "edit" );
+			}
+
+		} else {
+
+			// Use new formatting
+			contentParameter = getURLParameter( 'c' );
+			if( contentParameter[ contentParameter.length - 1] == '/' ) {
+				
+				// Remove trailing slash if it is there.
+				contentParameter = contentParameter.substring( 0, contentParameter.length - 1 );
+			}
+
+			headerField.innerHTML = RawDeflate.inflate( window.atob( getURLParameter( 'h' ) ) );
+			contentField.innerHTML = RawDeflate.inflate( window.atob( contentParameter ) );
+		}
 	}
 
 	function deflate() {
@@ -304,10 +373,13 @@ var editor = (function() {
 
 		deflatedHeader = window.btoa( RawDeflate.deflate( headerField.innerHTML ) );
 		deflatedContent = window.btoa( RawDeflate.deflate( contentField.innerHTML ) );
-		return deflatedHeader + '#' + deflatedContent;
+		deflatedMode = window.btoa( "share" );
+
+		return '?h=' + deflatedHeader + '&c=' + deflatedContent;
 	}
 
 	function getWordCount() {
+		
 		var text = get_text( contentField );
 
 		if ( text === "" ) {
@@ -317,11 +389,30 @@ var editor = (function() {
 		}
 	}
 
+	function resetContent() {
+
+		headerField.innerHTML = 'Title...';
+		contentField.innerHTML = '<p>And your writings here...</p>';
+
+		if ( window.History.enabled ) {
+			History.replaceState( { state:0 }, "New", "/" );
+		}
+
+		var range = document.createRange();
+		var selection = window.getSelection();
+		range.setStart(headerField, 1);
+		selection.removeAllRanges();
+		selection.addRange(range);
+	}
+
 	return {
 		init: init,
 		deflate: deflate,
 		saveState: saveState,
-		getWordCount: getWordCount
+		setEditMode: setEditMode,
+		getWordCount: getWordCount,
+		toggleEventBindings: toggleEventBindings,
+		resetContent: resetContent
 	}
 
 })();

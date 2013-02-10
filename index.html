@@ -51,10 +51,22 @@
 			</div>
 		</div>
 
-		<div class="ui">
+		<div class="ui view-mode">
 
 			<div class="wrapper">
-				<div class="top">
+
+				<div class="top viewing">
+					<button id="new" class="new useicons">
+						&#xe007;
+					</button>
+					<label for="new"> New </label>
+					<button id="edit" class="edit useicons">
+						&#xf0ad;
+					</button>
+					<label for="edit"> Edit </label>
+				</div>
+
+				<div class="top editing">
 					<button class="fullscreen useicons">
 						&#xe006;
 					</buttom>
@@ -70,7 +82,6 @@
 					<button class="link useicons">
 						&#xe001;
 					</button>
-
 				</div>
 
 				<div class="bottom">
@@ -87,11 +98,11 @@
 
 		<section>
 			
-			<header contenteditable="true" class="header">
+			<header contenteditable="false" class="header">
 				This is ZenPen
 			</header>
 
-			<article contenteditable="true" class="content">
+			<article contenteditable="false" class="content">
 
 				<p>
 					A minimalist writing zone, where you can block out all distractions and get to what's important. The writing!
@@ -100,13 +111,15 @@
 					To get started, all you need to do is delete this text (seriously, just highlight it and hit delete), and fill the page with your own fantastic words.
 				</p>
 				<p>
-					You can use <b>bold</b>, <i>italics</i> or <b><i>both</i></b> just by highlighting the text and selecting them from the tiny options box that appears above it.</p>
+					You can use <b>bold</b>, <i>italics</i>, <b><i>both</i></b> and <a href="http://zenpen.io"> urls </a> just by highlighting the text and selecting them from the tiny options box that appears above it.
+				</p>
 
 				<blockquote>
-					Quotes are easy to add too!</blockquote>
+					Quotes are easy to add too!
+				</blockquote>
 
 				<p>
-					Then save and share your writings... everything is passed via url, so none of your information is stored.
+					Then save and share your writings... everything is passed via URL, so none of your information is stored.
 				</p>
 				<p>
 					Questions/Comments? Click that little question mark at the bottom left of the screen.
@@ -122,6 +135,7 @@
 
 			// Load required scripts.	
 			head.js( "js/libs/fullScreen.js",
+				"js/libs/history.min.js",
 				"js/libs/rawinflate.js",
 				"js/libs/rawdeflate.js",
 				"js/utils.js",
@@ -130,8 +144,8 @@
 	        	function(){
 	            	
 	            	// Initiate ZenPen
-	            	editor.init();
 	    			ui.init();
+	            	editor.init();
 	            }
 	        );
         </script>

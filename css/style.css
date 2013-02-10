@@ -143,7 +143,6 @@ blockquote {
 article a {
 	text-decoration: none;
 	color: deepskyblue;
-	cursor: pointer;
 }
 
 article a:hover {
@@ -163,6 +162,59 @@ article a:hover {
 .quote {
 	line-height: 60px !important;
 	font-size: 49px !important;
+}
+
+.edit-mode .viewing, .view-mode .editing {
+	display: none;
+}
+
+.view-mode button {
+	opacity: 0.3;
+}
+
+.view-mode button:hover {
+	opacity: 0.8;
+}
+
+label {
+
+	-webkit-transition: all 400ms;
+	-moz-transition: all 400ms;
+	-ms-transition: all 400ms;
+	-o-transition: all 400ms;
+	transition: all 400ms;
+
+	background-color: rgba(0,0,0,0.8);
+	text-transform: uppercase;
+	font-family: helvetica;
+	position: absolute;
+	border-radius: 3px;
+	margin-top: -30px;
+	margin-left: 27px;
+	font-size: 10px;
+	height: 28px;
+	padding: 8px;
+	color: #fff;
+	opacity: 0;
+}
+
+label:before {
+	content: "";
+	border-right: 6px solid rgba(0,0,0,0.8);
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid transparent;
+	border-top: 6px solid transparent;
+	position: absolute;
+	display: block;
+	height: 0px;
+	left: -12px;
+	width: 0px;
+	top: 8px;
+}
+
+.view-mode label:hover, .view-mode label:active, .view-mode button:hover+label {
+    opacity: 0.8;
+    margin-left: 30px;
 }
 
 /*********************************************
@@ -314,7 +366,7 @@ article a:hover {
 	width: 0px;
 	overflow: hidden;
 	margin-right: 0px;
-	opacity: 0px;
+	opacity: 0;
 }
 
 .options .italic {
@@ -396,6 +448,10 @@ article a:hover {
 
 .yang .options:before {
 	border-top: 5px solid rgba(255,255,255,0.9);
+}
+
+.url {
+	-webkit-font-smoothing: antialiased;
 }
 
 .top {
