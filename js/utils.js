@@ -33,5 +33,5 @@ function getURLParameter(name) {
 }
 
 function isCleanSlate() {
-	return ( getURLParameter( 'h' ) === null );
+	return ( getURLParameter( 'h' ) === null && window.location.hash === '' );
 }
