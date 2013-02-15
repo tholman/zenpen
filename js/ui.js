@@ -1,14 +1,13 @@
 var ui = (function() {
 
 	// Base elements
-	var body, article, uiContainer, overlay, shareText, shareBox, aboutButton;
+	var body, article, uiContainer, overlay, aboutButton, descriptionModal;
 
 	// Buttons
-	var screenSizeElement, colorLayoutElement, shareElement, targetElement, newButton, editButton;
+	var screenSizeElement, colorLayoutElement, targetElement;
 
 	// Work Counter
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
-
 
 	var expandScreenIcon = '&#xe006;';
 	var shrinkScreenIcon = '&#xe005;';
@@ -21,7 +20,7 @@ var ui = (function() {
 
 		wordCountActive = false;
 
-		if ( supportsHtmlStorage() && isCleanSlate() ) {
+		if ( supportsHtmlStorage() ) {
 			loadState();
 		}
 
@@ -82,16 +81,9 @@ var ui = (function() {
 			}
 		}, false);
 
-		// UI elements for save/share
-		shareElement = document.querySelector( '.link' );
-		shareElement.onclick = onShareClick;
-
 		// Overlay when modals are active
 		overlay = document.querySelector( '.overlay' );
 		overlay.onclick = onOverlayClick;
-
-		shareText = overlay.querySelector( 'input' );
-		shareBox = overlay.querySelector( '.share' );
 
 		article = document.querySelector( '.content' );
 		article.onkeyup = onArticleKeyUp;
@@ -101,6 +93,8 @@ var ui = (function() {
 		wordCountElement.onchange = onWordCountChange;
 		wordCountElement.onkeyup = onWordCountKeyUp;
 
+		descriptionModal = overlay.querySelector( '.description' );
+
 		wordCounter = document.querySelector( '.word-counter' );
 		wordCounterProgress = wordCounter.querySelector( '.progress' );
 
@@ -109,23 +103,6 @@ var ui = (function() {
 
 		header = document.querySelector( '.header' );
 		header.onkeypress = onHeaderKeyPress;
-
-		newButton = document.querySelector( '.new' );
-		newButton.onclick = onNewButtonClick;
-
-		editButton = document.querySelector( '.edit' );
-		editButton.onclick = onEditButtonClick;
-	}
-
-	function onNewButtonClick( event ) {
-		editor.setEditMode( true );
-		editor.toggleEventBindings( true );
-		editor.resetContent();
-	}
-
-	function onEditButtonClick( event ) {
-		editor.toggleEventBindings( true )
-		editor.setEditMode( true );
 	}
 
 	function onScreenSizeClick( event ) {
@@ -165,9 +142,11 @@ var ui = (function() {
 	}
 
 	function onAboutButtonClick( event ) {
-		window.open( 'http://www.zenpen.io/index.html?h=4+IEgpCMzGIFIIpKzQtIzQMA&c=hVQ9b9swEJ3rX3Hw0C62haJDUccR2qFtvHXw1I2SzhYbkqcej3aUX9+jJAdBYKieBPH47n3Ji8U7/e268sGuYP/Bvw9V7O52ttwZaBmP98tWpNsWhbTkvAmbmnyxhCi9w/tlnTgSb6EjGwT5blkerIeHYXJXmHJX2HJEXMNvDL8wgI1gwFkRh3BBfMTQQMf0B2tZgRDEmo3UrQ4d8QJWHzHCHlpz1nkrLXhqkAMIPglgY4U4buCbonhihM6w2Do5w66HE4rYcAIlRyCtEbiwHd48U8DNruhKVb4X8OZRt0yHEdDEfuDSGsYVGAXHs3LX9xY5n9SMRl4hRFBfOoeCrp8sfO1fVANPSj5Vg3+Tl8Uzhg7DjJuaA+kEREpcI1CAnyNKNjYbPO76gejgyIgDNQrCtkqizGOqvBWokooiBsa/CaOos0YSY7zyP7QIKaoyfOqQLQbd1ZoIFebAQuwsYwNVD+aGNpXmuSEapU1RxqIV78Z45uqiAjXmqxqYM61ydCo+fvr8Za22raes1rkN8/g1kbu9IDNXisn/r9SKorqapLpekHIpRH2z6rdWWqt3ZPKwVyii8NKMI/SUxvaa0MPgv9Ubq5yHznoMWp48U5ugISTjxuLqB6AtaYCO4BHO9q313lgntBXrSdp+c9mMnfp6ygdZ0Lye73lsgpwkEd9OV/Sz03tjcy/jmnnww3jjCjyYsch/NP8A' );
+		overlay.style.display = "block";
+		descriptionModal.style.display = "block";
 	}
 
+	/* Allows the user to press enter to tab from the title */
 	function onHeaderKeyPress( event ) {
 
 		if ( event.keyCode === 13 ) {
@@ -176,6 +155,7 @@ var ui = (function() {
 		}
 	}
 
+	/* Allows the user to press enter to tab from the word count modal */
 	function onWordCountKeyUp( event ) {
 		
 		if ( event.keyCode === 13 ) {
@@ -238,33 +218,12 @@ var ui = (function() {
 
 	function removeOverlay() {
 		overlay.style.display = "none";
-		shareBox.style.display = "none";
 		wordCountBox.style.display = "none";
-	}
-
-	function onShareClick() {
-
-		shareText.value = window.location.href.split('?')[0] + editor.deflate();
-		overlay.style.display = "block";
-		shareBox.style.display = "block";
-		shareText.focus();
-		shareText.select();
-	}
-
-	function setEditMode( value ) {
-
-		// Turn edit mode on
-		if ( value ) {
-			uiContainer.className = 'ui edit-mode';
-		// Turn edit mode off
-		} else {
-			uiContainer.className = 'ui view-mode';
-		}
+		descriptionModal.style.display = "none";
 	}
 
 	return {
-		init: init,
-		setEditMode: setEditMode
+		init: init
 	}
 
 })();

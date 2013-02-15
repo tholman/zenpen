@@ -23,17 +23,16 @@
 	<body class="yin">
 
 		<div class="overlay">
-			<div class="share modal">
-				<h1>Save + Share URL</h1>
-				<div class="editable">
-					<input type="text" onclick="javascript:select();"></input>
-				</div>
-			</div>
 			<div class="wordcount modal">
 				<h1>Target Word Count</h1>
-				<div class="editable">
+				<div>
 					<input type="number" name="quantity" value="0" min="0"></input>
 				</div>
+			</div>
+
+			<div class="description modal">
+				<h1> About ZenPen </h1>
+				<p>  Zenpen is a minimalist writing zone by <a href="http://tholman.com">Tim Holman</a> (<a href="http://twitter.com/twholman">@twholman</a>), to get you into that zone, where you can focus on the writing - with none of the distractions. ZenPen is open source on <a href="http://github.com/tholman/zenpen">Github</a> (with many improvements on the way!). If you have any questions, hit me up via <a href="mailto:timothy.w.holman@gmail.com">email</a> - ooh, you can follow me on twitter for updates too: <a href="http://twitter.com/twholman">@twholman</a> </p>
 			</div>
 		</div>
 
@@ -51,20 +50,9 @@
 			</div>
 		</div>
 
-		<div class="ui view-mode">
+		<div class="ui">
 
 			<div class="wrapper">
-
-				<div class="top viewing">
-					<button id="new" class="new useicons">
-						&#xe007;
-					</button>
-					<label for="new"> New </label>
-					<button id="edit" class="edit useicons">
-						&#xf0ad;
-					</button>
-					<label for="edit"> Edit </label>
-				</div>
 
 				<div class="top editing">
 					<button class="fullscreen useicons">
@@ -77,10 +65,6 @@
 
 					<button class="target useicons">
 						&#xe002;
-					</button>
-
-					<button class="link useicons">
-						&#xe001;
 					</button>
 				</div>
 
@@ -98,18 +82,20 @@
 
 		<section>
 			
-			<header contenteditable="false" class="header">
+			<header contenteditable="true" class="header">
 				This is ZenPen
 			</header>
 
-			<article contenteditable="false" class="content">
+			<article contenteditable="true" class="content">
 
 				<p>
 					A minimalist writing zone, where you can block out all distractions and get to what's important. The writing!
 				</p>
+
 				<p>
 					To get started, all you need to do is delete this text (seriously, just highlight it and hit delete), and fill the page with your own fantastic words.
 				</p>
+
 				<p>
 					You can use <b>bold</b>, <i>italics</i>, <b><i>both</i></b> and <a href="http://zenpen.io"> urls </a> just by highlighting the text and selecting them from the tiny options box that appears above it.
 				</p>
@@ -119,11 +105,9 @@
 				</blockquote>
 
 				<p>
-					Then save and share your writings... everything is passed via URL, so none of your information is stored.
+					For <i>questions</i> and <b>open source info</b>, Click that little question mark at the bottom left of the screen.
 				</p>
-				<p>
-					Questions/Comments? Click that little question mark at the bottom left of the screen.
-				</p>
+
 				<p>Happy Typing! ~ <b>Tim Holman (@twholman)</b></p>
 
 			</article>
@@ -135,9 +119,6 @@
 
 			// Load required scripts.	
 			head.js( "js/libs/fullScreen.js",
-				"js/libs/history.min.js",
-				"js/libs/rawinflate.js",
-				"js/libs/rawdeflate.js",
 				"js/utils.js",
 				"js/ui.js",
 				"js/editor.js",

@@ -61,7 +61,7 @@ header {
 
 article {
 	padding-bottom: 50px;
-	line-height: 1.30em;
+	line-height: 30px;
 	min-height: 90%;
 	font-size: 22px;
 	display: block;
@@ -94,7 +94,7 @@ blockquote {
 }
 
 .yin {
-	background: #fafafa;
+	background: #fdfdfd;
 	color: #111;
 }
 
@@ -140,12 +140,12 @@ blockquote {
 	border: 0px;
 }
 
-article a {
+a {
 	text-decoration: none;
 	color: deepskyblue;
 }
 
-article a:hover {
+a:hover {
 	text-decoration: underline;
 }
 
@@ -164,70 +164,17 @@ article a:hover {
 	font-size: 49px !important;
 }
 
-.edit-mode .viewing, .view-mode .editing {
-	display: none;
-}
-
-.view-mode button {
-	opacity: 0.3;
-}
-
-.view-mode button:hover {
-	opacity: 0.8;
-}
-
-label {
-
-	-webkit-transition: all 400ms;
-	-moz-transition: all 400ms;
-	-ms-transition: all 400ms;
-	-o-transition: all 400ms;
-	transition: all 400ms;
-
-	background-color: rgba(0,0,0,0.8);
-	text-transform: uppercase;
-	font-family: helvetica;
-	position: absolute;
-	border-radius: 3px;
-	margin-top: -30px;
-	margin-left: 27px;
-	font-size: 10px;
-	height: 28px;
-	padding: 8px;
-	color: #fff;
-	opacity: 0;
-}
-
-label:before {
-	content: "";
-	border-right: 6px solid rgba(0,0,0,0.8);
-	border-bottom: 6px solid transparent;
-	border-left: 6px solid transparent;
-	border-top: 6px solid transparent;
-	position: absolute;
-	display: block;
-	height: 0px;
-	left: -12px;
-	width: 0px;
-	top: 8px;
-}
-
-.view-mode label:hover, .view-mode label:active, .view-mode button:hover+label {
-    opacity: 0.8;
-    margin-left: 30px;
-}
-
 /*********************************************
  * MODAL
  *********************************************/
 
 .yang .modal {
-	background-color: rgba(255,255,255,0.8);
+	background-color: rgba(255,255,255,0.9);
 	color: #111;
 }
 
 .modal {
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0,0,0,0.9);
 	margin-left: -200px;
 	position: absolute;
 	border-radius: 3px;
@@ -252,18 +199,16 @@ label:before {
 	margin-top: 10px;
 }
 
-.modal input[type="text"] {
-	font-size: 16px;
-	padding: 5px;
-	width: 100%;
-}
-
 .modal input[type="number"] {
 	font-size: 16px;
 	display: block;
 	margin: auto;
 	width: 150px;
 	padding: 5px;
+}
+
+.description {
+	height: 225px;
 }
 
 /*********************************************

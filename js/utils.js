@@ -27,11 +27,3 @@ function get_text(el) {
     }
     return ret.trim();
 }
-
-function getURLParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1])||null;
-}
-
-function isCleanSlate() {
-	return ( getURLParameter( 'h' ) === null && window.location.hash === '' );
-}
