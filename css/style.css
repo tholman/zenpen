@@ -307,7 +307,7 @@ a:hover {
 	margin-left: -137px;
 }
 
-.options.url-mode .bold, .options.url-mode .italic, .options.url-mode .quote {
+.options.url-mode .bold, .options.url-mode .italic, .options.url-mode .quote, .options button {
 	width: 0px;
 	overflow: hidden;
 	margin-right: 0px;
