@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Embeddable ZenPen Testing</title>
+		
+	<link href="css/style.css" rel="stylesheet" type="text/CSS" />
+	<link href="css/fonts.css" rel="stylesheet" type="text/CSS" />
+	
+	<script type="text/JavaScript" src="./js/utils.js"></script>	
+	<script type="text/JavaScript" src="./js/embeddable.js"></script>
+	<script type="text/JavaScript">
+
+		window.onload = function(){
+
+			var editor = new Editor({
+				"content": document.getElementById("zenEditor"),
+				"save": false
+			});
+
+			var newButton = editor.addButton();
+			newButton.innerHTML = "A";
+
+			var newButton = editor.addButton();
+			newButton.innerHTML = "B";
+
+			var newButton = editor.addButton();
+			newButton.innerHTML = "C";
+		};
+
+	</script>
+
+	<style type="text/CSS">
+	body #zenEditor
+	{
+		margin-left:500px;
+		margin-top:50px;
+	}
+	</style>
+</head>
+<body>
+
+	<div id="zenEditor" contenteditable="true">This is some text.</div>
+	<div>Some normal text.</div>
+
+	<div class="text-options">
+		<div class="options">
+			<span class="no-overflow">
+				<span class="lengthen ui-inputs">
+					<button class="url useicons">&#xe001;</button>
+					<input class="url-input" type="text" placeholder="Type or Paste URL here" />
+					<button class="bold">b</button>
+					<button class="italic">i</button>
+					<button class="quote">&rdquo;</button>
+				</span>
+			</span>
+		</div>
+	</div>
+
+</body>
+</html>
