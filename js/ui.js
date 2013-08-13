@@ -107,7 +107,7 @@ var ui = (function() {
 
 	function onScreenSizeClick( event ) {
 
-		if ( document.fullscreenEnabled === false ) {
+		if ( !document.fullscreenElement ) {
 			enterFullscreen();
 		} else {
 			exitFullscreen();
