@@ -110,7 +110,7 @@ var editor = (function() {
 
 				// Show the ui bubble
 				textOptions.className = "text-options active";
-				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+				textOptions.style.top = boundary.top - 5 + "px";
 				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 			}
 		}
