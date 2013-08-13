@@ -19,13 +19,24 @@
 			});
 
 			var newButton = editor.addButton();
-			newButton.innerHTML = "A";
-
-			var newButton = editor.addButton();
-			newButton.innerHTML = "B";
-
-			var newButton = editor.addButton();
 			newButton.innerHTML = "C";
+
+			var colorPicker = document.createElement("input");
+			colorPicker.type = "color";
+			colorPicker.style.position = "absolute";
+			colorPicker.style.visibility = "hidden";
+
+			document.body.appendChild(colorPicker);
+
+			newButton.onclick = function(){
+
+				colorPicker.click();
+			};
+
+			colorPicker.onchange = function(){
+
+				document.execCommand("foreColor", false, this.value);
+			};
 		};
 
 	</script>
