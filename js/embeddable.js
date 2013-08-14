@@ -237,7 +237,7 @@ function Editor(elements){
 
 			oldWidth = optionsBox.style.width;
 			oldMarginLeft = optionsBox.style.marginLeft;
-			optionsBox.style.width = "";
+			optionsBox.style.width = "275px";
 			optionsBox.style.marginLeft = "-137px";
 
 			optionsBox.className = 'options url-mode';
@@ -283,6 +283,8 @@ function Editor(elements){
 	function onUrlInputBlur( event ) {
 
 		optionsBox.className = 'options';
+		optionsBox.style.width = oldWidth;
+		optionsBox.style.marginLeft = oldMarginLeft;
 		applyURL( urlInput.value );
 		urlInput.value = '';
 
@@ -298,6 +300,9 @@ function Editor(elements){
 		document.execCommand( 'unlink', false );
 
 		if (url !== "") {
+			if (url[0].match(/[A-z0-9]/i) && url[0] != "h") {
+				url = "http://" + url;
+			}
 			document.execCommand( 'createLink', false, url );
 		}
 	}

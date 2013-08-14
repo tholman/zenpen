@@ -311,6 +311,9 @@ var editor = (function() {
 		document.execCommand( 'unlink', false );
 
 		if (url !== "") {
+		
+			if(url[0].match(/[A-z0-9]/i) && url[0] != "h") url = "http://" + url;
+
 			document.execCommand( 'createLink', false, url );
 		}
 	}
