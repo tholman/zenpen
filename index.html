@@ -1,105 +1,105 @@
 <!doctype html>
 <html>
-    <head>
-        <!-- MISC/META -->
-        <title>ZenPen ~ Minimal Distraction, Maximim Zen</title>
-        <meta charset="utf-8">
-        <meta name="description" content="Zenpen - A minimal web based text editor, for the modern man.">
-        
-        <!-- CSS -->
-        <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-        <link href="css/style.css" rel="stylesheet">
-        <link href="css/fonts.css" rel="stylesheet">
-        
-        <!-- LIBS -->
-        <script src="js/libs/head.min.js"></script>
-        
-        <!-- JS loading in footer -->
-    </head>
-    
-    <body class="yin">
-
-        <div class="overlay">
-            <div class="wordcount modal">
-                <h1>Target Word Count</h1>
-                <div>
-                    <input type="number" name="quantity" value="0" min="0"></input>
-                </div>
-            </div>
-            <div class="description modal">
-                <h1> About ZenPen </h1>
-                <p>  Zenpen is a minimalist writing zone by <a href="http://tholman.com">Tim Holman</a> (<a href="http://twitter.com/twholman">@twholman</a>), to get you into that zone, where you can focus on the writing - with none of the distractions. ZenPen is open source on <a href="http://github.com/tholman/zenpen">Github</a> (with many improvements on the way!). If you have any questions, hit me up via <a href="mailto:timothy.w.holman@gmail.com">email</a> - ooh, you can follow me on twitter for updates too: <a href="http://twitter.com/twholman">@twholman</a> </p>
-            </div>
-        </div>
-        
-        <div class="text-options">
-            <div class="options">
-                <span class="no-overflow">
-                    <span class="lengthen ui-inputs">
-                        <button class="url useicons">&#xe001;</button>
-                        <input class="url-input" type="text" placeholder="Type or Paste URL here"/>
-                        <button class="bold">b</button>
-                        <button class="italic">i</button>
-                        <button class="quote">&rdquo;</button>
-                    </span>
-                </span>
-            </div>
-        </div>
-
-        <div class="ui">
-            <div class="wrapper">
-                <div class="top editing">
-                    <button class="fullscreen useicons">&#xe006;</button>
-                    <button class="color-flip useicons">&#xe000;</button>
-                    <button class="target useicons">&#xe002;</button>
-                </div>
-
-                <div class="bottom">
-                    <button class="about">?</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="word-counter">
-            <span class="progress"></span>
-        </div>
-
-        <section>
-            
-            <header contenteditable="true" class="header">This is ZenPen</header>
-            
-            <article contenteditable="true" class="content">
-            
-                <p>A minimalist writing zone, where you can block out all distractions and get to what's important. The writing!</p>
-                
-                <p>To get started, all you need to do is delete this text (seriously, just highlight it and hit delete), and fill the page with your own fantastic words.</p>
-                
-                <p>You can use <b>bold</b>, <i>italics</i>, <b><i>both</i></b> and <a href="http://zenpen.io"> urls </a> just by highlighting the text and selecting them from the tiny options box that appears above it.</p>
-                
-                <blockquote>Quotes are easy to add too!</blockquote>
-                
-                <p>For <i>questions</i> and <b>open source info</b>, Click that little question mark at the bottom left of the screen.</p>
-                
-                <p>Happy Typing! ~ <b>Tim Holman (@twholman)</b></p>
-                
-            </article>
-            
-        </section>
-        
-        <!-- JS -->
-        <script type="text/javascript">
-            // Load required scripts.
-            head.js("js/libs/fullScreen.js",
-                "js/utils.js",
-                "js/ui.js",
-                "js/editor.js",
-                function() {
-                    // Initiate ZenPen
-                    editor.init();
-                    ui.init();
-                }
-            );
-        </script>
-        
-    </body>
+	<head>
+		<!-- MISC/META -->
+		<title>ZenPen ~ Minimal Distraction, Maximim Zen</title>
+		<meta charset="utf-8">
+		<meta name="description" content="Zenpen - A minimal web based text editor, for the modern man.">
+		
+		<!-- CSS -->
+		<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/fonts.css" rel="stylesheet">
+		
+		<!-- LIBS -->
+		<script src="js/libs/head.min.js"></script>
+		
+		<!-- JS loading in footer -->
+	</head>
+	
+	<body class="yin">
+	
+		<div class="overlay">
+			<div class="wordcount modal">
+				<h1>Target Word Count</h1>
+				<div>
+					<input type="number" name="quantity" value="0" min="0"></input>
+				</div>
+			</div>
+			<div class="description modal">
+				<h1> About ZenPen </h1>
+				<p>  Zenpen is a minimalist writing zone by <a href="http://tholman.com">Tim Holman</a> (<a href="http://twitter.com/twholman">@twholman</a>), to get you into that zone, where you can focus on the writing - with none of the distractions. ZenPen is open source on <a href="http://github.com/tholman/zenpen">Github</a> (with many improvements on the way!). If you have any questions, hit me up via <a href="mailto:timothy.w.holman@gmail.com">email</a> - ooh, you can follow me on twitter for updates too: <a href="http://twitter.com/twholman">@twholman</a> </p>
+			</div>
+		</div>
+		
+		<div class="text-options">
+			<div class="options">
+				<span class="no-overflow">
+					<span class="lengthen ui-inputs">
+						<button class="url useicons">&#xe001;</button>
+						<input class="url-input" type="text" placeholder="Type or Paste URL here"/>
+						<button class="bold">b</button>
+						<button class="italic">i</button>
+						<button class="quote">&rdquo;</button>
+					</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="ui">
+			<div class="wrapper">
+				<div class="top editing">
+					<button class="fullscreen useicons">&#xe006;</button>
+					<button class="color-flip useicons">&#xe000;</button>
+					<button class="target useicons">&#xe002;</button>
+				</div>
+				
+				<div class="bottom">
+					<button class="about">?</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="word-counter">
+			<span class="progress"></span>
+		</div>
+		
+		<section>
+			
+			<header contenteditable="true" class="header">This is ZenPen</header>
+			
+			<article contenteditable="true" class="content">
+			
+				<p>A minimalist writing zone, where you can block out all distractions and get to what's important. The writing!</p>
+				
+				<p>To get started, all you need to do is delete this text (seriously, just highlight it and hit delete), and fill the page with your own fantastic words.</p>
+				
+				<p>You can use <b>bold</b>, <i>italics</i>, <b><i>both</i></b> and <a href="http://zenpen.io"> urls </a> just by highlighting the text and selecting them from the tiny options box that appears above it.</p>
+				
+				<blockquote>Quotes are easy to add too!</blockquote>
+				
+				<p>For <i>questions</i> and <b>open source info</b>, Click that little question mark at the bottom left of the screen.</p>
+				
+				<p>Happy Typing! ~ <b>Tim Holman (@twholman)</b></p>
+				
+			</article>
+			
+		</section>
+		
+		<!-- JS -->
+		<script type="text/javascript">
+			// Load required scripts.
+			head.js("js/libs/fullScreen.js",
+				"js/utils.js",
+				"js/ui.js",
+				"js/editor.js",
+				function() {
+					// Initiate ZenPen
+					editor.init();
+					ui.init();
+				}
+			);
+		</script>
+		
+	</body>
 </html>
