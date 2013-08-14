@@ -104,13 +104,11 @@ var editor = (function() {
 
 		// Check selections exist
 		if ( selection.isCollapsed === true && lastType === false ) {
-
 			onSelectorBlur();
 		}
 
 		// Text is selected
 		if ( selection.isCollapsed === false ) {
-
 			currentNodeList = findNodes( selection.focusNode );
 
 			// Find if highlighting is in the editable area
@@ -161,7 +159,7 @@ var editor = (function() {
 			quoteButton.className = "quote"
 		}
 
-		if ( hasNode( currentNodeList, 'A') ) {
+		if ( hasNode( currentNodeList, 'A') || optionsBox.className == 'options url-mode') {
 			urlButton.className = "url useicons active"
 		} else {
 			urlButton.className = "url useicons"
@@ -269,7 +267,6 @@ var editor = (function() {
 	}
 
 	function onUrlInputKeyDown( event ) {
-
 		if ( event.keyCode === 13 ) {
 			event.preventDefault();
 			applyURL( urlInput.value );
