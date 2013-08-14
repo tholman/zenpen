@@ -76,7 +76,6 @@ var editor = (function() {
 	}
 
 	function bindElements() {
-
 		headerField = document.querySelector( '.header' );
 		contentField = document.querySelector( '.content' );
 		textOptions = document.querySelector( '.text-options' );
@@ -234,14 +233,15 @@ var editor = (function() {
 
 	function onBoldClick() {
 		document.execCommand( 'bold', false );
+		updateBubblePosition();
 	}
 
 	function onItalicClick() {
 		document.execCommand( 'italic', false );
+		updateBubblePosition();
 	}
 
 	function onQuoteClick() {
-
 		var nodeNames = findNodes( window.getSelection().focusNode );
 
 		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
@@ -249,6 +249,8 @@ var editor = (function() {
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
+		
+		updateBubblePosition();
 	}
 
 	function onUrlClick() {
@@ -259,7 +261,6 @@ var editor = (function() {
 
 			// Set timeout here to debounce the focus action
 			setTimeout( function() {
-
 				var nodeNames = findNodes( window.getSelection().focusNode );
 
 				if ( hasNode( nodeNames , "A" ) ) {
@@ -275,7 +276,7 @@ var editor = (function() {
 				lastType = false;
 
 				urlInput.focus();
-
+				updateBubblePosition();
 			}, 10)
 
 		} else {
@@ -304,7 +305,6 @@ var editor = (function() {
 	}
 
 	function applyURL( url ) {
-
 		rehighlightLastSelection();
 
 		// Unlink any current links
@@ -316,6 +316,8 @@ var editor = (function() {
 
 			document.execCommand( 'createLink', false, url );
 		}
+		
+		updateBubblePosition();
 	}
 
 	function rehighlightLastSelection() {
