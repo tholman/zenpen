@@ -4,8 +4,9 @@
 	<meta charset="UTF-8">
 	<title>Embeddable ZenPen Testing</title>
 		
-	<link href="css/style.css" rel="stylesheet" type="text/CSS" />
-	<link href="css/fonts.css" rel="stylesheet" type="text/CSS" />
+	<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/fonts.css" rel="stylesheet">
 	
 	<script type="text/JavaScript" src="./src/utils.js"></script>	
 	<script type="text/JavaScript" src="./js/embeddable.js"></script>
@@ -42,10 +43,22 @@
 	</script>
 
 	<style type="text/CSS">
-	body #zenEditor
-	{
-		margin-left:500px;
-		margin-top:50px;
+	body {
+		background: rgba(51, 51, 51, 0.2);
+	}
+	body #zenEditor {
+		background-color: white;
+		margin: 40px;
+		border-radius: 3px;
+		min-height: 240px;
+		padding: 5px 20px;
+		font-family: 'Lora', serif;
+		color: rgb(17, 17, 17);
+		font-size: 22px;
+	}
+	
+	body blockquote {
+		margin-left: -20px;
 	}
 	</style>
 </head>

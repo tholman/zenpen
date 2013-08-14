@@ -106,19 +106,26 @@ function Editor(elements){
 			// Find if highlighting is in the editable area
 			if ( hasParent(selection.focusNode, contentField) ) {
 
-				var range = selection.getRangeAt(0);
-				var boundary = range.getBoundingClientRect();
 
 				updateBubbleStates();
 
 				// Show the ui bubble
-				textOptions.className = "text-options active";
-				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+				updateBubblePosition();
 			}
 		}
 
 		lastType = selection.isCollapsed;
+	}
+	
+	function updateBubblePosition() {
+		var selection = window.getSelection();
+		var range = selection.getRangeAt(0);
+		var boundary = range.getBoundingClientRect();
+
+
+		textOptions.className = "text-options active";
+		textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+		textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 	}
 
 	function updateBubbleStates() {
@@ -212,14 +219,15 @@ function Editor(elements){
 
 	function onBoldClick() {
 		document.execCommand( 'bold', false );
+		updateBubblePosition();	
 	}
 
 	function onItalicClick() {
 		document.execCommand( 'italic', false );
+		updateBubblePosition();
 	}
 
 	function onQuoteClick() {
-
 		var nodeNames = findNodes( window.getSelection().focusNode );
 
 		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
@@ -227,6 +235,8 @@ function Editor(elements){
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
+		
+		updateBubblePosition();
 	}
 
 	var oldWidth, oldMarginLeft;
@@ -260,7 +270,7 @@ function Editor(elements){
 				lastType = false;
 
 				urlInput.focus();
-
+				updateBubblePosition();
 			}, 10)
 
 		} else {
@@ -293,7 +303,6 @@ function Editor(elements){
 	}
 
 	function applyURL( url ) {
-
 		rehighlightLastSelection();
 
 		// Unlink any current links
@@ -305,6 +314,8 @@ function Editor(elements){
 			}
 			document.execCommand( 'createLink', false, url );
 		}
+		
+		updateBubblePosition();
 	}
 
 	function rehighlightLastSelection() {
