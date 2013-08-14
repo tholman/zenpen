@@ -79,6 +79,7 @@ blockquote {
 	display: block;
 	height: 100%;
 	width: 100%;
+	margin: 5px;
 }
 
 /* Used by the ui bubble to stop wrapping */
@@ -291,8 +292,7 @@ a:hover {
 	margin-left: -63px;
 	margin-top: -46px;
 	z-index: 1000;
-	padding: 5px 4px 5px 5px;
-	width: 125px;
+	width: 137px;
 	height: 40px;
 
 	-webkit-transition: all 300ms ease-in-out;
@@ -330,15 +330,15 @@ a:hover {
 	opacity: 0.7;
 	height: 30px;
 	border-radius: 3px;
-	margin-right: 1px;
 	font-family: 'Lora', serif;
+	margin-right: 5px;
 }
 
 .options.url-mode input{
 	border-left: 2px solid transparent;
 	padding-right: 5px;
 	padding-left: 5px;
-	width: 236px;
+	width: 232px;
 }
 
 .options input {

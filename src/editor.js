@@ -1,14 +1,13 @@
 var editor = (function() {
-
+	'use strict';
 	// Editor elements
-	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
+	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection, lastRange, lastSelection;
 
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
 
 	function init() {
-
 		lastRange = 0;
 		bindElements();
 
@@ -28,10 +27,8 @@ var editor = (function() {
 	}
 
 	function createEventBindings( on ) {
-
 		// Key up bindings
-		if ( supportsHtmlStorage() ) {
-
+		if (supportsHtmlStorage()) {
 			document.onkeyup = function( event ) {
 				checkTextHighlighting( event );
 				saveState();
@@ -44,7 +41,6 @@ var editor = (function() {
 		// Mouse bindings
 		document.onmousedown = checkTextHighlighting;
 		document.onmouseup = function( event ) {
-
 			setTimeout( function() {
 				checkTextHighlighting( event );
 			}, 1);
@@ -60,13 +56,11 @@ var editor = (function() {
 		// http://ejohn.org/blog/learning-from-twitter
 		var scrollEnabled = true;
 		document.body.addEventListener( 'scroll', function() {
-			
 			if ( !scrollEnabled ) {
 				return;
 			}
 			
-			scrollEnabled = true;
-			
+			scrollEnabled = true;			
 			updateBubblePosition();
 			
 			return setTimeout((function() {
@@ -100,13 +94,9 @@ var editor = (function() {
 	}
 
 	function checkTextHighlighting( event ) {
-
 		var selection = window.getSelection();
 
-		if ( (event.target.className === "url-input" ||
-		     event.target.classList.contains( "url" ) ||
-		     event.target.parentNode.classList.contains( "ui-inputs")) ) {
-
+		if ((event.target.className === "url-input" || event.target.classList.contains( "url" ) || event.target.parentNode.classList.contains( "ui-inputs"))) {
 			currentNodeList = findNodes( selection.focusNode );
 			updateBubbleStates();
 			return;
@@ -144,7 +134,7 @@ var editor = (function() {
 		var boundary = range.getBoundingClientRect();
 		
 		textOptions.style.top = boundary.top - 5 + window.pageYOffset + "px";
-		textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
+		textOptions.style.left = (boundary.left + boundary.right)/2 - 5 + "px";
 	}
 
 	function updateBubbleStates() {
@@ -179,12 +169,10 @@ var editor = (function() {
 	}
 
 	function onSelectorBlur() {
-
 		textOptions.className = "text-options fade";
+		
 		setTimeout( function() {
-
 			if (textOptions.className == "text-options fade") {
-
 				textOptions.className = "text-options";
 				textOptions.style.top = '-999px';
 				textOptions.style.left = '-999px';
@@ -254,33 +242,28 @@ var editor = (function() {
 	}
 
 	function onUrlClick() {
-
 		if ( optionsBox.className == 'options' ) {
-
 			optionsBox.className = 'options url-mode';
+			var nodeNames = findNodes( window.getSelection().focusNode );
+			
+			if ( hasNode( nodeNames , "A" ) ) {
+				urlInput.value = nodeNames.url;
+			} else {
+				// Symbolize text turning into a link, which is temporary, and will never be seen.
+				document.execCommand( 'createLink', false, '/' );
+			}
+			
+			// Since typing in the input box kills the highlighted text we need
+			// to save this selection, to add the url link if it is provided.
+			lastSelection = window.getSelection().getRangeAt(0);
+			lastType = false;
 
-			// Set timeout here to debounce the focus action
-			setTimeout( function() {
-				var nodeNames = findNodes( window.getSelection().focusNode );
-
-				if ( hasNode( nodeNames , "A" ) ) {
-					urlInput.value = nodeNames.url;
-				} else {
-					// Symbolize text turning into a link, which is temporary, and will never be seen.
-					document.execCommand( 'createLink', false, '/' );
-				}
-
-				// Since typing in the input box kills the highlighted text we need
-				// to save this selection, to add the url link if it is provided.
-				lastSelection = window.getSelection().getRangeAt(0);
-				lastType = false;
-
+			updateBubblePosition();
+			
+			setTimeout(function() {
 				urlInput.focus();
-				updateBubblePosition();
-			}, 10)
-
+			}, 300);
 		} else {
-
 			optionsBox.className = 'options';
 		}
 	}
@@ -321,8 +304,7 @@ var editor = (function() {
 	}
 
 	function rehighlightLastSelection() {
-
-		window.getSelection().addRange( lastSelection );
+		window.getSelection().addRange(lastSelection);
 	}
 
 	function getWordCount() {
