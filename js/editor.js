@@ -311,8 +311,8 @@ var editor = (function() {
 		if (url !== "") {
 		
 			// Insert HTTP if it doesn't exist.
-			if ( url[0].match(/[A-z0-9]/i) && !url[0].match("^(http|https)://") ) {
-
+			if ( !url.match("^(http|https)://") ) {
+				
 				url = "http://" + url;	
 			} 
 
