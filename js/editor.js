@@ -243,7 +243,6 @@ var editor = (function() {
 		var nodeNames = findNodes( window.getSelection().focusNode );
 
 		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
-			// document.execCommand( 'formatBlock', false, 'p' );
 			document.execCommand( 'outdent' );
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
@@ -311,7 +310,11 @@ var editor = (function() {
 
 		if (url !== "") {
 		
-			if(url[0].match(/[A-z0-9]/i) && url[0] != "h") url = "http://" + url;
+			// Insert HTTP if it doesn't exist.
+			if ( url[0].match(/[A-z0-9]/i) && url[0] != "h" ) {
+
+				url = "http://" + url;	
+			} 
 
 			document.execCommand( 'createLink', false, url );
 		}
