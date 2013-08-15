@@ -275,7 +275,7 @@ var editor = (function() {
 
 				urlInput.focus();
 
-			}, 10);
+			}, 100);
 
 		} else {
 
