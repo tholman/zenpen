@@ -2,7 +2,7 @@
 
 Zenpen (http://zenpen.io) is a web app for writing minimally, and getting into the Zone.
 
-All information is persistant locally, using HTML5 local storage.
+All information is persistent locally, using HTML5 local storage.
 
 ##ZenPen's minimal interface
 ![ZenPen](http://i.imgur.com/gHLGRDR.png)
