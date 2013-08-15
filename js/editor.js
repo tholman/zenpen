@@ -49,6 +49,30 @@ var editor = (function() {
 				checkTextHighlighting( event );
 			}, 1);
 		};
+		
+		// Window bindings
+		window.addEventListener( 'resize', function( event ) {
+			updateBubblePosition();
+		});
+
+		// Scroll bindings. We limit the events, to free the ui
+		// thread and prevent stuttering. See:
+		// http://ejohn.org/blog/learning-from-twitter
+		var scrollEnabled = true;
+		document.body.addEventListener( 'scroll', function() {
+			
+			if ( !scrollEnabled ) {
+				return;
+			}
+			
+			scrollEnabled = true;
+			
+			updateBubblePosition();
+			
+			return setTimeout((function() {
+				scrollEnabled = true;
+			}), 250);
+		});
 	}
 
 	function bindElements() {
@@ -102,20 +126,24 @@ var editor = (function() {
 
 			// Find if highlighting is in the editable area
 			if ( hasNode( currentNodeList, "ARTICLE") ) {
-
-				var range = selection.getRangeAt(0);
-				var boundary = range.getBoundingClientRect();
-
 				updateBubbleStates();
+				updateBubblePosition();
 
 				// Show the ui bubble
 				textOptions.className = "text-options active";
-				textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
-				textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 			}
 		}
 
 		lastType = selection.isCollapsed;
+	}
+	
+	function updateBubblePosition() {
+		var selection = window.getSelection();
+		var range = selection.getRangeAt(0);
+		var boundary = range.getBoundingClientRect();
+		
+		textOptions.style.top = boundary.top - 5 + window.pageYOffset + "px";
+		textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 	}
 
 	function updateBubbleStates() {
