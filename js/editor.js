@@ -243,6 +243,7 @@ var editor = (function() {
 		var nodeNames = findNodes( window.getSelection().focusNode );
 
 		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
+			document.execCommand( 'formatBlock', false, 'p' );
 			document.execCommand( 'outdent' );
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
@@ -312,7 +313,7 @@ var editor = (function() {
 		
 			// Insert HTTP if it doesn't exist.
 			if ( !url.match("^(http|https)://") ) {
-				
+
 				url = "http://" + url;	
 			} 
 
