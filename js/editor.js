@@ -243,7 +243,8 @@ var editor = (function() {
 		var nodeNames = findNodes( window.getSelection().focusNode );
 
 		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
-			document.execCommand( 'formatBlock', false, 'p' );
+			// document.execCommand( 'formatBlock', false, 'p' );
+			document.execCommand( 'outdent' );
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
@@ -274,7 +275,7 @@ var editor = (function() {
 
 				urlInput.focus();
 
-			}, 10)
+			}, 10);
 
 		} else {
 
