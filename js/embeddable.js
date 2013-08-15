@@ -53,6 +53,30 @@ function Editor(elements){
 				checkTextHighlighting( event );
 			}, 1);
 		};
+		
+		// Window bindings
+		window.addEventListener( 'resize', function( event ) {
+			updateBubblePosition();
+		});
+
+		// Scroll bindings. We limit the events, to free the ui
+		// thread and prevent stuttering. See:
+		// http://ejohn.org/blog/learning-from-twitter
+		var scrollEnabled = true;
+		document.body.addEventListener( 'scroll', function() {
+			
+			if ( !scrollEnabled ) {
+				return;
+			}
+			
+			scrollEnabled = true;
+			
+			updateBubblePosition();
+			
+			return setTimeout((function() {
+				scrollEnabled = true;
+			}), 250);
+		});
 	}
 
 	function bindElements() {
@@ -80,41 +104,34 @@ function Editor(elements){
 	}
 
 	function checkTextHighlighting( event ) {
-
-		var selection = window.getSelection();
-
-		if ( (event.target.className === "url-input" ||
-		     event.target.classList.contains( "url" ) ||
-		     event.target.parentNode.classList.contains( "ui-inputs")) ) {
-
-			currentNodeList = findNodes( selection.focusNode );
-			updateBubbleStates();
-			return;
-		}
-
-		// Check selections exist
-		if ( ( selection.isCollapsed === true || !hasParent(selection.focusNode, contentField) ) && lastType === false ) {
-
-			onSelectorBlur();
-		}
-
-		// Text is selected
-		if ( selection.isCollapsed === false ) {
-
-			currentNodeList = findNodes( selection.focusNode );
-
-			// Find if highlighting is in the editable area
-			if ( hasParent(selection.focusNode, contentField) ) {
-
-
-				updateBubbleStates();
-
-				// Show the ui bubble
-				updateBubblePosition();
+		// var selection = JSON.parse(JSON.stringify(window.getSelection()));
+		var selection = {type: window.getSelection().type, focusOffset: window.getSelection().focusOffset, baseOffset: window.getSelection().baseOffset};
+		currentNodeList = findNodes( window.getSelection().focusNode );
+		
+		if (selection && selection.type == 'Range' && parseInt(selection.focusOffset - selection.baseOffset, 10) !== 0 && JSON.stringify(selection) !== JSON.stringify(oldSelection)) {
+			var tmpSel = window.getSelection();
+			
+			// Text is selected
+			if ( tmpSel.isCollapsed === false ) {
+				// Find if highlighting is in the editable area
+				if ( hasNode( currentNodeList, "ARTICLE") ) {
+					// Show the ui bubble
+					textOptions.className = "text-options active";
+				}
+			}
+		} else {
+			if (event.target.className === '') {
+				onSelectorBlur();
+				console.log('closing');
 			}
 		}
-
-		lastType = selection.isCollapsed;
+		
+		oldSelection = selection;
+		selection = tmpSel;
+		updateBubbleStates();
+		updateBubblePosition();
+		
+		return;
 	}
 	
 	function updateBubblePosition() {
@@ -122,9 +139,11 @@ function Editor(elements){
 		var range = selection.getRangeAt(0);
 		var boundary = range.getBoundingClientRect();
 
-
 		textOptions.className = "text-options active";
-		textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+		// textOptions.style.top = boundary.top - 5 + document.body.scrollTop + "px";
+
+		
+		textOptions.style.top = boundary.top - 5 + window.pageYOffset + "px";
 		textOptions.style.left = (boundary.left + boundary.right)/2 + "px";
 	}
 
@@ -231,7 +250,7 @@ function Editor(elements){
 		var nodeNames = findNodes( window.getSelection().focusNode );
 
 		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
-			document.execCommand( 'formatBlock', false, 'p' );
+			document.execCommand( 'outdent' );
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
@@ -271,7 +290,7 @@ function Editor(elements){
 
 				urlInput.focus();
 				updateBubblePosition();
-			}, 10)
+			}, 100)
 
 		} else {
 
@@ -309,9 +328,11 @@ function Editor(elements){
 		document.execCommand( 'unlink', false );
 
 		if (url !== "") {
-			if (url[0].match(/[A-z0-9]/i) && url[0] != "h") {
-				url = "http://" + url;
-			}
+			// Insert HTTP if it doesn't exist.
+			if ( !url.match("^(http|https)://") ) {
+				url = "http://" + url;	
+			} 
+			
 			document.execCommand( 'createLink', false, url );
 		}
 		

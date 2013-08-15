@@ -1,7 +1,7 @@
 var editor = (function() {
 	'use strict';
 	// Editor elements
-	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection, lastRange, lastSelection;
+	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection, lastRange, lastSelection, oldSelection;
 
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
@@ -94,36 +94,35 @@ var editor = (function() {
 	}
 
 	function checkTextHighlighting( event ) {
-		var selection = window.getSelection();
-
-		if ((event.target.className === "url-input" || event.target.classList.contains( "url" ) || event.target.parentNode.classList.contains( "ui-inputs"))) {
-			currentNodeList = findNodes( selection.focusNode );
-			updateBubbleStates();
-			return;
-		}
-
-		// Check selections exist
-		if ( selection.isCollapsed === true && lastType === false ) {
-			onSelectorBlur();
-		}
-
-		// Text is selected
-		if ( selection.isCollapsed === false ) {
-			currentNodeList = findNodes( selection.focusNode );
-
-			// Find if highlighting is in the editable area
-			if ( hasNode( currentNodeList, "ARTICLE") ) {
-				updateBubbleStates();
-				updateBubblePosition();
-
-				// Show the ui bubble
-				textOptions.className = "text-options active";
-				
-				updateBubblePosition()
+		// var selection = JSON.parse(JSON.stringify(window.getSelection()));
+		var selection = {type: window.getSelection().type, focusOffset: window.getSelection().focusOffset, baseOffset: window.getSelection().baseOffset};
+		currentNodeList = findNodes( window.getSelection().focusNode );
+		
+		if (selection && selection.type == 'Range' && parseInt(selection.focusOffset - selection.baseOffset, 10) !== 0 && JSON.stringify(selection) !== JSON.stringify(oldSelection)) {
+			var tmpSel = window.getSelection();
+			
+			// Text is selected
+			if ( tmpSel.isCollapsed === false ) {
+				// Find if highlighting is in the editable area
+				if ( hasNode( currentNodeList, "ARTICLE") ) {
+					// Show the ui bubble
+					textOptions.className = "text-options active";
+				}
+			}
+		} else {
+			console.log(event.target.className, textOptions.className, textOptions.className.indexOf('active'));
+			if (event.target.className === '' && textOptions.className.indexOf('active') > -1) {
+				onSelectorBlur();
+				console.log('close');
 			}
 		}
-
-		lastType = selection.isCollapsed;
+		
+		oldSelection = selection;
+		selection = tmpSel;
+		updateBubbleStates();
+		updateBubblePosition();
+		
+		return;
 	}
 	
 	function updateBubblePosition() {
@@ -131,8 +130,13 @@ var editor = (function() {
 		var range = selection.getRangeAt(0);
 		var boundary = range.getBoundingClientRect();
 		
-		textOptions.style.top = boundary.top - 5 + window.pageYOffset + "px";
-		textOptions.style.left = (boundary.left + boundary.right)/2 - 5 + "px";
+		var newTop = parseFloat(boundary.top - 5 + window.pageYOffset);
+		var newLft = parseFloat((boundary.left + boundary.right)/2 - 5);
+		
+		if (newTop >= 0 && newLft >= 0) {
+			textOptions.style.top = boundary.top - 5 + window.pageYOffset + "px";
+			textOptions.style.left = (boundary.left + boundary.right)/2 - 5 + "px";
+		}
 	}
 
 	function updateBubbleStates() {
@@ -168,6 +172,8 @@ var editor = (function() {
 
 	function onSelectorBlur() {
 		textOptions.className = "text-options fade";
+		/*
+		textOptions.className = "text-options fade";
 		
 		setTimeout( function() {
 			if (textOptions.className == "text-options fade") {
@@ -175,7 +181,7 @@ var editor = (function() {
 				textOptions.style.top = '-999px';
 				textOptions.style.left = '-999px';
 			}
-		}, 260 )
+		}, 260 ) */
 	}
 
 	function findNodes( element ) {
@@ -275,7 +281,6 @@ var editor = (function() {
 	}
 
 	function onUrlInputBlur( event ) {
-
 		optionsBox.className = 'options';
 		applyURL( urlInput.value );
 		urlInput.value = '';
