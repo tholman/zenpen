@@ -20,9 +20,7 @@ var ui = (function() {
 
 		wordCountActive = false;
 
-		if ( supportsHtmlStorage() ) {
-			loadState();
-		}
+		loadState();
 
 		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." );
 	}
@@ -51,10 +49,9 @@ var ui = (function() {
 
 	function saveState() {
 
-		if ( supportsHtmlStorage() ) {
-			localStorage[ 'darkLayout' ] = darkLayout;
-			localStorage[ 'wordCount' ] = wordCountElement.value;
-		}
+		localStorage[ 'darkLayout' ] = darkLayout;
+		localStorage[ 'wordCount' ] = wordCountElement.value;
+
 	}
 
 	function bindElements() {
