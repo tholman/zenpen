@@ -14,7 +14,11 @@
 		<link href="css/fonts.css" rel="stylesheet">
 
 		<!-- LIBS -->
-		<script src="js/libs/head.min.js"></script>
+		<!--[if lte IE 9]>
+			<script src="js/libs/head.js"></script> 
+		<![endif]-->
+
+		<script src="js/libs/head.js"></script>  
 		<script src="js/libs/fullScreen.js"></script>
 		
 		<!-- JS loading in footer -->
@@ -117,14 +121,12 @@
 
 		<!-- JS -->
 		<script type="text/javascript">
-
 			// Load required scripts.	
 			head.js( 
 				"js/utils.js",
 				"js/ui.js",
 				"js/editor.js",
 	        	function(){
-	            	
 	            	// Initiate ZenPen
 	            	editor.init();
 	    			ui.init();
