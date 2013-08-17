@@ -97,10 +97,19 @@ var editor = (function() {
 			}
 			
 			if (event.target.tagName.toLowerCase() == 'input') {				
-				event.target.focus();
-				event.target.select();
+				that.focusInput();
 			}
 		});
+	};
+	
+	ToolTip.prototype.blurInput = function() {
+		this.el.querySelector("input").blur();
+		this.editor.content.focus();
+	};
+	
+	ToolTip.prototype.focusInput = function() {
+		this.el.querySelector("input").focus();
+		this.el.querySelector("input").select();
 	};
 	
 	ToolTip.prototype.runAction = function(action) {
@@ -119,14 +128,22 @@ var editor = (function() {
 				}
 				break;
 			case 'link':
+				if (!this.actionStatus(action)) {
+					document.execCommand('createLink', false, '#');
+				}
+				
 				if (this.getMode() === 'buttons') {
+					this.focusInput();
+					
 					this.setMode('url');
 					this.actionOn(action);
 				} else if (this.getMode() === 'url') {
+					this.blurInput();
+					
 					this.setMode('buttons');
 					this.restoreSelection();
 					
-					document.execCommand( 'createLink', false, '' );
+					
 					
 					if (this.el.querySelector('input').value === '') {
 						this.actionOff(action);
@@ -142,19 +159,24 @@ var editor = (function() {
 	};
 	
 	ToolTip.prototype.restoreSelection = function() {
-		window.getSelection().addRange(this.lastSelection);
+		var that = this;
+		
+		setTimeout(function() {
+			console.log('restore', that.lastSelection);
+			
+			window.getSelection().addRange((that.lastSelection));
+		}, 500);
+		
 	};
 	
 	ToolTip.prototype.preserveSelection = function() {
-		this.lastSelection = window.getSelection();
+		this.lastSelection = (window.getSelection().getRangeAt(0));
+		
+		console.log('preserve', this.lastSelection);
 	};
 	
 	ToolTip.prototype.setMode = function(mode) {
 		this.el.setAttribute('data-mode', mode);
-		
-		if (mode == 'url') {
-			this.el.querySelector('input').select();
-		}
 	}
 	
 	ToolTip.prototype.getMode = function() {
@@ -295,16 +317,17 @@ var editor = (function() {
 		window.addEventListener("mouseup", function(event) {
 			setTimeout(function() {
 				if (that.clickIsOnBar(event)) {
-						
-					} else if (that.hasSelection()) {
-						that.selectedText(); 
-					} else {
-						that.bar.close();
-					}
+					
+				} else if (that.hasSelection() && that.clickIsInside(event)) {
+					that.bar.show();
+					that.bar.preserveSelection();
+				} else {
+					that.bar.close();
+				}
 			}, 10);
 		});
 		
-		this.content.addEventListener("keydown", function(event) {
+		document.addEventListener("keydown", function(event) {
 			// TODO: Just close if content is chanegd
 			that.bar.close();
 			that.writeStorage();
@@ -330,11 +353,6 @@ var editor = (function() {
 
 	};
 	
-	ZenPen.prototype.selectedText = function() {
-		this.bar.show();
-		this.bar.preserveSelection();
-	}
-	
 	ZenPen.prototype.clickIsInside = function(event) {
 		return event.target.tagName.toLowerCase() == 'article' || hasParent(event.target, 'article');
 	};
@@ -348,11 +366,11 @@ var editor = (function() {
 	};
 	
 	ZenPen.prototype.focus = function() {
-		var range = document.createRange();
-		var selection = window.getSelection();
-		range.setStart(this.headline, 1);
-		selection.removeAllRanges();
-		selection.addRange(range);
+		if (this.headline) {
+			this.headline.focus();
+		} else {
+			this.content.focus();
+		}
 	}
 	
 	ZenPen.prototype.hasSelection = function() {
