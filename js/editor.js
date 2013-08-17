@@ -1,5 +1,4 @@
 var editor = (function() {
-
 	// Editor elements
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
 
@@ -7,8 +6,7 @@ var editor = (function() {
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
 
-	function init() {
-
+	function init() {	
 		lastRange = 0;
 		bindElements();
 
@@ -21,25 +19,25 @@ var editor = (function() {
 
 		createEventBindings();
 
-		// Load state if storage is supported
-		if ( supportsHtmlStorage() ) {
+		// // Load state if storage is supported
+		// if ( supportsHtmlStorage() ) {
 			loadState();
-		}
+		// }
 	}
 
 	function createEventBindings( on ) {
 
 		// Key up bindings
-		if ( supportsHtmlStorage() ) {
+		// if ( supportsHtmlStorage() ) {
 
 			document.onkeyup = function( event ) {
 				checkTextHighlighting( event );
 				saveState();
 			}
 
-		} else {
-			document.onkeyup = checkTextHighlighting;
-		}
+		// } else {
+			// document.onkeyup = checkTextHighlighting;
+		// }
 
 		// Mouse bindings
 		document.onmousedown = checkTextHighlighting;
@@ -76,7 +74,6 @@ var editor = (function() {
 	}
 
 	function bindElements() {
-
 		headerField = document.querySelector( '.header' );
 		contentField = document.querySelector( '.content' );
 		textOptions = document.querySelector( '.text-options' );
@@ -101,17 +98,32 @@ var editor = (function() {
 	}
 
 	function checkTextHighlighting( event ) {
-
 		var selection = window.getSelection();
-
-		if ( (event.target.className === "url-input" ||
-		     event.target.classList.contains( "url" ) ||
-		     event.target.parentNode.classList.contains( "ui-inputs")) ) {
+		
+		var classList = event.target.classList || event.target.className;  // support for IE9
+		var parentClassList = event.target.parentNode.classList || event.target.parentNode.className;  // support for IE9
+		
+		var hi = classList.contains('hi');
+		
+		var hi2 = parentClassList.contains('hi');
+		
+		
+		if  (event.target.className === "url-input" ||
+		     classList.contains( "url" ) ||
+		     parentClassList.contains( "ui-inputs"))  {
 
 			currentNodeList = findNodes( selection.focusNode );
 			updateBubbleStates();
 			return;
-		}
+		}		
+		// if ( (event.target.className === "url-input" ||
+		     // event.target.classList.contains( "url" ) ||
+		     // event.target.parentNode.classList.contains( "ui-inputs")) ) {
+
+			// currentNodeList = findNodes( selection.focusNode );
+			// updateBubbleStates();
+			// return;
+		// }
 
 		// Check selections exist
 		if ( selection.isCollapsed === true && lastType === false ) {
@@ -220,7 +232,6 @@ var editor = (function() {
 	}
 
 	function loadState() {
-
 		if ( localStorage[ 'header' ] ) {
 			headerField.innerHTML = localStorage[ 'header' ];
 		}
