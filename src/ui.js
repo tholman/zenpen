@@ -15,17 +15,21 @@ var ui = (function() {
 	var darkLayout = false;
 
 	function init() {
-		/* 
 		bindElements();
 
 		wordCountActive = false;
 
-		if ( supportsHtmlStorage() ) {
-			loadState();
-		}
-
-		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." ); */
+		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." ); 
 	}
+
+	function supportsHtmlStorage() {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
 
 	function loadState() {
 
@@ -58,7 +62,6 @@ var ui = (function() {
 	}
 
 	function bindElements() {
-/*
 		// Body element for light/dark styles
 		body = document.body;
 
@@ -103,7 +106,6 @@ var ui = (function() {
 
 		// header = document.querySelector( '.header' );
 		// header.onkeypress = onHeaderKeyPress;
-		*/
 	}
 
 	function onScreenSizeClick( event ) {
@@ -165,8 +167,6 @@ var ui = (function() {
 			setWordCount( parseInt(this.value) );
 
 			removeOverlay();
-
-			article.focus();
 		}
 	}
 
@@ -191,7 +191,6 @@ var ui = (function() {
 	}
 
 	function onArticleKeyUp( event ) {
-
 		if ( wordCountValue > 0 ) {
 			updateWordCount();
 		}

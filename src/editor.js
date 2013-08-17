@@ -1,6 +1,25 @@
 var editor = (function() {
 	'use strict';
 
+	String.prototype.trim = function(){ return this.replace(/^\s+|\s+$/g, ''); };
+	
+	function get_text(el) {
+		var ret = " ";
+		var length = el.childNodes.length;
+		for (var i = 0; i < length; i++) {
+			var node = el.childNodes[i];
+			if (node.nodeType != 8) {
+				if (node.nodeType != 1) {
+					// Strip white space.
+					ret += node.nodeValue;
+				} else {
+					ret += get_text(node);
+				}
+			}
+		}
+		return ret.trim();
+	}
+
 	function hasParent(element, parent) {
 		if (element.tagName.toLowerCase() == 'html') {
 			return false; }
@@ -239,7 +258,7 @@ var editor = (function() {
 	};
 	
 	ZenPen.prototype.countWords = function() {
-		var text = get_text(contentField);
+		var text = get_text(this.content);
 	
 		if (text === "") {
 			return 0;
@@ -270,10 +289,10 @@ var editor = (function() {
 		});
 		
 		this.content.addEventListener("selectionchange", function(e) {
-
+			
 		});
 		
-		this.content.addEventListener("mouseup", function(event) {
+		window.addEventListener("mouseup", function(event) {
 			setTimeout(function() {
 				if (that.clickIsOnBar(event)) {
 						
@@ -492,11 +511,16 @@ var editor = (function() {
 		}
 	} */
 
+	var ZPEditor = null;
+
 	return {
 		init: function(ID) {
-			var ZPEditor = new ZenPen(ID);
+			ZPEditor = new ZenPen(ID);
 			ZPEditor.focus();
 			ZPEditor.checkStorage();
+		},
+		getWordCount: function() {
+			return ZPEditor.countWords();
 		}  /*,
 		saveState: saveState,
 		getWordCount: getWordCount */
