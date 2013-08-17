@@ -27,3 +27,4 @@ function get_text(el) {
 	}
 	return ret.trim();
 }
+

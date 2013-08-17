@@ -1,59 +1,300 @@
 var editor = (function() {
 	'use strict';
-	// Editor elements
-	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection, lastRange, lastSelection, oldSelection;
 
-	// Editor Bubble elements
-	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
-
-
-	function init() {
-		lastRange = 0;
-		bindElements();
-
-		// Set cursor position
-		var range = document.createRange();
-		var selection = window.getSelection();
-		range.setStart(headerField, 1);
-		selection.removeAllRanges();
-		selection.addRange(range);
-
-		createEventBindings();
-
-		// Load state if storage is supported
-		if ( supportsHtmlStorage() ) {
-			loadState();
+	function hasParent(element, parent) {
+		if (element.tagName.toLowerCase() == 'html') {
+			return false; }
+	
+		if (element.parentNode.tagName.toLowerCase() == parent.toLowerCase()) {
+			return true;
+		} else {
+			return hasParent(element.parentNode, parent);
+		}
+	}
+	
+	function hasParentWithID(element, parent) {
+		if (element.tagName.toLowerCase() == 'html') {
+			return false; }
+	
+		if (element.parentNode.id.toLowerCase() == parent.toLowerCase()) {
+			return true;
+		} else {
+			return hasParentWithID(element.parentNode, parent);
+		}
+	}
+	
+	function hasNode(nodeList, name) {
+		return !!nodeList[name];
+	}
+	
+	function findNodes(element) {
+		var nodeNames = {};
+	
+		while (element.parentNode) {
+			nodeNames[element.nodeName] = true;
+			element = element.parentNode;
+	
+			if (element.nodeName === 'A') {
+				nodeNames.url = element.href;
+			}
+		}
+	
+		return nodeNames;
+	}
+	
+	function supportsHtmlStorage() {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
 		}
 	}
 
-	function createEventBindings( on ) {
-		// Key up bindings
-		if (supportsHtmlStorage()) {
-			document.onkeyup = function( event ) {
-				checkTextHighlighting( event );
-				saveState();
-			}
-
-		} else {
-			document.onkeyup = checkTextHighlighting;
-		}
-
-		// Mouse bindings
-		document.onmousedown = checkTextHighlighting;
-		document.onmouseup = function( event ) {
-			setTimeout( function() {
-				checkTextHighlighting( event );
-			}, 1);
-		};
+	//
+	// ToolTip Element
+	//
+	var ToolTip = function(id, editor) {
+		this.id = id;
+		this.el = document.getElementById(this.id);
+		this.timeoutClose = null;
+		this.setMode('buttons');
+		this.isOpen = false;
+		this.url = null;
+		this.linkSelection = null;
+		this.editor = editor;
 		
-		// Window bindings
-		window.addEventListener( 'resize', function( event ) {
-			updateBubblePosition();
+		var that = this;
+		this.el.addEventListener('click', function(event) {
+			event.stopPropagation();
+			event.stopImmediatePropagation();
+			
+			if (event.target.attributes['data-action'] && ['link', 'bold', 'italic', 'quote'].indexOf(event.target.attributes['data-action'].value) > -1) {
+				var action = event.target.attributes['data-action'].value;
+				
+				if (action != 'link') {
+					that.actionToggle(action); }
+				that.runAction(action);
+				that.updatePosition();
+			}
+			
+			if (event.target.tagName.toLowerCase() == 'input') {				
+				event.target.focus();
+				event.target.select();
+			}
 		});
+	};
+	
+	ToolTip.prototype.runAction = function(action) {
+		switch (action) {
+			case 'bold':
+			case 'italic':
+				document.execCommand(action, false);
+				break;
+			case 'quote':
+				var nodeNames = findNodes(window.getSelection().focusNode);
+				
+				if (hasNode(nodeNames, 'BLOCKQUOTE')) {
+					document.execCommand('formatBlock', false, 'p');
+				} else {
+					document.execCommand('formatBlock', false, 'blockquote');
+				}
+				break;
+			case 'link':
+				if (this.getMode() === 'buttons') {
+					this.setMode('url');
+					this.actionOn(action);
+				} else if (this.getMode() === 'url') {
+					this.setMode('buttons');
+					this.restoreSelection();
+					
+					document.execCommand( 'createLink', false, '' );
+					
+					if (this.el.querySelector('input').value === '') {
+						this.actionOff(action);
+					} else {
+						this.actionOn(action);
+					}
+				}
+				
+				break;
+		}
+		
+		this.editor.writeStorage();
+	};
+	
+	ToolTip.prototype.restoreSelection = function() {
+		window.getSelection().addRange(this.lastSelection);
+	};
+	
+	ToolTip.prototype.preserveSelection = function() {
+		this.lastSelection = window.getSelection();
+	};
+	
+	ToolTip.prototype.setMode = function(mode) {
+		this.el.setAttribute('data-mode', mode);
+		
+		if (mode == 'url') {
+			this.el.querySelector('input').select();
+		}
+	}
+	
+	ToolTip.prototype.getMode = function() {
+		return this.el.attributes['data-mode'].value;
+	}
+	
+	ToolTip.prototype.actionToggle = function(action) {
+		if (this.actionStatus(action)) {
+			this.actionOff(action);
+		} else {
+			this.actionOn(action);
+		}
+	}
+	
+	ToolTip.prototype.actionStatus = function(action) {
+		return document.querySelector('button[data-action="' + action + '"]').className === 'active';
+	};
+	
+	ToolTip.prototype.actionOn = function(action) {
+		var item = document.querySelector('button[data-action="' + action + '"]');
+		item.className = 'active';
+	}
+	
+	ToolTip.prototype.actionOff = function(action) {
+		var item = document.querySelector('button[data-action="' + action + '"]');
+		item.className = '';
+	}
+	
+	ToolTip.prototype.updateButtonStates = function() {
+		var currentNodeList = findNodes(window.getSelection().focusNode);
+		var nodeMapping = {b: 'bold', i: 'italic', blockquote: 'quote', a: 'link'};
+		
+		for (var n in nodeMapping) {
+			if (hasNode(currentNodeList, n.toUpperCase())) {
+				this.actionOn(nodeMapping[n]);
+			} else {
+				this.actionOff(nodeMapping[n]);
+			}
+		}	
+	};
+	
+	ToolTip.prototype.show = function() {
+		if (this.timeoutClose) {
+			clearTimeout(this.timeoutClose); }
+		
+		this.el.querySelector('input').value = '';
+		this.updatePosition();
+		this.updateButtonStates();
+		this.el.className = "text-options active";
+		this.isOpen = true;
+	}
+	
+	ToolTip.prototype.close = function() {
+		if (this.timeoutClose) {
+			clearTimeout(this.timeoutClose); }
+		
+		this.setMode('buttons');
+		this.el.className = "text-options fade";
+		
+		var that = this;
+		// Maybe set to display: none?
+		this.timeoutClose = setTimeout(function() {
+			that.el.style.top = "100%";
+			that.el.style.left = "100%";
+		}, 260);
+		
+		this.isOpen = false;
+	}
+	
+	ToolTip.prototype.updatePosition = function() {
+		var selection = window.getSelection();
+		var range = selection.getRangeAt(0);
+		var boundary = range.getBoundingClientRect();
+		
+		var newTop = parseFloat(boundary.top - 5 + window.pageYOffset);
+		var newLft = parseFloat((boundary.left + boundary.right)/2 - 5);
+		
+		if (newTop == -5 && newLft == -5) {
+			return;
+		}
+		
+		this.el.style.top = newTop + "px";
+		this.el.style.left = newLft + "px";
+	}
+	
+	//
+	// ZenPen Editor
+	//
+	var ZenPen = function(id) {
+		this.id = id;
+		this.lastSelection = null;
+		this.downOnOption = false;
+		
+		
+		this.headline = document.getElementById(this.id).querySelector('[data-type="headline"]');
+		this.content  = document.getElementById(this.id).querySelector('[data-type="content"]');
+		
+		this.bar = new ToolTip(this.id + '-bar', this);
+		
+		this.watchForSelection();
+	};
+	
+	ZenPen.prototype.countWords = function() {
+		var text = get_text(contentField);
+	
+		if (text === "") {
+			return 0;
+		}
+		
+		return text.split(/\s+/).length;
+	}
+	
+	ZenPen.prototype.updatePosition = function() {
+		this.bar.updatePosition();
+	};
+	
+	ZenPen.prototype.watchForSelection = function() {
+		var that = this;
+		
+		document.addEventListener("mousedown", function(ev) {
+			if (that.clickIsOnBar(ev)) {
+				ev.preventDefault();
+			}
+		});
+		
+		this.content.addEventListener("selectstart", function(ev) {
+			that.bar.close();
+		});
+		
+		this.headline.addEventListener("selectstart", function(ev) {
+			that.bar.close();
+		});
+		
+		this.content.addEventListener("selectionchange", function(e) {
 
-		// Scroll bindings. We limit the events, to free the ui
-		// thread and prevent stuttering. See:
-		// http://ejohn.org/blog/learning-from-twitter
+		});
+		
+		this.content.addEventListener("mouseup", function(event) {
+			setTimeout(function() {
+				if (that.clickIsOnBar(event)) {
+						
+					} else if (that.hasSelection()) {
+						that.selectedText(); 
+					} else {
+						that.bar.close();
+					}
+			}, 10);
+		});
+		
+		this.content.addEventListener("keydown", function(event) {
+			// TODO: Just close if content is chanegd
+			that.bar.close();
+			that.writeStorage();
+		});
+		
+		window.addEventListener( 'resize', function( event ) {
+			that.bar.updatePosition();
+		});
+		
 		var scrollEnabled = true;
 		document.body.addEventListener( 'scroll', function() {
 			if ( !scrollEnabled ) {
@@ -61,39 +302,85 @@ var editor = (function() {
 			}
 			
 			scrollEnabled = true;			
-			updateBubblePosition();
+			that.bar.updatePosition();
 			
 			return setTimeout((function() {
 				scrollEnabled = true;
 			}), 250);
 		});
+
+	};
+	
+	ZenPen.prototype.selectedText = function() {
+		this.bar.show();
+		this.bar.preserveSelection();
 	}
-
-	function bindElements() {
-		headerField = document.querySelector( '.header' );
-		contentField = document.querySelector( '.content' );
-		textOptions = document.querySelector( '.text-options' );
-
-		optionsBox = textOptions.querySelector( '.options' );
-
-		boldButton = textOptions.querySelector( '.bold' );
-		boldButton.onclick = onBoldClick;
-
-		italicButton = textOptions.querySelector( '.italic' );
-		italicButton.onclick = onItalicClick;
-
-		quoteButton = textOptions.querySelector( '.quote' );
-		quoteButton.onclick = onQuoteClick;
-
-		urlButton = textOptions.querySelector( '.url' );
-		urlButton.onmousedown = onUrlClick;
-
-		urlInput = textOptions.querySelector( '.url-input' );
-		urlInput.onblur = onUrlInputBlur;
-		urlInput.onkeydown = onUrlInputKeyDown;
+	
+	ZenPen.prototype.clickIsInside = function(event) {
+		return event.target.tagName.toLowerCase() == 'article' || hasParent(event.target, 'article');
+	};
+	
+	ZenPen.prototype.clickIsOnBar = function(event) {
+		return event.target.id.toLowerCase() == 'article' || hasParentWithID(event.target, this.bar.id);
 	}
+	
+	ZenPen.prototype.sameSelection = function(selection) {
+		return JSON.stringify(this.lastSelection) === JSON.stringify(selection);
+	};
+	
+	ZenPen.prototype.focus = function() {
+		var range = document.createRange();
+		var selection = window.getSelection();
+		range.setStart(this.headline, 1);
+		selection.removeAllRanges();
+		selection.addRange(range);
+	}
+	
+	ZenPen.prototype.hasSelection = function() {
+		return Math.abs(window.getSelection().focusOffset - window.getSelection().baseOffset) > 0;
+		
+		/* var tempSelection = {
+			type: window.getSelection().type, 
+			focusOffset: window.getSelection().focusOffset, 
+			baseOffset: window.getSelection().baseOffset, 
+			length: Math.abs(window.getSelection().focusOffset - window.getSelection().baseOffset)
+		};
+		
+		return tempSelection.length > 0 && !this.sameSelection(tempSelection); */
+	};
+	
+	ZenPen.prototype.checkStorage = function() {
+		if (!supportsHtmlStorage()) {
+			return; }
 
+		if (localStorage.header) {
+			this.headline.innerHTML = localStorage.header;
+		}
+		
+		if (localStorage.content) {
+			this.content.innerHTML = localStorage.content;
+		}
+	};
+	
+	ZenPen.prototype.writeStorage = function() {
+		if (!supportsHtmlStorage()) {
+			return; }
+		
+		localStorage.header = this.headline.innerHTML;
+		localStorage.content = this.content.innerHTML;
+	}
+		
+	
+
+	//
+	// Old Codes
+	//
+	
+	
+	
+	/*
 	function checkTextHighlighting( event ) {
+		
 		// var selection = JSON.parse(JSON.stringify(window.getSelection()));
 		var selection = {type: window.getSelection().type, focusOffset: window.getSelection().focusOffset, baseOffset: window.getSelection().baseOffset};
 		currentNodeList = findNodes( window.getSelection().focusNode );
@@ -110,140 +397,21 @@ var editor = (function() {
 				}
 			}
 		} else {
-			console.log(event.target.className, textOptions.className, textOptions.className.indexOf('active'));
 			if (event.target.className === '' && textOptions.className.indexOf('active') > -1) {
 				onSelectorBlur();
-				console.log('close');
 			}
 		}
 		
 		oldSelection = selection;
 		selection = tmpSel;
+		
 		updateBubbleStates();
 		updateBubblePosition();
 		
 		return;
 	}
 	
-	function updateBubblePosition() {
-		var selection = window.getSelection();
-		var range = selection.getRangeAt(0);
-		var boundary = range.getBoundingClientRect();
-		
-		var newTop = parseFloat(boundary.top - 5 + window.pageYOffset);
-		var newLft = parseFloat((boundary.left + boundary.right)/2 - 5);
-		
-		if (newTop >= 0 && newLft >= 0) {
-			textOptions.style.top = boundary.top - 5 + window.pageYOffset + "px";
-			textOptions.style.left = (boundary.left + boundary.right)/2 - 5 + "px";
-		}
-	}
 
-	function updateBubbleStates() {
-
-		// It would be possible to use classList here, but I feel that the
-		// browser support isn't quite there, and this functionality doesn't
-		// warrent a shim.
-
-		if ( hasNode( currentNodeList, 'B') ) {
-			boldButton.className = "bold active"
-		} else {
-			boldButton.className = "bold"
-		}
-
-		if ( hasNode( currentNodeList, 'I') ) {
-			italicButton.className = "italic active"
-		} else {
-			italicButton.className = "italic"
-		}
-
-		if ( hasNode( currentNodeList, 'BLOCKQUOTE') ) {
-			quoteButton.className = "quote active"
-		} else {
-			quoteButton.className = "quote"
-		}
-
-		if ( hasNode( currentNodeList, 'A') || optionsBox.className == 'options url-mode') {
-			urlButton.className = "url useicons active"
-		} else {
-			urlButton.className = "url useicons"
-		}
-	}
-
-	function onSelectorBlur() {
-		textOptions.className = "text-options fade";
-		/*
-		textOptions.className = "text-options fade";
-		
-		setTimeout( function() {
-			if (textOptions.className == "text-options fade") {
-				textOptions.className = "text-options";
-				textOptions.style.top = '-999px';
-				textOptions.style.left = '-999px';
-			}
-		}, 260 ) */
-	}
-
-	function findNodes( element ) {
-
-		var nodeNames = {};
-
-		while ( element.parentNode ) {
-
-			nodeNames[element.nodeName] = true;
-			element = element.parentNode;
-
-			if ( element.nodeName === 'A' ) {
-				nodeNames.url = element.href;
-			}
-		}
-
-		return nodeNames;
-	}
-
-	function hasNode( nodeList, name ) {
-
-		return !!nodeList[ name ];
-	}
-
-	function saveState( event ) {
-		
-		localStorage[ 'header' ] = headerField.innerHTML;
-		localStorage[ 'content' ] = contentField.innerHTML;
-	}
-
-	function loadState() {
-
-		if ( localStorage[ 'header' ] ) {
-			headerField.innerHTML = localStorage[ 'header' ];
-		}
-
-		if ( localStorage[ 'content' ] ) {
-			contentField.innerHTML = localStorage[ 'content' ];
-		}
-	}
-
-	function onBoldClick() {
-		document.execCommand( 'bold', false );
-		updateBubblePosition();
-	}
-
-	function onItalicClick() {
-		document.execCommand( 'italic', false );
-		updateBubblePosition();
-	}
-
-	function onQuoteClick() {
-		var nodeNames = findNodes( window.getSelection().focusNode );
-
-		if ( hasNode( nodeNames, 'BLOCKQUOTE' ) ) {
-			document.execCommand( 'formatBlock', false, 'p' );
-		} else {
-			document.execCommand( 'formatBlock', false, 'blockquote' );
-		}
-		
-		updateBubblePosition();
-	}
 
 	function onUrlClick() {
 		if ( optionsBox.className == 'options' ) {
@@ -306,7 +474,11 @@ var editor = (function() {
 	}
 
 	function rehighlightLastSelection() {
-		window.getSelection().addRange(lastSelection);
+		rehighlightSelection(lastSelection);
+	}
+	
+	function rehighlightSelection(sel) {
+		window.getSelection().addRange(sel);
 	}
 
 	function getWordCount() {
@@ -318,12 +490,15 @@ var editor = (function() {
 		} else {
 			return text.split(/\s+/).length;
 		}
-	}
+	} */
 
 	return {
-		init: init,
+		init: function(ID) {
+			var ZPEditor = new ZenPen(ID);
+			ZPEditor.focus();
+			ZPEditor.checkStorage();
+		}  /*,
 		saveState: saveState,
-		getWordCount: getWordCount
+		getWordCount: getWordCount */
 	}
-
 })();

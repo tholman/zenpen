@@ -15,7 +15,7 @@ var ui = (function() {
 	var darkLayout = false;
 
 	function init() {
-		
+		/* 
 		bindElements();
 
 		wordCountActive = false;
@@ -24,7 +24,7 @@ var ui = (function() {
 			loadState();
 		}
 
-		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." );
+		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." ); */
 	}
 
 	function loadState() {
@@ -58,7 +58,7 @@ var ui = (function() {
 	}
 
 	function bindElements() {
-
+/*
 		// Body element for light/dark styles
 		body = document.body;
 
@@ -85,8 +85,8 @@ var ui = (function() {
 		overlay = document.querySelector( '.overlay' );
 		overlay.onclick = onOverlayClick;
 
-		article = document.querySelector( '.content' );
-		article.onkeyup = onArticleKeyUp;
+		// article = document.querySelector( '.content' );
+		// article.onkeyup = onArticleKeyUp;
 
 		wordCountBox = overlay.querySelector( '.wordcount' );
 		wordCountElement = wordCountBox.querySelector( 'input' );
@@ -101,8 +101,9 @@ var ui = (function() {
 		aboutButton = document.querySelector( '.about' );
 		aboutButton.onclick = onAboutButtonClick;
 
-		header = document.querySelector( '.header' );
-		header.onkeypress = onHeaderKeyPress;
+		// header = document.querySelector( '.header' );
+		// header.onkeypress = onHeaderKeyPress;
+		*/
 	}
 
 	function onScreenSizeClick( event ) {

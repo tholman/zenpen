@@ -32,19 +32,7 @@
 			</div>
 		</div>
 		
-		<div class="text-options">
-			<div class="options">
-				<span class="no-overflow">
-					<span class="lengthen ui-inputs">
-						<button class="url useicons">&#xe001;</button>
-						<input class="url-input" type="text" placeholder="Type or Paste URL here"/>
-						<button class="bold">b</button>
-						<button class="italic">i</button>
-						<button class="quote">&rdquo;</button>
-					</span>
-				</span>
-			</div>
-		</div>
+		
 		
 		<div class="ui">
 			<div class="wrapper">
@@ -64,12 +52,24 @@
 			<span class="progress"></span>
 		</div>
 		
-		<section>
+		<section id="editor">
+			<div id="editor-bar" class="text-options">
+			  <div class="options">
+			    <span class="no-overflow">
+			      <span class="lengthen ui-inputs">
+			        <button data-action="link"   >&#xe001;</button>
+			        <input class="url-input" type="text" placeholder="Type or Paste URL here"/>
+			        <button data-action="bold"   >b</button>
+			        <button data-action="italic" >i</button>
+			        <button data-action="quote"  >&rdquo;</button>
+			      </span>
+			    </span>
+			  </div>
+			</div>
 			
-			<header contenteditable="true" class="header">This is ZenPen</header>
+			<header class="editor-item" contenteditable="true" data-type="headline">This is ZenPen</header>
 			
-			<article contenteditable="true" class="content">
-			
+			<article class="editor-item" contenteditable="true" data-type="content">
 				<p>A minimalist writing zone, where you can block out all distractions and get to what's important. The writing!</p>
 				
 				<p>To get started, all you need to do is delete this text (seriously, just highlight it and hit delete), and fill the page with your own fantastic words.</p>
@@ -90,13 +90,13 @@
 		<script type="text/javascript">
 			// Load required scripts.
 			head.js("src/libs/fullScreen.js",
-				"src/utils.js",
-				"src/ui.js",
+//				"src/utils.js",
+//				"src/ui.js",
 				"src/editor.js",
 				function() {
 					// Initiate ZenPen
-					editor.init();
-					ui.init();
+					editor.init('editor');
+					// ui.init();
 				}
 			);
 		</script>
