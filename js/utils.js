@@ -7,6 +7,7 @@ if (!String.prototype.contains){
 	String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
 }
 
+// If there is no localStorage, implement it through cookies.
 if (!window.localStorage) {
   Object.defineProperty(window, "localStorage", new (function () {
     var aKeys = [], oStorage = {};
@@ -67,14 +68,6 @@ if (!window.localStorage) {
     this.enumerable = true;
   })());
 }
-
-// function supportsHtmlStorage() {
-	// try {
-		// return 'localStorage' in window && window['localStorage'] !== null  && typeof  localStorage !== 'undefined';
-	// } catch (e) {
-		// return false;
-	// }
-// }
 
 function get_text(el) {
     ret = " ";
