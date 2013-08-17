@@ -8,6 +8,7 @@ if (!String.prototype.contains){
 }
 
 // If there is no localStorage, implement it through cookies.
+// Code from https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage?redirectlocale=en-US&redirectslug=DOM%2FStorage
 if (!window.localStorage) {
   Object.defineProperty(window, "localStorage", new (function () {
     var aKeys = [], oStorage = {};
