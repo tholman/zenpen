@@ -323,6 +323,10 @@ button[data-action="quote"] {
 
 }
 
+.text-options[data-mode="url"] .options[data-count="5"] {
+	margin-left: -115px;
+}
+
 .text-options[data-mode="url"] .options[data-count="4"] {
 	margin-left: -132px;
 }
