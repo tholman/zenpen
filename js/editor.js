@@ -125,7 +125,7 @@ var ZenPen = (function() {
     // Initialize
     this.id = id;
     this.editor = editor;
-    this.features = ['bold', 'italic', 'link', 'quote', 'underline']
+    this.features = ['bold', 'italic', 'link', 'quote', 'underline'];
     this.actions = actions;
     this.active = 0;
     this.el = document.getElementById(this.id);
@@ -189,7 +189,7 @@ var ZenPen = (function() {
   
   ToolTip.prototype.getWidth = function() {
     return this.getMode('url') ? 275 : this.active * 28 + this.active * 5 + 5;
-  }
+  };
   
   /**
    * Change focus from URL input field back to content editor
