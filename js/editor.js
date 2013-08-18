@@ -560,13 +560,13 @@ var editor = (function() {
     // save changes to HTML storage
     document.addEventListener("keydown", function() {
       // TODO: Just close if content is chanegd
-      if (window.getSelection().focusNode.tagName && window.getSelection().focusNode.tagName.toLowerCase() === 'span') {
-        
-      } else {
-        // Close ToolTip and update HTML storage
-        that.bar.close();
-        that.writeStorage();
+      if (window.getSelection().focusNode && window.getSelection().focusNode.tagName && window.getSelection().focusNode.tagName.toLowerCase() === 'span') {
+        return;
       }
+      
+      // Close ToolTip and update HTML storage
+      that.bar.close();
+      that.writeStorage();
     });
     
     // Update ToolTip position after browser is resized
