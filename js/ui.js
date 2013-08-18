@@ -223,7 +223,8 @@ var ui = (function() {
 	}
 
 	return {
-		init: init
+		init: init,
+		updateWordCount: updateWordCount
 	}
 
 })();
