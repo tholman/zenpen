@@ -21,8 +21,8 @@ var editor = (function() {
 		var length = el.childNodes.length;
 		for (var i = 0; i < length; i++) {
 			var node = el.childNodes[i];
-			if (node.nodeType != 8) {
-				if (node.nodeType != 1) {
+			if (node.nodeType !== 8) {
+				if (node.nodeType !== 1) {
 					ret += node.nodeValue;
 				} else {
 					ret += get_text(node);
@@ -41,10 +41,10 @@ var editor = (function() {
 	 * @return bool
 	 */
 	function hasParent(element, parent) {
-		if (element.tagName.toLowerCase() == 'html') {
+		if (element.tagName.toLowerCase() === 'html') {
 			return false; }
 	
-		if (element.parentNode.tagName.toLowerCase() == parent.toLowerCase()) {
+		if (element.parentNode.tagName.toLowerCase() === parent.toLowerCase()) {
 			return true;
 		} else {
 			return hasParent(element.parentNode, parent);
@@ -59,10 +59,10 @@ var editor = (function() {
 	 * @return bool
 	 */
 	function hasParentWithID(element, parent) {
-		if (element.tagName.toLowerCase() == 'html') {
+		if (element.tagName.toLowerCase() === 'html') {
 			return false; }
 	
-		if (element.parentNode.id.toLowerCase() == parent.toLowerCase()) {
+		if (element.parentNode.id.toLowerCase() === parent.toLowerCase()) {
 			return true;
 		} else {
 			return hasParentWithID(element.parentNode, parent);
@@ -153,7 +153,7 @@ var editor = (function() {
 			}
 			
 			// Check if click on input element
-			if (event.target.tagName.toLowerCase() == 'input') {				
+			if (event.target.tagName.toLowerCase() === 'input') {
 				that.focusInput();
 				
 				// Quit
@@ -199,7 +199,7 @@ var editor = (function() {
 		if (this.actionStatus('italic')) {
 			this.runAction('italic');
 		}
-	}
+	};
 	
 	/**
 	 * Run action
@@ -230,10 +230,11 @@ var editor = (function() {
 			// Run link action
 			case 'link':
 				var curURL = '#';
-				var nodeNames = findNodes(window.getSelection().focusNode);
 				var selection = window.getSelection();
 				var range = document.createRange();
 				var that = this;
+				
+				nodeNames = findNodes(window.getSelection().focusNode);
 				
 				/**
 				 * Select text and update styles
@@ -244,7 +245,7 @@ var editor = (function() {
 					selection.addRange(range);
 					
 					that.applyStyles();
-				}
+				};
 				
 				/**
 				 * Update link in editor
@@ -256,7 +257,7 @@ var editor = (function() {
 					document.execCommand('insertHTML', false, '<a href="' + url + '" id="current-link">' + name + '</a>');
 					
 					__updateLinkStyles();
-				}
+				};
 				
 				// Get current URL anchor if selection already is a link
 				if (hasNode(nodeNames, "A")) {
@@ -294,7 +295,7 @@ var editor = (function() {
 						this.actionOn(action);
 						that.updateButtonStates();
 						
-						var curURL = this.el.querySelector('input').value;
+						curURL = this.el.querySelector('input').value;
 						__updateLink(curURL, window.getSelection().toString());
 					}
 					
@@ -321,7 +322,7 @@ var editor = (function() {
 	 */
 	ToolTip.prototype.setMode = function(mode) {
 		this.el.setAttribute('data-mode', mode);
-	}
+	};
 	
 	/**
 	 * Get current ToolTip view mode or compare with given view mode
@@ -335,7 +336,7 @@ var editor = (function() {
 		} else {
 			return comp === this.el.attributes['data-mode'].value;
 		}
-	}
+	};
 	
 	/**
 	 * Toogle ToolTip option button
@@ -348,7 +349,7 @@ var editor = (function() {
 		} else {
 			this.actionOn(action);
 		}
-	}
+	};
 	
 	/**
 	 * Get action status
@@ -368,7 +369,7 @@ var editor = (function() {
 	ToolTip.prototype.actionOn = function(action) {
 		var item = document.querySelector('button[data-action="' + action + '"]');
 		item.className = 'active';
-	}
+	};
 	
 	/**
 	 * Switch action off
@@ -378,7 +379,7 @@ var editor = (function() {
 	ToolTip.prototype.actionOff = function(action) {
 		var item = document.querySelector('button[data-action="' + action + '"]');
 		item.className = '';
-	}
+	};
 	
 	/**
 	 * Update button states
@@ -408,7 +409,7 @@ var editor = (function() {
 		this.updateButtonStates();
 		this.el.className = "text-options active";
 		this.isOpen = true;
-	}
+	};
 	
 	/**
 	 * Close ToolTip
@@ -432,7 +433,7 @@ var editor = (function() {
 		}, 260);
 		
 		this.isOpen = false;
-	}
+	};
 	
 	/**
 	 * Update ToolTip position
@@ -447,7 +448,7 @@ var editor = (function() {
 			var newTop = parseFloat(boundary.top - 5 + window.pageYOffset);
 			var newLft = parseFloat((boundary.left + boundary.right)/2 - 5);
 			
-			if (newTop == -5 && newLft == -5) {
+			if (newTop === -5 && newLft === -5) {
 				return;
 			}
 			
@@ -456,7 +457,7 @@ var editor = (function() {
 		} catch (e) {
 			
 		}
-	}
+	};
 	
 	/**
 	 * ZenPen Editor constructor
@@ -488,7 +489,7 @@ var editor = (function() {
 		}
 		
 		return text.split(/\s+/).length;
-	}
+	};
 	
 	/**
 	 * Update ToolTip position
@@ -513,7 +514,7 @@ var editor = (function() {
 		// Starting to select text in content box. This will be called after
 		// mousedown if no 'preventDefault' is called before
 		if (this.content) {
-			this.content.addEventListener("selectstart", function(ev) {
+			this.content.addEventListener("selectstart", function() {
 				that.bar.close();
 			});
 		}
@@ -521,13 +522,13 @@ var editor = (function() {
 		// Starting to select text in headline box. This will be called after
 		// mousedown if no 'preventDefault' is called before
 		if (this.headline) {
-			this.headline.addEventListener("selectstart", function(ev) {
+			this.headline.addEventListener("selectstart", function() {
 				that.bar.close();
 			});
 		}
 		
 		// Maybe needed for some future magic
-		this.content.addEventListener("selectionchange", function(e) {
+		this.content.addEventListener("selectionchange", function() {
 
 		});
 		
@@ -548,7 +549,7 @@ var editor = (function() {
 		
 		// Close ToolTip if key is pressed someout outside the ToolTip's input and
 		// save changes to HTML storage
-		document.addEventListener("keydown", function(event) {
+		document.addEventListener("keydown", function() {
 			// TODO: Just close if content is chanegd
 			if (window.getSelection().focusNode.tagName && window.getSelection().focusNode.tagName.toLowerCase() === 'span') {
 				
@@ -560,7 +561,7 @@ var editor = (function() {
 		});
 		
 		// Update ToolTip position after browser is resized
-		window.addEventListener( 'resize', function( event ) {
+		window.addEventListener('resize', function() {
 			that.bar.updatePosition();
 		});
 		
@@ -575,9 +576,9 @@ var editor = (function() {
 			that.bar.updatePosition();
 			
 			// Smooth scrolling
-			return setTimeout((function() {
+			return setTimeout(function() {
 				scrollEnabled = true;
-			}), 250);
+			}, 250);
 		});
 
 	};
@@ -589,7 +590,7 @@ var editor = (function() {
 	 * @return bool
 	 */
 	ZenPen.prototype.clickIsInside = function(event) {
-		return event.target.tagName.toLowerCase() == 'article' || hasParent(event.target, 'article');
+		return event.target.tagName.toLowerCase() === 'article' || hasParent(event.target, 'article');
 	};
 	
 	/**
@@ -599,8 +600,8 @@ var editor = (function() {
 	 * @return bool
 	 */
 	ZenPen.prototype.clickIsOnBar = function(event) {
-		return event.target.id.toLowerCase() == 'article' || hasParentWithID(event.target, this.bar.id);
-	}
+		return event.target.id.toLowerCase() === 'article' || hasParentWithID(event.target, this.bar.id);
+	};
 	
   /**
    * Check if user has selected text
@@ -636,7 +637,7 @@ var editor = (function() {
 		
 		localStorage.header = this.headline.innerHTML;
 		localStorage.content = this.content.innerHTML;
-	}
+	};
 		
 	var ZPEditor = null;
 
