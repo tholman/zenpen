@@ -59,6 +59,7 @@
               <input class="url-input" type="text" placeholder="Type or Paste URL here"/>
               <button data-action="bold"   >b</button>
               <button data-action="italic" >i</button>
+              <button data-action="underline" >u</button>
               <button data-action="quote"  >&rdquo;</button>
             </span>
           </span>
@@ -96,7 +97,7 @@
           ui.init();
           
           // Initialize editor
-          var Editor = new ZenPen('editor', ['link', 'bold', 'italic', 'quote']);
+          var Editor = new ZenPen('editor', ['link', 'bold', 'italic', 'quote', 'underline']);
           Editor.checkStorage();
           
           Editor.change(function() {

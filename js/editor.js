@@ -125,7 +125,7 @@ var ZenPen = (function() {
     // Initialize
     this.id = id;
     this.editor = editor;
-    this.features = ['bold', 'italic', 'link', 'quote']
+    this.features = ['bold', 'italic', 'link', 'quote', 'underline']
     this.actions = actions;
     this.active = 0;
     this.el = document.getElementById(this.id);
@@ -146,7 +146,7 @@ var ZenPen = (function() {
       event.stopImmediatePropagation();
       
       // Check if click on known action
-      if (event.target.attributes['data-action'] && ['link', 'bold', 'italic', 'quote'].indexOf(event.target.attributes['data-action'].value) > -1) {
+      if (event.target.attributes['data-action'] && that.features.indexOf(event.target.attributes['data-action'].value) > -1) {
         var action = event.target.attributes['data-action'].value;
           
         // Run action and update bubbles if styles have changed
@@ -228,6 +228,10 @@ var ZenPen = (function() {
     if (this.actionStatus('italic')) {
       this.runAction('italic');
     }
+    
+    if (this.actionStatus('uderline')) {
+      this.runAction('uderline');
+    }
   };
   
   /**
@@ -240,6 +244,7 @@ var ZenPen = (function() {
       // Run native font style actions
       case 'bold':
       case 'italic':
+      case 'underline':
         document.execCommand(action, false);
         
         this.actionToggle(action);
@@ -429,7 +434,7 @@ var ZenPen = (function() {
    */
   ToolTip.prototype.updateButtonStates = function() {
     var currentNodeList = findNodes(window.getSelection().focusNode);
-    var nodeMapping = {b: 'bold', i: 'italic', blockquote: 'quote', a: 'link'};
+    var nodeMapping = {b: 'bold', i: 'italic', u: 'underline', blockquote: 'quote', a: 'link'};
     
     for (var n in nodeMapping) {
       if (hasNode(currentNodeList, n.toUpperCase())) {
