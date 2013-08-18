@@ -109,7 +109,7 @@ var editor = (function() {
 	 */
 	function supportsHtmlStorage() {
 		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
+			return 'localStorage' in window && window.localStorage !== null;
 		} catch (e) {
 			return false;
 		}
