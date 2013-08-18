@@ -4,7 +4,7 @@ var editor = (function() {
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
 
 	// Editor Bubble elements
-	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
+	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput, underlineButton;
 
 
 	function init() {
@@ -98,6 +98,9 @@ var editor = (function() {
 		urlInput = textOptions.querySelector( '.url-input' );
 		urlInput.onblur = onUrlInputBlur;
 		urlInput.onkeydown = onUrlInputKeyDown;
+
+        underlineButton = textOptions.querySelector( '.underline' );
+        underlineButton.onclick = onUnderlineClick;
 	}
 
 	function checkTextHighlighting( event ) {
@@ -336,6 +339,10 @@ var editor = (function() {
 			return text.split(/\s+/).length;
 		}
 	}
+
+    function onUnderlineClick() {
+        document.execCommand('underline', false);
+    }
 
 	return {
 		init: init,

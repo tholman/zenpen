@@ -293,7 +293,7 @@ a:hover {
 	margin-top: -46px;
 	z-index: 1000;
 	padding: 5px 4px 5px 5px;
-	width: 125px;
+	width: 160px;
 	height: 40px;
 
 	-webkit-transition: all 300ms ease-in-out;
@@ -418,4 +418,8 @@ a:hover {
 .wrapper {
 	position: relative;
 	height: 100%;
+}
+
+.underline  {
+    text-decoration: underline;
 }
