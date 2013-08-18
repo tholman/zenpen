@@ -358,7 +358,7 @@ var editor = (function() {
 	 * @return bool
 	 */
 	ToolTip.prototype.actionStatus = function(action) {
-		return document.querySelector('button[data-action="' + action + '"]').className === 'active';
+		return this.el.querySelector('button[data-action="' + action + '"]').className === 'active';
 	};
 	
 	/**
@@ -367,7 +367,7 @@ var editor = (function() {
 	 * @param string action Action name
 	 */
 	ToolTip.prototype.actionOn = function(action) {
-		var item = document.querySelector('button[data-action="' + action + '"]');
+		var item = this.el.querySelector('button[data-action="' + action + '"]');
 		item.className = 'active';
 	};
 	
@@ -377,7 +377,7 @@ var editor = (function() {
 	 * @param string action Action name
 	 */
 	ToolTip.prototype.actionOff = function(action) {
-		var item = document.querySelector('button[data-action="' + action + '"]');
+		var item = this.el.querySelector('button[data-action="' + action + '"]');
 		item.className = '';
 	};
 	
