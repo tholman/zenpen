@@ -2,20 +2,35 @@
   "name": "zenpen",
   "version": "0.0.1",
   "description": "A minimal web based text editor for the modern man.",
+  "author": "Tim Holman <timothy.w.holman@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git://github.com/tholman/zenpen.git"
   },
-  "author": "Tim Holman",
+  "contributors": [ 
+    {"name": "tholman", "url": "https://github.com/tholman"},
+    {"name": "semu", "url": "https://github.com/semu"},
+    {"name": "leon-vv", "url": "https://github.com/leon-vv"},
+    {"name": "mluds", "url": "https://github.com/mluds"},
+    {"name": "Prakt", "url": "https://github.com/Prakt"},
+    {"name": "MichielDeMey", "url": "https://github.com/MichielDeMey"},
+    {"name": "shivkumarganesh", "url": "https://github.com/shivkumarganesh"},
+    {"name": "amitburst", "url": "https://github.com/amitburst"},
+    {"name": "mexicat", "url": "https://github.com/mexicat"},
+    {"name": "gillesdemey", "url": "https://github.com/gillesdemey"},
+    {"name": "JeffPaine", "url": "https://github.com/JeffPaine"},
+    {"name": "briangonzalez", "url": "https://github.com/briangonzalez"},
+    {"name": "623HS", "url": "https://github.com/623HS"},
+    {"name": "potomak", "url": "https://github.com/potomak"}
+  ],
   "license": "Apache",
   "readmeFilename": "readme.md",
+  "keywords": ["zenpen", "editor", "awesome"],
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.2",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-watch": "~0.5.1",
-    "grunt-contrib-qunit": "~0.2.2"
+    "grunt-contrib-uglify": "~0.2.2"
   }
 }
