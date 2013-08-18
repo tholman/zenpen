@@ -80,6 +80,7 @@ blockquote {
 	display: block;
 	height: 100%;
 	width: 100%;
+	margin: 5px;
 }
 
 /* Used by the ui bubble to stop wrapping */
@@ -89,7 +90,12 @@ blockquote {
 	height: 100%;
 }
 
-.useicons {
+
+button.disabled {
+	display: none;
+}
+
+button[data-action="link"], .fullscreen, .color-flip, .target, .markdown {
 	font-size: 20px !important;
 	font-family: 'icomoon' !important;
 }
@@ -160,7 +166,7 @@ a:hover {
 	top: 0px;
 }
 
-.quote {
+button[data-action="quote"] {
 	line-height: 60px !important;
 	font-size: 49px !important;
 }
@@ -292,8 +298,6 @@ a:hover {
 	margin-left: -63px;
 	margin-top: -46px;
 	z-index: 1000;
-	padding: 5px 4px 5px 5px;
-	width: 125px;
 	height: 40px;
 
 	-webkit-transition: all 300ms ease-in-out;
@@ -303,19 +307,65 @@ a:hover {
 	transition: all 300ms ease-in-out;
 }
 
-.options.url-mode {
+
+.url {
+	-webkit-font-smoothing: antialiased;
+}
+
+.options {
+	// width: 137px;
+}
+
+
+
+.text-options[data-mode="url"] .options {
 	width: 275px;
-	margin-left: -137px;
+
 }
 
-.options.url-mode .bold, .options.url-mode .italic, .options.url-mode .quote {
-	width: 0px;
+.text-options[data-mode="url"] .options[data-count="5"] {
+	margin-left: -115px;
+}
+
+.text-options[data-mode="url"] .options[data-count="4"] {
+	margin-left: -132px;
+}
+
+.text-options[data-mode="url"] .options[data-count="3"] {
+	margin-left: -148px;
+}
+
+.text-options[data-mode="url"] .options[data-count="2"] {
+	margin-left: -165px;
+}
+
+.text-options[data-mode="url"] .options[data-count="1"] {
+	margin-left: -182px;
+}
+
+
+
+.text-options[data-mode="url"]  input {
+	border-left: 2px solid transparent;
+	padding-right: 5px;
+	padding-left: 5px;
+	width: 232px;
+}
+
+.text-options[data-mode="url"] button {
 	overflow: hidden;
-	margin-right: 0px;
-	opacity: 0;
+	opacity: 0 !important;
+	-moz-opacity: 0;
+	filter:alpha(opacity=0);;
 }
 
-.options .italic {
+.text-options[data-mode="url"] button[data-action="link"] {
+	opacity: 1 !important;
+	-moz-opacity: 1;
+	filter:alpha(opacity=0);;
+}
+
+button[data-action="italic"] {
 	font-style: italic;
 }
 
@@ -331,16 +381,10 @@ a:hover {
 	opacity: 0.7;
 	height: 30px;
 	border-radius: 3px;
-	margin-right: 1px;
 	font-family: 'Lora', serif;
+	margin-right: 5px;
 }
 
-.options.url-mode input{
-	border-left: 2px solid transparent;
-	padding-right: 5px;
-	padding-left: 5px;
-	width: 236px;
-}
 
 .options input {
 	-webkit-transition: all 300ms ease-in-out;
@@ -396,9 +440,6 @@ a:hover {
 	border-top: 5px solid rgba(255,255,255,0.9);
 }
 
-.url {
-	-webkit-font-smoothing: antialiased;
-}
 
 .top {
 	position: absolute;

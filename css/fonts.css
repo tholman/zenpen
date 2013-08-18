@@ -46,6 +46,9 @@ you can use the generic selector below, but it's slower:
 .icon-twitter:before {
 	content: "\e008";
 }
+.icon-untitled:before {
+	content: "\e009";
+}
 .icon-contrast:before {
 	content: "\e000";
 }

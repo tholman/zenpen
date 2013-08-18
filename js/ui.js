@@ -1,7 +1,7 @@
 var ui = (function() {
 
 	// Base elements
-	var body, article, uiContainer, overlay, aboutButton, descriptionModal;
+	var body, article, uiContainer, overlay, aboutButton, descriptionModal, markdownButton;
 
 	// Buttons
 	var screenSizeElement, colorLayoutElement, targetElement;
@@ -14,18 +14,22 @@ var ui = (function() {
 
 	var darkLayout = false;
 
-	function init() {
-		
-		bindElements();
+	function init(Editor) {
+		bindElements(Editor);
 
 		wordCountActive = false;
 
-		if ( supportsHtmlStorage() ) {
-			loadState();
-		}
-
-		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." );
+		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." ); 
 	}
+
+	function supportsHtmlStorage() {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+
 
 	function loadState() {
 
@@ -57,8 +61,7 @@ var ui = (function() {
 		}
 	}
 
-	function bindElements() {
-
+	function bindElements(Editor) {
 		// Body element for light/dark styles
 		body = document.body;
 
@@ -84,10 +87,7 @@ var ui = (function() {
 		// Overlay when modals are active
 		overlay = document.querySelector( '.overlay' );
 		overlay.onclick = onOverlayClick;
-
-		article = document.querySelector( '.content' );
-		article.onkeyup = onArticleKeyUp;
-
+		
 		wordCountBox = overlay.querySelector( '.wordcount' );
 		wordCountElement = wordCountBox.querySelector( 'input' );
 		wordCountElement.onchange = onWordCountChange;
@@ -100,9 +100,23 @@ var ui = (function() {
 
 		aboutButton = document.querySelector( '.about' );
 		aboutButton.onclick = onAboutButtonClick;
-
-		header = document.querySelector( '.header' );
-		header.onkeypress = onHeaderKeyPress;
+		
+		if (toMarkdown) {
+			document.querySelector('.markdown').addEventListener('click', function() {
+				var headline = 'Unknown Article';
+				var filename = 'unknown.md';
+				
+				if (Editor.headline && Editor.headline.innerHTML !== '' && Editor.headline.innerHTML !== '<br>') {
+					headline = Editor.headline.innerHTML;
+					filename = Editor.headline.innerHTML + '.md';
+				}
+				
+				var pom = document.createElement('a');
+				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(toMarkdown('<h1>' + headline + '</h1>' + Editor.content.innerHTML)));
+				pom.setAttribute('download', filename);
+				pom.click();
+			});
+		}
 	}
 
 	function onScreenSizeClick( event ) {
@@ -164,8 +178,6 @@ var ui = (function() {
 			setWordCount( parseInt(this.value) );
 
 			removeOverlay();
-
-			article.focus();
 		}
 	}
 
@@ -190,22 +202,24 @@ var ui = (function() {
 	}
 
 	function onArticleKeyUp( event ) {
-
 		if ( wordCountValue > 0 ) {
 			updateWordCount();
 		}
 	}
 
-	function updateWordCount() {
+	function updateWordCount(cnt) {
 
-		var wordCount = editor.getWordCount();
+		var wordCount = cnt;
 		var percentageComplete = wordCount / wordCountValue;
-		wordCounterProgress.style.height = percentageComplete * 100 + '%';
-
-		if ( percentageComplete >= 1 ) {
-			wordCounterProgress.className = "progress complete";
-		} else {
-			wordCounterProgress.className = "progress";
+		
+		if (wordCounterProgress) {
+			wordCounterProgress.style.height = percentageComplete * 100 + '%';
+	
+			if ( percentageComplete >= 1 ) {
+				wordCounterProgress.className = "progress complete";
+			} else {
+				wordCounterProgress.className = "progress";
+			}
 		}
 	}
 
@@ -223,7 +237,8 @@ var ui = (function() {
 	}
 
 	return {
-		init: init
+		init: init,
+		updateWordCount: updateWordCount
 	}
 
 })();
