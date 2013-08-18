@@ -1,7 +1,7 @@
 var ui = (function() {
 
 	// Base elements
-	var body, article, uiContainer, overlay, aboutButton, descriptionModal;
+	var body, article, uiContainer, overlay, aboutButton, descriptionModal, markdownButton;
 
 	// Buttons
 	var screenSizeElement, colorLayoutElement, targetElement;
@@ -14,8 +14,8 @@ var ui = (function() {
 
 	var darkLayout = false;
 
-	function init() {
-		bindElements();
+	function init(Editor) {
+		bindElements(Editor);
 
 		wordCountActive = false;
 
@@ -61,7 +61,7 @@ var ui = (function() {
 		}
 	}
 
-	function bindElements() {
+	function bindElements(Editor) {
 		// Body element for light/dark styles
 		body = document.body;
 
@@ -87,10 +87,7 @@ var ui = (function() {
 		// Overlay when modals are active
 		overlay = document.querySelector( '.overlay' );
 		overlay.onclick = onOverlayClick;
-
-		// article = document.querySelector( '.content' );
-		// article.onkeyup = onArticleKeyUp;
-
+		
 		wordCountBox = overlay.querySelector( '.wordcount' );
 		wordCountElement = wordCountBox.querySelector( 'input' );
 		wordCountElement.onchange = onWordCountChange;
@@ -103,9 +100,23 @@ var ui = (function() {
 
 		aboutButton = document.querySelector( '.about' );
 		aboutButton.onclick = onAboutButtonClick;
-
-		// header = document.querySelector( '.header' );
-		// header.onkeypress = onHeaderKeyPress;
+		
+		if (toMarkdown) {
+			document.querySelector('.markdown').addEventListener('click', function() {
+				var headline = 'Unknown Article';
+				var filename = 'unknown.md';
+				
+				if (Editor.headline && Editor.headline.innerHTML !== '' && Editor.headline.innerHTML !== '<br>') {
+					headline = Editor.headline.innerHTML;
+					filename = Editor.headline.innerHTML + '.md';
+				}
+				
+				var pom = document.createElement('a');
+				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(toMarkdown('<h1>' + headline + '</h1>' + Editor.content.innerHTML)));
+				pom.setAttribute('download', filename);
+				pom.click();
+			});
+		}
 	}
 
 	function onScreenSizeClick( event ) {

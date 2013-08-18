@@ -38,6 +38,7 @@
           <button class="fullscreen useicons">&#xe006;</button>
           <button class="color-flip useicons">&#xe000;</button>
           <button class="target useicons">&#xe002;</button>
+          <button class="markdown useicons">&#xe009;</button>
         </div>
         
         <div class="bottom">
@@ -90,15 +91,16 @@
       // Load required scripts.
       head.js(
         "js/libs/fullScreen.js",
+        "js/libs/to-markdown.js",
         "js/ui.js",
         "js/editor.js",
         function() {
-          // Initialize site elements
-          ui.init();
-          
           // Initialize editor
           var Editor = new ZenPen('editor', ['link', 'bold', 'italic', 'quote' /*, 'underline' */]);
           Editor.checkStorage();
+          
+          // Initialize site elements
+          ui.init(Editor);
           
           Editor.change(function() {
             ui.updateWordCount(Editor.countWords());

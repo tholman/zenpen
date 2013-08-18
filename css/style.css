@@ -95,7 +95,7 @@ button.disabled {
 	display: none;
 }
 
-button[data-action="link"], .fullscreen, .color-flip, .target {
+button[data-action="link"], .fullscreen, .color-flip, .target, .markdown {
 	font-size: 20px !important;
 	font-family: 'icomoon' !important;
 }
