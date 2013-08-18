@@ -676,7 +676,7 @@ var ZenPen = (function() {
     if (!supportsHtmlStorage()) {
       return; }
 
-    if (localStorage.header) {
+    if (localStorage.header && this.headline) {
       this.headline.innerHTML = localStorage.header;
     }
     
@@ -692,8 +692,11 @@ var ZenPen = (function() {
     if (!supportsHtmlStorage()) {
       return; }
     
-    localStorage.header = this.headline.innerHTML;
     localStorage.content = this.content.innerHTML;
+    
+    if (this.headline) {
+      localStorage.header = this.headline.innerHTML; 
+    }
     
     this.updateWatchers();
   };
