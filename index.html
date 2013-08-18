@@ -92,13 +92,16 @@
         "js/ui.js",
         "js/editor.js",
         function() {
-          // Initiate ZenPen
-          editor.init('editor');
-          editor.change(function(editor) {
-            ui.updateWordCount();
-          });
-          
+          // Initialize site elements
           ui.init();
+          
+          // Initialize editor
+          var Editor = new ZenPen('editor', ['link', 'bold', 'italic', 'quote']);
+          Editor.checkStorage();
+          
+          Editor.change(function() {
+            ui.updateWordCount(Editor.countWords());
+          });
         }
       );
     </script>

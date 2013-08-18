@@ -90,6 +90,11 @@ blockquote {
 	height: 100%;
 }
 
+
+button.disabled {
+	display: none;
+}
+
 button[data-action="link"], .fullscreen, .color-flip, .target {
 	font-size: 20px !important;
 	font-family: 'icomoon' !important;
@@ -293,7 +298,6 @@ button[data-action="quote"] {
 	margin-left: -63px;
 	margin-top: -46px;
 	z-index: 1000;
-	width: 137px;
 	height: 40px;
 
 	-webkit-transition: all 300ms ease-in-out;
@@ -308,10 +312,34 @@ button[data-action="quote"] {
 	-webkit-font-smoothing: antialiased;
 }
 
+.options {
+	// width: 137px;
+}
+
+
+
 .text-options[data-mode="url"] .options {
 	width: 275px;
-	margin-left: -137px;
+
 }
+
+.text-options[data-mode="url"] .options[data-count="4"] {
+	margin-left: -132px;
+}
+
+.text-options[data-mode="url"] .options[data-count="3"] {
+	margin-left: -148px;
+}
+
+.text-options[data-mode="url"] .options[data-count="2"] {
+	margin-left: -165px;
+}
+
+.text-options[data-mode="url"] .options[data-count="1"] {
+	margin-left: -182px;
+}
+
+
 
 .text-options[data-mode="url"]  input {
 	border-left: 2px solid transparent;
@@ -320,10 +348,16 @@ button[data-action="quote"] {
 	width: 232px;
 }
 
-.text-options[data-mode="url"] button[data-action=bold], .text-options[data-mode="url"] button[data-action=italic], .text-options[data-mode="url"] button[data-action=quote]{
+.text-options[data-mode="url"] button {
 	overflow: hidden;
-	opacity: 0;
+	opacity: 0 !important;
 	-moz-opacity: 0;
+	filter:alpha(opacity=0);;
+}
+
+.text-options[data-mode="url"] button[data-action="link"] {
+	opacity: 1 !important;
+	-moz-opacity: 1;
 	filter:alpha(opacity=0);;
 }
 

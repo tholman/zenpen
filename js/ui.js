@@ -196,16 +196,19 @@ var ui = (function() {
 		}
 	}
 
-	function updateWordCount() {
+	function updateWordCount(cnt) {
 
-		var wordCount = editor.getWordCount();
+		var wordCount = cnt;
 		var percentageComplete = wordCount / wordCountValue;
-		wordCounterProgress.style.height = percentageComplete * 100 + '%';
-
-		if ( percentageComplete >= 1 ) {
-			wordCounterProgress.className = "progress complete";
-		} else {
-			wordCounterProgress.className = "progress";
+		
+		if (wordCounterProgress) {
+			wordCounterProgress.style.height = percentageComplete * 100 + '%';
+	
+			if ( percentageComplete >= 1 ) {
+				wordCounterProgress.className = "progress complete";
+			} else {
+				wordCounterProgress.className = "progress";
+			}
 		}
 	}
 

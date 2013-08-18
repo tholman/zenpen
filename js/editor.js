@@ -1,4 +1,4 @@
-var editor = (function() {
+var ZenPen = (function() {
   'use strict';
   
   /**
@@ -121,10 +121,13 @@ var editor = (function() {
    * @param string id ToolTip's HTML container element ID
    * @param object editor ZepPen Editor object for bindings
    */
-  var ToolTip = function(id, editor) {
+  var ToolTip = function(id, actions, editor) {
     // Initialize
     this.id = id;
     this.editor = editor;
+    this.features = ['bold', 'italic', 'link', 'quote']
+    this.actions = actions;
+    this.active = 0;
     this.el = document.getElementById(this.id);
     
     // Default handlers
@@ -135,6 +138,8 @@ var editor = (function() {
     
     // Listen for events
     var that = this;
+    
+    this.enableActions();
     
     this.el.addEventListener('click', function(event) {
       event.stopPropagation();
@@ -161,6 +166,30 @@ var editor = (function() {
       }
     });
   };
+  
+  ToolTip.prototype.enableActions = function() {
+    this.active = 0;
+    
+    for (var i = 0, m = this.features.length; i < m; i++) {
+      if (this.actions.indexOf(this.features[i]) === -1) {
+        if (this.el.querySelector('button[data-action="' + this.features[i] + '"]')) {
+          this.el.querySelector('button[data-action="' + this.features[i] + '"]').className = 'disabled';
+          this.el.querySelector('button[data-action="' + this.features[i] + '"]').attributes['data-action'].value = 'none';
+        }
+      } else {
+        this.active++;
+      }
+    }
+    
+    this.el.querySelector('.options').style.width = this.getWidth() + 'px';
+    var tmpAttr = document.createAttribute('data-count');
+    tmpAttr.value = this.active;
+    this.el.querySelector('.options').setAttributeNode(tmpAttr);
+  };
+  
+  ToolTip.prototype.getWidth = function() {
+    return this.getMode('url') ? 275 : this.active * 28 + this.active * 5 + 5;
+  }
   
   /**
    * Change focus from URL input field back to content editor
@@ -321,6 +350,14 @@ var editor = (function() {
    */
   ToolTip.prototype.setMode = function(mode) {
     this.el.setAttribute('data-mode', mode);
+    
+    if (mode === 'url') {
+      this.el.querySelector('.options').style.width = this.getWidth() + 'px';
+      
+      // this.updatePosition();
+    } else {
+      this.enableActions();
+    }
   };
   
   /**
@@ -357,6 +394,9 @@ var editor = (function() {
    * @return bool
    */
   ToolTip.prototype.actionStatus = function(action) {
+    if (this.actions.indexOf(action) === -1) {
+      return; }
+    
     return document.querySelector('button[data-action="' + action + '"]').className === 'active';
   };
   
@@ -366,8 +406,10 @@ var editor = (function() {
    * @param string action Action name
    */
   ToolTip.prototype.actionOn = function(action) {
-    var item = document.querySelector('button[data-action="' + action + '"]');
-    item.className = 'active';
+    if (this.actions.indexOf(action) === -1) {
+      return; }
+      
+    document.querySelector('button[data-action="' + action + '"]').className = 'active';
   };
   
   /**
@@ -376,8 +418,10 @@ var editor = (function() {
    * @param string action Action name
    */
   ToolTip.prototype.actionOff = function(action) {
-    var item = document.querySelector('button[data-action="' + action + '"]');
-    item.className = '';
+    if (this.actions.indexOf(action) === -1) {
+      return; }
+      
+    document.querySelector('button[data-action="' + action + '"]').className = '';
   };
   
   /**
@@ -445,9 +489,9 @@ var editor = (function() {
       var boundary = range.getBoundingClientRect();
       
       var newTop = parseFloat(boundary.top - 5 + window.pageYOffset);
-      var newLft = parseFloat((boundary.left + boundary.right)/2 - 5);
+      var newLft = parseFloat(boundary.width/2 + (boundary.left + 63) - this.getWidth()/2);
       
-      if (newTop === -5 && newLft === -5) {
+      if (newTop === -5 && boundary.left === 0) {
         return;
       }
       
@@ -461,17 +505,16 @@ var editor = (function() {
   /**
    * ZenPen Editor constructor
    */
-  var ZenPen = function(id) {
+  var ZenPen = function(id, actions) {
     this.id = id;
     this.lastSelection = null;
     this.downOnOption = false;
     this.watcher = [];
     
-    
     this.headline = document.getElementById(this.id).querySelector('[data-type="headline"]');
     this.content  = document.getElementById(this.id).querySelector('[data-type="content"]');
     
-    this.bar = new ToolTip(this.id + '-bar', this);
+    this.bar = new ToolTip(this.id + '-bar', actions, this);
     
     this.watchForSelection();
   };
@@ -659,19 +702,5 @@ var editor = (function() {
     }
   };
    
-    
-  var ZPEditor = null;
-
-  return {
-    init: function(ID) {
-      ZPEditor = new ZenPen(ID);
-      ZPEditor.checkStorage();
-    },
-    change: function(cb) {
-      ZPEditor.change(cb);
-    },
-    getWordCount: function() {
-      return ZPEditor.countWords();
-    }
-  };
+  return ZenPen;
 })();
