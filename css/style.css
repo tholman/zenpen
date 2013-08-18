@@ -62,6 +62,7 @@ header {
 article {
 	padding-bottom: 50px;
 	line-height: 30px;
+	margin-top: 22px;
 	min-height: 90%;
 	font-size: 22px;
 	display: block;

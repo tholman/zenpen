@@ -580,7 +580,6 @@ var editor = (function() {
 				scrollEnabled = true;
 			}, 250);
 		});
-
 	};
 	
 	/**
