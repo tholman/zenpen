@@ -4,7 +4,7 @@
 	<head>
 
 		<!-- MISC/META -->
-		<title> ZenPen ~ Minimal Distraction, Maximim Zen </title>
+		<title>ZenPen ~ Minimal Distraction, Maximim Zen</title>
         <meta charset="utf-8">
 		<meta name="description" content="Zenpen - A minimal web based text editor, for the modern man.">
         
@@ -12,13 +12,21 @@
 		<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/fonts.css" rel="stylesheet">
-
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.nicescroll.min.js"></script>
+		<!-- JS loading in footer -->
+		<script>
+		  $(document).ready(function() {
+		  
+			var nice = $("html").niceScroll();  // The document page (body)
+			
+		  });
+		</script>
 		<!-- LIBS -->
 		<script src="js/libs/head.min.js"></script>
 		<script src="js/libs/fullScreen.js"></script>
-		
-		<!-- JS loading in footer -->
 
+        
     </head>
 
 	<body class="yin">
