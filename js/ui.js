@@ -225,15 +225,13 @@ var ui = (function() {
 		var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
 		
 		var body = document.querySelector('article.content');
-		var tmp = document.createElement('div');
-		tmp.appendChild(body.cloneNode(true));
-		var bodyText = tmp.innerHTML;
+		var bodyText = body.innerHTML;
 		
-		var text = formatText('html',headerText,bodyText);
+		var text = formatText('markdown',headerText,bodyText);
 		
 		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
 		
-		saveAs(blob, 'testing.txt');
+		saveAs(blob, 'ZenPen.txt');
 	}
 	
 	function formatText(type, header, body)
@@ -246,10 +244,23 @@ var ui = (function() {
 				text = text.replace(/\t/g, '');
 			break;
 			case 'markdown':
-			
+				text = body.replace(/<b>|<\/b>/g,"**");
+				text = text.replace(/<i>|<\/i>/g,"_");
+				text = text.replace(/<blockquote>/g,"> ");
+				text = text.replace(/<\/blockquote>/g,"");
+				
+				text = header + text;
 			break;
 			case 'plain':
-			
+				var tmp = document.createElement('div');
+				tmp.innerHTML = body;
+				text = tmp.textContent || tmp.innerText || "";
+				text = text.replace(/\t/g, '');
+				
+				text = text.replace(/\n{3}/g,"\n");
+				text = text.replace(/\n/,""); //replace the opening line break
+				
+				text = header + text;
 			break;
 			default:
 			break;
