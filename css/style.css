@@ -212,6 +212,49 @@ a:hover {
 	height: 225px;
 }
 
+.saveoverlay
+{
+	top:50%;
+	left:50%;
+	margin-left:-200px;
+	margin-top:-85px;
+	height:170px;
+}
+.saveoverlay div
+{
+	font-size:12px;
+}
+.saveselection
+{
+	text-align:center;
+}
+.saveselection span
+{
+	margin-right:5px;
+	cursor:pointer;
+	color: deepskyblue;
+	
+}
+.saveselection span:hover
+{
+	text-decoration:underline;
+}
+.savebutton
+{
+	width   : 80px;
+    background  : none;
+    cursor  : pointer;
+    font-size   : 16px;
+    color   : #fff;
+    border  : none;
+    margin      : 0px;
+    padding     : 0px;
+	
+	color: white;
+	font-weight:bold;
+}
+
+
 /*********************************************
  * WORK COUNT
  *********************************************/

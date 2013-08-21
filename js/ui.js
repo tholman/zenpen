@@ -105,6 +105,8 @@ var ui = (function() {
 		wordCountElement.onkeyup = onWordCountKeyUp;
 
 		descriptionModal = overlay.querySelector( '.description' );
+		
+		saveModal = overlay.querySelector('.saveoverlay');
 
 		wordCounter = document.querySelector( '.word-counter' );
 		wordCounterProgress = wordCounter.querySelector( '.progress' );
@@ -156,7 +158,25 @@ var ui = (function() {
 		overlay.style.display = "block";
 		descriptionModal.style.display = "block";
 	}
-
+	
+	function onSaveClick( event ) {
+		overlay.style.display = "block";
+		saveModal.style.display = "block";
+		
+		/*
+		var header = document.querySelector('header.header');
+		var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
+		
+		var body = document.querySelector('article.content');
+		var bodyText = body.innerHTML;
+		
+		var text = formatText('markdown',headerText,bodyText);
+		
+		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+		
+		saveAs(blob, 'ZenPen.txt');
+		*/
+	}
 	/* Allows the user to press enter to tab from the title */
 	function onHeaderKeyPress( event ) {
 
@@ -218,20 +238,6 @@ var ui = (function() {
 		} else {
 			wordCounterProgress.className = "progress";
 		}
-	}
-	
-	function onSaveClick( event ) {
-		var header = document.querySelector('header.header');
-		var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
-		
-		var body = document.querySelector('article.content');
-		var bodyText = body.innerHTML;
-		
-		var text = formatText('markdown',headerText,bodyText);
-		
-		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-		
-		saveAs(blob, 'ZenPen.txt');
 	}
 	
 	function formatText(type, header, body)
@@ -305,6 +311,7 @@ var ui = (function() {
 		overlay.style.display = "none";
 		wordCountBox.style.display = "none";
 		descriptionModal.style.display = "none";
+		saveModal.style.display = "none";
 	}
 
 	return {
