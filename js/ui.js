@@ -248,7 +248,7 @@ var ui = (function() {
 	{
 		if (document.querySelectorAll('span.activesave').length > 0) document.querySelector('span.activesave').className = '';
 		
-		document.querySelector('.saveoverlay h1').style.color = 'white';
+		document.querySelector('.saveoverlay h1').style.cssText = '';
 		
 		var targ;
 		if (!e) var e = window.event;
