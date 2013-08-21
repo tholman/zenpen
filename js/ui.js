@@ -269,8 +269,6 @@ var ui = (function() {
 			
 		textToWrite = formatText(saveFormat,headerText,bodyText);
 		
-		console.log(textToWrite);
-		
 		var textArea = document.querySelector('.hiddentextbox');
 		textArea.value = textToWrite;
 		textArea.focus();
