@@ -15,6 +15,8 @@
 
 		<!-- LIBS -->
 		<script src="js/libs/head.min.js"></script>
+		<script src="js/libs/FileSaver.min.js"></script>
+		<script src="js/libs/Blob.js"></script>
 		<script src="js/libs/fullScreen.js"></script>
 		
 		<!-- JS loading in footer -->
@@ -34,6 +36,18 @@
 			<div class="description modal">
 				<h1> About ZenPen </h1>
 				<p>  Zenpen is a minimalist writing zone by <a href="http://tholman.com">Tim Holman</a> (<a href="http://twitter.com/twholman">@twholman</a>), to get you into that zone, where you can focus on the writing - with none of the distractions. ZenPen is open source on <a href="http://github.com/tholman/zenpen">Github</a> (with many improvements on the way!). If you have any questions, hit me up via <a href="mailto:timothy.w.holman@gmail.com">email</a> - ooh, you can follow me on twitter for updates too: <a href="http://twitter.com/twholman">@twholman</a> </p>
+			</div>
+			
+			<div class="saveoverlay modal">
+				<h1>Select the format you would like</h1>
+				<p class='saveselection'>
+					<span data-format='html'>HTML</span>
+					<span data-format='markdown'>Markdown</span>
+					<span data-format='plain'>Plain Text</span>
+				</p>
+				<button class='savebutton'>Save</button>
+				<div>Alternatively, you can just press ctrl+c (cmd+c on mac) and the format you selected will be copied to your clipboard</div>
+				<textarea class='hiddentextbox'></textarea>
 			</div>
 		</div>
 
@@ -66,6 +80,9 @@
 
 					<button class="target useicons" title="Show word count">
 						&#xe002;
+					</button>
+					<button class="save useicons" title="Save Text">
+						S
 					</button>
 				</div>
 
@@ -117,7 +134,6 @@
 
 		<!-- JS -->
 		<script type="text/javascript">
-
 			// Load required scripts.	
 			head.js( 
 				"js/utils.js",
