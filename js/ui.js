@@ -10,7 +10,7 @@ var ui = (function() {
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
 	
 	//save support
-	var supportSave, saveFormat;
+	var supportSave, saveFormat, textToWrite;
 	
 	var expandScreenIcon = '&#xe006;';
 	var shrinkScreenIcon = '&#xe005;';
@@ -173,15 +173,7 @@ var ui = (function() {
 	{
 		if (typeof saveFormat != 'undefined' && saveFormat != '')
 		{
-			var header = document.querySelector('header.header');
-			var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
-			
-			var body = document.querySelector('article.content');
-			var bodyText = body.innerHTML;
-			
-			var text = formatText(saveFormat,headerText,bodyText);
-			
-			var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+			var blob = new Blob([textToWrite], {type: "text/plain;charset=utf-8"});
 			
 			saveAs(blob, 'ZenPen.txt');
 		}
@@ -268,6 +260,21 @@ var ui = (function() {
 		targ.className ='activesave';
 		
 		saveFormat = targ.getAttribute('data-format');
+		
+		var header = document.querySelector('header.header');
+		var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
+		
+		var body = document.querySelector('article.content');
+		var bodyText = body.innerHTML;
+			
+		textToWrite = formatText(saveFormat,headerText,bodyText);
+		
+		console.log(textToWrite);
+		
+		var textArea = document.querySelector('.hiddentextbox');
+		textArea.value = textToWrite;
+		textArea.focus();
+		textArea.select();
 	}
 	function formatText(type, header, body)
 	{

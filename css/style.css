@@ -262,6 +262,12 @@ a:hover {
 {
 	color:deepskyblue;
 }
+.hiddentextbox
+{
+	opacity:0;
+	filter:alpha(opacity=0);
+	position:absolute;
+}
 
 /*********************************************
  * WORK COUNT
