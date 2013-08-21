@@ -90,6 +90,9 @@ var ui = (function() {
 		{
 			saveElement = document.querySelector( '.save' );
 			saveElement.onclick = onSaveClick;
+			
+			var formatSelectors = document.querySelectorAll( '.saveselection span' );
+			for(var i in formatSelectors) formatSelectors[i].onclick = selectFormat;
 		}
 
 		// Overlay when modals are active
@@ -239,7 +242,19 @@ var ui = (function() {
 			wordCounterProgress.className = "progress";
 		}
 	}
-	
+	function selectFormat(e)
+	{
+		if (document.querySelectorAll('span.activesave').length > 0) document.querySelector('span.activesave').className('');
+		
+		var targ;
+		if (!e) var e = window.event;
+		if (e.target) targ = e.target;
+		else if (e.srcElement) targ = e.srcElement;
+		if (targ.nodeType == 3) // defeat Safari bug
+			targ = targ.parentNode;
+			
+		targ.className('activesave');
+	}
 	function formatText(type, header, body)
 	{
 		var text;

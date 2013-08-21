@@ -232,7 +232,7 @@ a:hover {
 {
 	margin-right:5px;
 	cursor:pointer;
-	color: deepskyblue;
+	
 	
 }
 .saveselection span:hover
@@ -250,10 +250,19 @@ a:hover {
     margin      : 0px;
     padding     : 0px;
 	
-	color: white;
+	display:block;
+	margin:0 auto;
+	color: deepskyblue;
 	font-weight:bold;
 }
-
+.savebutton:hover
+{
+	text-decoration:underline;
+}
+.activesave
+{
+	color:deepskyblue;
+}
 
 /*********************************************
  * WORK COUNT
