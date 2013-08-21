@@ -221,11 +221,41 @@ var ui = (function() {
 	}
 	
 	function onSaveClick( event ) {
-		//what to do when save button is clicked
-		var text = 'Testing';
+		var header = document.querySelector('header.header');
+		var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
+		
+		var body = document.querySelector('article.content');
+		var tmp = document.createElement('div');
+		tmp.appendChild(body.cloneNode(true));
+		var bodyText = tmp.innerHTML;
+		
+		var text = formatText('html',headerText,bodyText);
+		
 		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
 		
 		saveAs(blob, 'testing.txt');
+	}
+	
+	function formatText(type, header, body)
+	{
+		var text;
+		switch(type)
+		{
+			case 'html':
+				text = header + body;
+				text = text.replace(/\t/g, '');
+			break;
+			case 'markdown':
+			
+			break;
+			case 'plain':
+			
+			break;
+			default:
+			break;
+		}
+		
+		return text;
 	}
 
 	function onOverlayClick( event ) {
