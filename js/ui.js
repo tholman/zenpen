@@ -4,17 +4,22 @@ var ui = (function() {
 	var body, article, uiContainer, overlay, aboutButton, descriptionModal;
 
 	// Buttons
-	var screenSizeElement, colorLayoutElement, targetElement;
+	var screenSizeElement, colorLayoutElement, targetElement, saveElement;
 
 	// Work Counter
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
-
+	
+	//fileAPI support
+	var supportSave;
+	
 	var expandScreenIcon = '&#xe006;';
 	var shrinkScreenIcon = '&#xe005;';
 
 	var darkLayout = false;
 
 	function init() {
+		
+		supportsSave = !!new Blob()?true:false;
 		
 		bindElements();
 
@@ -23,7 +28,7 @@ var ui = (function() {
 		if ( supportsHtmlStorage() ) {
 			loadState();
 		}
-
+		
 		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." );
 	}
 
@@ -80,6 +85,12 @@ var ui = (function() {
 				exitFullscreen();
 			}
 		}, false);
+		
+		if (supportsSave) //init event listeners only if browser can save
+		{
+			saveElement = document.querySelector( '.save' );
+			saveElement.onclick = onSaveClick;
+		}
 
 		// Overlay when modals are active
 		overlay = document.querySelector( '.overlay' );
@@ -207,6 +218,14 @@ var ui = (function() {
 		} else {
 			wordCounterProgress.className = "progress";
 		}
+	}
+	
+	function onSaveClick( event ) {
+		//what to do when save button is clicked
+		var text = 'Testing';
+		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+		
+		saveAs(blob, 'testing.txt');
 	}
 
 	function onOverlayClick( event ) {
