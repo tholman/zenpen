@@ -240,23 +240,48 @@ var ui = (function() {
 		switch(type)
 		{
 			case 'html':
+				header = "<h1>" + header + "</h1>";
 				text = header + body;
 				text = text.replace(/\t/g, '');
 			break;
 			case 'markdown':
-				text = body.replace(/<b>|<\/b>/g,"**");
+				header = header.replace(/\t/g, '');
+				header = header.replace(/\n$/, '');
+				header = "#" + header + "#";
+			
+				text = body.replace(/\t/g, '');
+			
+				text = text.replace(/<b>|<\/b>/g,"**");
+				text = text.replace(/\r\n+|\r+|\n+|\t+/ig,"");
 				text = text.replace(/<i>|<\/i>/g,"_");
 				text = text.replace(/<blockquote>/g,"> ");
 				text = text.replace(/<\/blockquote>/g,"");
+				text = text.replace(/<p>|<\/p>/gi,"\n");
+				text = text.replace(/<br>/g,"\n");
 				
-				text = header + text;
+				var links = text.match(/<a href="(.+)">(.+)<\/a>/gi);
+				
+				for (var i = 0;i<links.length;i++)
+				{
+					var tmpparent = document.createElement('div');
+					tmpparent.innerHTML = links[i];
+					
+					var tmp = tmpparent.firstChild;
+					
+					var href = tmp.getAttribute('href');
+					var linktext = tmp.textContent || tmp.innerText || "";
+					
+					text = text.replace(links[i],'['+linktext+']('+href+')');
+				}
+				
+				text = header +"\n\n"+ text;
 			break;
 			case 'plain':
 				var tmp = document.createElement('div');
 				tmp.innerHTML = body;
 				text = tmp.textContent || tmp.innerText || "";
-				text = text.replace(/\t/g, '');
 				
+				text = text.replace(/\t/g, '');
 				text = text.replace(/\n{3}/g,"\n");
 				text = text.replace(/\n/,""); //replace the opening line break
 				
