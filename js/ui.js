@@ -293,13 +293,13 @@ var ui = (function() {
 			
 				text = body.replace(/\t/g, '');
 			
-				text = text.replace(/<b>|<\/b>/g,"**");
-				text = text.replace(/\r\n+|\r+|\n+|\t+/ig,"");
-				text = text.replace(/<i>|<\/i>/g,"_");
-				text = text.replace(/<blockquote>/g,"> ");
-				text = text.replace(/<\/blockquote>/g,"");
-				text = text.replace(/<p>|<\/p>/gi,"\n");
-				text = text.replace(/<br>/g,"\n");
+				text = text.replace(/<b>|<\/b>/g,"**")
+					.replace(/\r\n+|\r+|\n+|\t+/ig,"")
+					.replace(/<i>|<\/i>/g,"_")
+					.replace(/<blockquote>/g,"> ")
+					.replace(/<\/blockquote>/g,"")
+					.replace(/<p>|<\/p>/gi,"\n")
+					.replace(/<br>/g,"\n");
 				
 				var links = text.match(/<a href="(.+)">(.+)<\/a>/gi);
 				
@@ -325,9 +325,9 @@ var ui = (function() {
 				tmp.innerHTML = body;
 				text = tmp.textContent || tmp.innerText || "";
 				
-				text = text.replace(/\t/g, '');
-				text = text.replace(/\n{3}/g,"\n");
-				text = text.replace(/\n/,""); //replace the opening line break
+				text = text.replace(/\t/g, '')
+					.replace(/\n{3}/g,"\n")
+					.replace(/\n/,""); //replace the opening line break
 				
 				text = header + text;
 			break;
