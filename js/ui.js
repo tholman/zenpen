@@ -9,8 +9,8 @@ var ui = (function() {
 	// Work Counter
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
 	
-	//fileAPI support
-	var supportSave;
+	//save support
+	var supportSave, saveFormat;
 	
 	var expandScreenIcon = '&#xe006;';
 	var shrinkScreenIcon = '&#xe005;';
@@ -93,7 +93,10 @@ var ui = (function() {
 			
 			var formatSelectors = document.querySelectorAll( '.saveselection span' );
 			for(var i in formatSelectors) formatSelectors[i].onclick = selectFormat;
+			
+			document.querySelector('.savebutton').onclick = saveText;
 		}
+		else document.querySelector('.save.useicons').style.display = "none";
 
 		// Overlay when modals are active
 		overlay = document.querySelector( '.overlay' );
@@ -165,20 +168,27 @@ var ui = (function() {
 	function onSaveClick( event ) {
 		overlay.style.display = "block";
 		saveModal.style.display = "block";
-		
-		/*
-		var header = document.querySelector('header.header');
-		var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
-		
-		var body = document.querySelector('article.content');
-		var bodyText = body.innerHTML;
-		
-		var text = formatText('markdown',headerText,bodyText);
-		
-		var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-		
-		saveAs(blob, 'ZenPen.txt');
-		*/
+	}
+	function saveText( event )
+	{
+		if (typeof saveFormat != 'undefined' && saveFormat != '')
+		{
+			var header = document.querySelector('header.header');
+			var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
+			
+			var body = document.querySelector('article.content');
+			var bodyText = body.innerHTML;
+			
+			var text = formatText(saveFormat,headerText,bodyText);
+			
+			var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+			
+			saveAs(blob, 'ZenPen.txt');
+		}
+		else
+		{
+			document.querySelector('.saveoverlay h1').style.color = '#FC1E1E';
+		}
 	}
 	/* Allows the user to press enter to tab from the title */
 	function onHeaderKeyPress( event ) {
@@ -244,7 +254,9 @@ var ui = (function() {
 	}
 	function selectFormat(e)
 	{
-		if (document.querySelectorAll('span.activesave').length > 0) document.querySelector('span.activesave').className('');
+		if (document.querySelectorAll('span.activesave').length > 0) document.querySelector('span.activesave').className = '';
+		
+		document.querySelector('.saveoverlay h1').style.color = 'white';
 		
 		var targ;
 		if (!e) var e = window.event;
@@ -253,7 +265,9 @@ var ui = (function() {
 		if (targ.nodeType == 3) // defeat Safari bug
 			targ = targ.parentNode;
 			
-		targ.className('activesave');
+		targ.className ='activesave';
+		
+		saveFormat = targ.getAttribute('data-format');
 	}
 	function formatText(type, header, body)
 	{
@@ -298,6 +312,8 @@ var ui = (function() {
 				text = header +"\n\n"+ text;
 			break;
 			case 'plain':
+				header = header.replace(/\t/g, '');
+			
 				var tmp = document.createElement('div');
 				tmp.innerHTML = body;
 				text = tmp.textContent || tmp.innerText || "";
@@ -327,6 +343,8 @@ var ui = (function() {
 		wordCountBox.style.display = "none";
 		descriptionModal.style.display = "none";
 		saveModal.style.display = "none";
+		if (document.querySelectorAll('span.activesave').length > 0) document.querySelector('span.activesave').className = '';
+		saveFormat='';
 	}
 
 	return {

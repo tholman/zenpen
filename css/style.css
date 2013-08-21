@@ -216,8 +216,8 @@ a:hover {
 {
 	top:50%;
 	left:50%;
-	margin-left:-200px;
-	margin-top:-85px;
+	margin-left:-215px;
+	margin-top:-100px;
 	height:170px;
 }
 .saveoverlay div
@@ -253,7 +253,6 @@ a:hover {
 	display:block;
 	margin:0 auto;
 	color: deepskyblue;
-	font-weight:bold;
 }
 .savebutton:hover
 {
