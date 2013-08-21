@@ -141,6 +141,13 @@ blockquote {
 	border: 0px;
 }
 
+.save img
+{
+	width: 28px;
+	position:relative;
+	left:-1px;
+}
+
 a {
 	text-decoration: none;
 	color: deepskyblue;
