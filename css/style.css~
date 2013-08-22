@@ -50,6 +50,11 @@ body {
 
 section {
 	height: 100%;
+	-webkit-transition: all 800ms;
+	-moz-transition: all 800ms;
+	-ms-transition: all 800ms;
+	-o-transition: all 800ms;
+	transition: all 800ms;	
 }
 
 .default{

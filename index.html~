@@ -68,7 +68,7 @@
 						&#xe002;
 					</button>
 
-					<button class="resize useicons" title="Toggle size text area">
+					<button class="resize useicons" title="Enable/Disable linebreak">
 						&#xe007;
 					</button>
 				</div>

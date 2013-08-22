@@ -210,7 +210,7 @@ var editor = (function() {
 
 	function hasNode( nodeList, name ) {
 
-		return !!nodeList[ name ];
+		return !!!nodeList[ name ];
 	}
 
 	function saveState( event ) {
