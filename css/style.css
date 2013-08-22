@@ -49,9 +49,17 @@ body {
 }
 
 section {
-	max-width: 600px;
 	height: 100%;
-	margin: auto;
+}
+
+.default{
+	width: 600px;
+	margin: 0px auto;
+}
+
+.fully{
+	width: 90%;
+	margin: 0px 10px 0px 60px;
 }
 
 header {
@@ -64,9 +72,10 @@ article {
 	line-height: 30px;
 	margin-top: 22px;
 	min-height: 90%;
-	font-size: 22px;
+	font-size: 22px;	
 	display: block;
 }
+
 
 blockquote {
 	border-left: 4px solid deepskyblue;

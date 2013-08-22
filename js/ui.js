@@ -1,10 +1,10 @@
 var ui = (function() {
 
 	// Base elements
-	var body, article, uiContainer, overlay, aboutButton, descriptionModal;
+	var body, article, uiContainer, overlay, aboutButton, descriptionModal, section;
 
 	// Buttons
-	var screenSizeElement, colorLayoutElement, targetElement;
+	var screenSizeElement, colorLayoutElement, targetElement, sectionAreaElement;
 
 	// Work Counter
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
@@ -13,6 +13,7 @@ var ui = (function() {
 	var shrinkScreenIcon = '&#xe005;';
 
 	var darkLayout = false;
+	var fully = false;
 
 	function init() {
 		
@@ -61,6 +62,7 @@ var ui = (function() {
 
 		// Body element for light/dark styles
 		body = document.body;
+		section = document.querySelector('.default');
 
 		uiContainer = document.querySelector( '.ui' );
 
@@ -71,6 +73,10 @@ var ui = (function() {
 		// UI element for full screen
 		screenSizeElement = document.querySelector( '.fullscreen' );
 		screenSizeElement.onclick = onScreenSizeClick;
+
+		//UI element for resize text area
+		sectionAreaElement = document.querySelector( '.resize' );
+		sectionAreaElement.onclick = onSwitchSizeClick;
 
 		targetElement = document.querySelector( '.target ');
 		targetElement.onclick = onTargetClick;
@@ -146,6 +152,15 @@ var ui = (function() {
 		descriptionModal.style.display = "block";
 	}
 
+		function onSwitchSizeClick( event ){
+			if( fully ){
+				section.className = 'default';
+			} else { 
+				section.className = 'fully';
+			}
+			fully = !fully;
+	}
+
 	/* Allows the user to press enter to tab from the title */
 	function onHeaderKeyPress( event ) {
 
@@ -195,6 +210,7 @@ var ui = (function() {
 			updateWordCount();
 		}
 	}
+
 
 	function updateWordCount() {
 
