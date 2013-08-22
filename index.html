@@ -39,14 +39,14 @@
 			</div>
 			
 			<div class="saveoverlay modal">
-				<h1>Select the format you would like</h1>
+				<h1>Select save format</h1>
 				<p class='saveselection'>
-					<span data-format='html'>HTML</span>
 					<span data-format='markdown'>Markdown</span>
+					<span data-format='html'>HTML</span>
 					<span data-format='plain'>Plain Text</span>
 				</p>
-				<button class='savebutton'>Save</button>
-				<div>Alternatively, you can just press ctrl+c (cmd+c on mac) and the format you selected will be copied to your clipboard</div>
+				<button class='savebutton useicons'>&#xe006;</button>
+				<div> Or select format and press ctrl+c (cmd+c on mac) to copy the text. </div>
 				<textarea class='hiddentextbox'></textarea>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 			<div class="options">
 				<span class="no-overflow">
 					<span class="lengthen ui-inputs">
-						<button class="url useicons">&#xe001;</button>
+						<button class="url useicons">&#xe005;</button>
 						<input class="url-input" type="text" placeholder="Type or Paste URL here"/>
 						<button class="bold">b</button>
 						<button class="italic">i</button>
@@ -71,18 +71,18 @@
 
 				<div class="top editing">
 					<button class="fullscreen useicons" title="Toggle fullscreen">
-						&#xe006;
-					</button>
-
-					<button class="color-flip useicons" title="Invert colors">
 						&#xe000;
 					</button>
 
-					<button class="target useicons" title="Show word count">
+					<button class="color-flip useicons" title="Invert colors">
 						&#xe002;
 					</button>
+
+					<button class="target useicons" title="Set target word count">
+						&#xe001;
+					</button>
 					<button class="save useicons" title="Save Text">
-						S
+						&#xe003;
 					</button>
 				</div>
 

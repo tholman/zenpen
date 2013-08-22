@@ -90,6 +90,7 @@ blockquote {
 }
 
 .useicons {
+	-webkit-font-smoothing: antialiased;
 	font-size: 20px !important;
 	font-family: 'icomoon' !important;
 }
@@ -212,58 +213,75 @@ a:hover {
 	height: 225px;
 }
 
-.saveoverlay
-{
-	top:50%;
-	left:50%;
-	margin-left:-215px;
-	margin-top:-100px;
-	height:170px;
+.saveoverlay {
+	margin-left: -215px;
+	margin-top: -100px;
+	height: 170px;
+	left: 50%;
+	top: 50%;
 }
-.saveoverlay div
-{
-	font-size:12px;
+
+.saveoverlay div {
+	text-align: center;
+	font-size: 11px;
 }
-.saveselection
-{
+
+.saveselection {
+	margin-top: 17px;
 	text-align:center;
 }
-.saveselection span
-{
-	margin-right:5px;
-	cursor:pointer;
-	
-	
+
+.saveselection span {
+
+	-webkit-transition: color 250ms, background 250ms;
+	-moz-transition: color 250ms, background 250ms;
+	-ms-transition: color 250ms, background 250ms;
+	-o-transition: color 250ms, background 250ms;
+	transition: color 250ms, background 250ms;
+
+	cursor: pointer;
+	font-size: 15px;
+	margin: 5px;
+	padding: 5px;
+	border: 2px solid white;
+	border-radius: 3px;
 }
-.saveselection span:hover
-{
-	text-decoration:underline;
+
+.saveselection span:hover {
+	background: rgba(255,255,255,0.8);
+	color: black;
 }
-.savebutton
-{
-	width   : 80px;
-    background  : none;
-    cursor  : pointer;
-    font-size   : 16px;
-    color   : #fff;
-    border  : none;
-    margin      : 0px;
-    padding     : 0px;
-	
-	display:block;
-	margin:0 auto;
-	color: deepskyblue;
+
+.savebutton {
+
+	-webkit-transition: opacity 250ms;
+	-moz-transition: opacity 250ms;
+	-ms-transition: opacity 250ms;
+	-o-transition: opacity 250ms;
+	transition: opacity 250ms;
+
+	font-size: 30px !important;
+	margin: 15px auto;
+	background: none;
+	cursor: pointer;
+	display: block;
+	border: none;
+	padding: 0px;
+	width: 80px;
+	color: #fff;
+	margin-top: -2px;
 }
-.savebutton:hover
-{
-	text-decoration:underline;
+
+.savebutton:hover {
+	opacity: 0.7;
 }
-.activesave
-{
-	color:deepskyblue;
+
+.activesave {
+	background: rgba(255,255,255,0.8);
+	color: black;
 }
-.hiddentextbox
-{
+
+.hiddentextbox {
 	opacity:0;
 	filter:alpha(opacity=0);
 	position:absolute;

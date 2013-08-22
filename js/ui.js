@@ -12,8 +12,8 @@ var ui = (function() {
 	//save support
 	var supportSave, saveFormat, textToWrite;
 	
-	var expandScreenIcon = '&#xe006;';
-	var shrinkScreenIcon = '&#xe005;';
+	var expandScreenIcon = '&#xe000;';
+	var shrinkScreenIcon = '&#xe004;';
 
 	var darkLayout = false;
 
@@ -86,17 +86,21 @@ var ui = (function() {
 			}
 		}, false);
 		
-		if (supportsSave) //init event listeners only if browser can save
-		{
+		//init event listeners only if browser can save
+		if (supportsSave) {
+
 			saveElement = document.querySelector( '.save' );
 			saveElement.onclick = onSaveClick;
 			
 			var formatSelectors = document.querySelectorAll( '.saveselection span' );
-			for(var i in formatSelectors) formatSelectors[i].onclick = selectFormat;
+			for( var i in formatSelectors ) {
+				formatSelectors[i].onclick = selectFormat;
+			}
 			
 			document.querySelector('.savebutton').onclick = saveText;
+		} else {
+			document.querySelector('.save.useicons').style.display = "none";
 		}
-		else document.querySelector('.save.useicons').style.display = "none";
 
 		// Overlay when modals are active
 		overlay = document.querySelector( '.overlay' );
@@ -169,16 +173,12 @@ var ui = (function() {
 		overlay.style.display = "block";
 		saveModal.style.display = "block";
 	}
-	function saveText( event )
-	{
-		if (typeof saveFormat != 'undefined' && saveFormat != '')
-		{
+	function saveText( event ) {
+
+		if (typeof saveFormat != 'undefined' && saveFormat != '') {
 			var blob = new Blob([textToWrite], {type: "text/plain;charset=utf-8"});
-			
 			saveAs(blob, 'ZenPen.txt');
-		}
-		else
-		{
+		} else {
 			document.querySelector('.saveoverlay h1').style.color = '#FC1E1E';
 		}
 	}
@@ -214,10 +214,13 @@ var ui = (function() {
 
 		// Set wordcount ui to active
 		if ( count > 0) {
+
 			wordCountValue = count;
 			wordCounter.className = "word-counter active";
 			updateWordCount();
+
 		} else {
+
 			wordCountValue = 0;
 			wordCounter.className = "word-counter";
 		}
@@ -244,9 +247,12 @@ var ui = (function() {
 			wordCounterProgress.className = "progress";
 		}
 	}
-	function selectFormat(e)
-	{
-		if (document.querySelectorAll('span.activesave').length > 0) document.querySelector('span.activesave').className = '';
+
+	function selectFormat( e ) {
+		
+		if ( document.querySelectorAll('span.activesave').length > 0 ) {
+			document.querySelector('span.activesave').className = '';
+		}
 		
 		document.querySelector('.saveoverlay h1').style.cssText = '';
 		
@@ -254,8 +260,11 @@ var ui = (function() {
 		if (!e) var e = window.event;
 		if (e.target) targ = e.target;
 		else if (e.srcElement) targ = e.srcElement;
-		if (targ.nodeType == 3) // defeat Safari bug
+		
+		// defeat Safari bug
+		if (targ.nodeType == 3) {
 			targ = targ.parentNode;
+		}
 			
 		targ.className ='activesave';
 		
@@ -273,17 +282,20 @@ var ui = (function() {
 		textArea.value = textToWrite;
 		textArea.focus();
 		textArea.select();
+
 	}
-	function formatText(type, header, body)
-	{
+
+	function formatText( type, header, body ) {
+		
 		var text;
-		switch(type)
-		{
+		switch( type ) {
+
 			case 'html':
 				header = "<h1>" + header + "</h1>";
 				text = header + body;
 				text = text.replace(/\t/g, '');
 			break;
+
 			case 'markdown':
 				header = header.replace(/\t/g, '');
 				header = header.replace(/\n$/, '');
@@ -301,8 +313,7 @@ var ui = (function() {
 				
 				var links = text.match(/<a href="(.+)">(.+)<\/a>/gi);
 				
-				for (var i = 0;i<links.length;i++)
-				{
+				for ( var i = 0; i<links.length; i++ ) {
 					var tmpparent = document.createElement('div');
 					tmpparent.innerHTML = links[i];
 					
@@ -316,6 +327,7 @@ var ui = (function() {
 				
 				text = header +"\n\n"+ text;
 			break;
+
 			case 'plain':
 				header = header.replace(/\t/g, '');
 			
@@ -344,11 +356,16 @@ var ui = (function() {
 	}
 
 	function removeOverlay() {
+		
 		overlay.style.display = "none";
 		wordCountBox.style.display = "none";
 		descriptionModal.style.display = "none";
 		saveModal.style.display = "none";
-		if (document.querySelectorAll('span.activesave').length > 0) document.querySelector('span.activesave').className = '';
+		
+		if ( document.querySelectorAll('span.activesave' ).length > 0) {
+			document.querySelector('span.activesave').className = '';
+		}
+
 		saveFormat='';
 	}
 
