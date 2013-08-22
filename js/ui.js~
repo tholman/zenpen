@@ -154,8 +154,9 @@ var ui = (function() {
 
 		function onSwitchSizeClick( event ){
 			if( fully ){
-				section.className = 'default';
-			} else { 
+					section.className = 'default';
+			} else {
+			section.style.margin = "0px 0px" 
 				section.className = 'fully';
 			}
 			fully = !fully;
