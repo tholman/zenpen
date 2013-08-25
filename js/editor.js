@@ -522,6 +522,15 @@ var ZenPen = (function() {
     
     this.watchForSelection();
   };
+
+  /**
+   * Add callback for change event
+   *
+   * @param function callback Callback
+   */
+  ZenPen.prototype.focus = function() {
+    this.content.focus();
+  };
   
   /**
    * Add callback for change event

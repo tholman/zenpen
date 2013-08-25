@@ -48,43 +48,6 @@ body {
 	padding: 0;
 }
 
-section {
-	max-width: 600px;
-	height: 100%;
-	margin: auto;
-}
-
-header {
-	font-weight: bold;
-	font-size: 38px;
-}
-
-article {
-	line-height: 30px;
-	font-size: 22px;
-	display: block;
-	height: 100%;
-}
-
-article p {
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-article blockquote {
-	border-left: 4px solid deepskyblue;
-	margin-left: -19px;
-	padding-left: 15px;
-	margin-right: 0px;
-	
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
 .no-overflow {
 	overflow: hidden;
 	display: block;
@@ -385,7 +348,6 @@ button[data-action="italic"] {
 	margin-right: 5px;
 }
 
-
 .options input {
 	-webkit-transition: all 300ms ease-in-out;
 	-moz-transition: all 300ms ease-in-out;
@@ -459,4 +421,45 @@ button[data-action="italic"] {
 .wrapper {
 	position: relative;
 	height: 100%;
+}
+
+/**
+ * Editor Styles
+ */
+
+
+section {
+	max-width: 600px;
+	margin: auto;
+}
+
+article {
+	line-height: 30px;
+	font-size: 22px;
+	display: block;
+	
+	
+	margin-bottom: 60px;
+	margin-top: 60px;
+
+}
+
+article p {
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+
+article blockquote {
+	border-left: 4px solid deepskyblue;
+	margin-left: -19px;
+	padding-left: 15px;
+	margin-right: 0px;
+
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	
+	margin-bottom: 15px;
 }

@@ -65,6 +65,11 @@ var ui = (function() {
 		// Body element for light/dark styles
 		body = document.body;
 
+
+		body.addEventListener('click', function() {
+			Editor.focus();
+		});
+
 		uiContainer = document.querySelector( '.ui' );
 
 		// UI element for color flip
