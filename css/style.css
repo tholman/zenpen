@@ -36,8 +36,6 @@ body {
 	padding-bottom: 40px;
 	padding-right: 10px;
 	overflow-y: scroll;
-	padding-left: 10px;
-	padding-top: 20px;
 	min-width: 800px;
 	width: 100%;
 
@@ -46,6 +44,8 @@ body {
 	-ms-transition: all 600ms;
 	-o-transition: all 600ms;
 	transition: all 600ms;
+	
+	padding: 0;
 }
 
 section {
@@ -60,19 +60,29 @@ header {
 }
 
 article {
-	padding-bottom: 50px;
 	line-height: 30px;
-	margin-top: 22px;
-	min-height: 90%;
 	font-size: 22px;
 	display: block;
+	height: 100%;
 }
 
-blockquote {
+article p {
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+article blockquote {
 	border-left: 4px solid deepskyblue;
 	margin-left: -19px;
 	padding-left: 15px;
 	margin-right: 0px;
+	
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 .no-overflow {

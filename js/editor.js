@@ -516,7 +516,6 @@ var ZenPen = (function() {
     this.downOnOption = false;
     this.watcher = [];
     
-    this.headline = document.getElementById(this.id).querySelector('[data-type="headline"]');
     this.content  = document.getElementById(this.id).querySelector('[data-type="content"]');
     
     this.bar = new ToolTip(this.id + '-bar', actions, this);
@@ -572,14 +571,6 @@ var ZenPen = (function() {
     // mousedown if no 'preventDefault' is called before
     if (this.content) {
       this.content.addEventListener("selectstart", function() {
-        that.bar.close();
-      });
-    }
-    
-    // Starting to select text in headline box. This will be called after
-    // mousedown if no 'preventDefault' is called before
-    if (this.headline) {
-      this.headline.addEventListener("selectstart", function() {
         that.bar.close();
       });
     }
@@ -675,10 +666,6 @@ var ZenPen = (function() {
   ZenPen.prototype.checkStorage = function() {
     if (!supportsHtmlStorage()) {
       return; }
-
-    if (localStorage.header && this.headline) {
-      this.headline.innerHTML = localStorage.header;
-    }
     
     if (localStorage.content) {
       this.content.innerHTML = localStorage.content;
@@ -693,10 +680,6 @@ var ZenPen = (function() {
       return; }
     
     localStorage.content = this.content.innerHTML;
-    
-    if (this.headline) {
-      localStorage.header = this.headline.innerHTML; 
-    }
     
     this.updateWatchers();
   };

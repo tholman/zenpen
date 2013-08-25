@@ -106,11 +106,6 @@ var ui = (function() {
 				var headline = 'Unknown Article';
 				var filename = 'unknown.md';
 				
-				if (Editor.headline && Editor.headline.innerHTML !== '' && Editor.headline.innerHTML !== '<br>') {
-					headline = Editor.headline.innerHTML;
-					filename = Editor.headline.innerHTML + '.md';
-				}
-				
 				var pom = document.createElement('a');
 				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(toMarkdown('<h1>' + headline + '</h1>' + Editor.content.innerHTML)));
 				pom.setAttribute('download', filename);
