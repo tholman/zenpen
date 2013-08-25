@@ -112,7 +112,7 @@ var ui = (function() {
 				var filename = 'unknown.md';
 				
 				var pom = document.createElement('a');
-				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(toMarkdown('<h1>' + headline + '</h1>' + Editor.content.innerHTML)));
+				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(toMarkdown(Editor.content.innerHTML.trim())));
 				pom.setAttribute('download', filename);
 				pom.click();
 			});
