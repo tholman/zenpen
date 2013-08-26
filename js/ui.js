@@ -6,7 +6,7 @@ var ui = (function() {
 	// Buttons
 	var screenSizeElement, colorLayoutElement, targetElement, saveElement;
 
-	// Work Counter
+	// Word Counter
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
 	
 	//save support
@@ -239,6 +239,7 @@ var ui = (function() {
 
 		var wordCount = editor.getWordCount();
 		var percentageComplete = wordCount / wordCountValue;
+		wordCounter.title = wordCount + ' words (' + Math.round(percentageComplete * 100) + '%)';
 		wordCounterProgress.style.height = percentageComplete * 100 + '%';
 
 		if ( percentageComplete >= 1 ) {
