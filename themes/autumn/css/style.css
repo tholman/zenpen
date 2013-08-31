@@ -1,0 +1,17 @@
+.themeBase {
+  color: #FED603 !important;
+  background-color: #330200 !important;
+}
+
+.modal {
+  background-color: #C51900 !important;
+  color: #FDBB03 !important;
+}
+
+.useicons {
+  color: #FDBB03 !important;
+}
+
+blockquote {
+  border-color: #C51900;
+}

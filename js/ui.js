@@ -42,16 +42,6 @@ var ui = (function() {
 			updateWordCount();
 		}
 
-		// Activate color switch
-		if ( localStorage['darkLayout'] === 'true' ) {
-			if ( darkLayout === false ) {
-				document.body.className = 'yang';
-			} else {
-				document.body.className = 'yin';
-			}
-			darkLayout = !darkLayout;
-		}
-
 	}
 
 	function saveState() {
@@ -147,14 +137,27 @@ var ui = (function() {
 		screenSizeElement.innerHTML = expandScreenIcon;	
 	}
 
+  
 	function onColorLayoutClick( event ) {
-		if ( darkLayout === false ) {
-			document.body.className = 'yang';
-		} else {
-			document.body.className = 'yin';
-		}
-		darkLayout = !darkLayout;
-
+    
+    var curTheme = editor.getActiveTheme();
+    var curThemeIndex = 0;
+    var themes = ['original-yin', 'original-yang', 'solarized-light', 'solarized-dark', 'typewriter', 'autumn', 'dracula', 'friends-of-symfony'];
+    
+    for ( var sx in themes ) {
+      if ( themes[sx] == curTheme ) {
+        curThemeIndex = sx;
+      }
+    }
+    
+    ++curThemeIndex;
+    
+    if (curThemeIndex > themes.length-1) {
+      curThemeIndex = 0;
+    }
+    
+    editor.changeTheme(themes[curThemeIndex]);
+    
 		saveState();
 	}
 

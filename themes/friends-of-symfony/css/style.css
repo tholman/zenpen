@@ -1,0 +1,17 @@
+.themeBase {
+  color: #30BBB3 !important;
+  background-color: #000000 !important;
+}
+
+.modal {
+  background-color: #DC4FDE !important;
+  color: #EDF8FC !important;
+}
+
+.useicons {
+  color: #EDF8FC !important;
+}
+
+blockquote {
+	border-color: #FFFFFF !important;
+}

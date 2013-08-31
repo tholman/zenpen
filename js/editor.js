@@ -5,6 +5,9 @@ var editor = (function() {
 
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
+  
+  //Theme
+  var editorTheme;
 
 
 	function init() {
@@ -26,6 +29,42 @@ var editor = (function() {
 			loadState();
 		}
 	}
+  
+  var changeTheme = function(themeName) { //public
+    
+    if (themeName == getActiveTheme()) {
+      //Same theme, do nothing
+      return true;
+    }
+    
+    var styleElem = null;
+    var styleLinks = document.getElementsByTagName('link');
+    for (var xx = 0; xx < styleLinks.length; xx++) {
+     if (styleLinks[xx].getAttribute('special') == 'themeLink') {
+      styleLinks[xx].parentNode.removeChild(styleLinks[xx]);
+      break;
+    }
+    }
+    
+    var theme_ext_style = document.createElement('link');
+    theme_ext_style.rel = "stylesheet";
+    theme_ext_style.href = "themes/" + themeName + "/css/style.css";
+    theme_ext_style.setAttribute('special', 'themeLink');
+    document.getElementsByTagName('head')[0].appendChild(theme_ext_style);
+    
+    setActiveTheme (themeName);
+    
+    saveState();  //No need to check if local storage is supported since saveState() checks for itself
+    
+  }
+  
+  var getActiveTheme = function() { //public
+    return editorTheme;
+  }
+  
+  function setActiveTheme (themeName) { //private
+    editorTheme = themeName;
+  }
 
 	function createEventBindings( on ) {
 
@@ -214,13 +253,24 @@ var editor = (function() {
 	}
 
 	function saveState( event ) {
-		
+		localStorage[ 'theme' ] = getActiveTheme();
 		localStorage[ 'header' ] = headerField.innerHTML;
 		localStorage[ 'content' ] = contentField.innerHTML;
 	}
 
 	function loadState() {
 
+     //Activate themes
+    
+    if ( !localStorage['theme'] )
+    {
+      //Default theme is the original yin
+      localStorage['theme'] = 'original-yin';
+    }
+    
+    changeTheme(localStorage[ 'theme' ]);
+    
+    
 		if ( localStorage[ 'header' ] ) {
 			headerField.innerHTML = localStorage[ 'header' ];
 		}
@@ -340,7 +390,10 @@ var editor = (function() {
 	return {
 		init: init,
 		saveState: saveState,
-		getWordCount: getWordCount
+		getWordCount: getWordCount,
+    
+    changeTheme: changeTheme,
+    getActiveTheme: getActiveTheme
 	}
 
 })();
