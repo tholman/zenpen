@@ -1,10 +1,10 @@
 .themeBase {
-  color: #C51900 !important;
+  color: #FED603 !important;
   background-color: #330200 !important;
 }
 
 .modal {
-  background-color: #FFFFFF !important;
+  background-color: #C51900 !important;
   color: #FDBB03 !important;
 }
 
@@ -13,5 +13,5 @@
 }
 
 blockquote {
-  border-color: #FED603;
+  border-color: #C51900;
 }
