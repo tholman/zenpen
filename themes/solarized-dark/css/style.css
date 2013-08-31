@@ -3,6 +3,10 @@
   background-color: #002B36 !important;
 }
 
+article {
+  font-size: 16px !important;
+}
+
 .modal {
   background-color: #FDF6E3 !important;
   color: #576E74 !important;
