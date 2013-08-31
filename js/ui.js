@@ -42,17 +42,10 @@ var ui = (function() {
 			updateWordCount();
 		}
 
-    
-    //Activate themes
-    
-    if ( !localStorage['theme'] )
-    {
-      localStorage['theme'] = 'original-yang';
-    }
-    //TODO: load theme css dynamically
-    //TODO: in index.html, just insert class themeBase. Delete whats below
-    
+      
 		// Activate color switch
+    
+    //TODO: figure what to do with this
 		if ( localStorage['darkLayout'] === 'true' ) {
 			if ( darkLayout === false ) {
 				document.body.className = 'yang';
@@ -67,6 +60,8 @@ var ui = (function() {
 	function saveState() {
 
 		if ( supportsHtmlStorage() ) {
+      localStorage[ 'theme' ] = editor.getActiveTheme();
+      console.log ('saving', localStorage[ 'theme' ]);
 			localStorage[ 'darkLayout' ] = darkLayout;
 			localStorage[ 'wordCount' ] = wordCountElement.value;
 		}
