@@ -1,0 +1,21 @@
+.themeBase {
+  color: #85BB90 !important;
+  background-color: #000000 !important;
+}
+
+section {
+  font-family: Courier New !important;
+}
+
+article {
+  font-size: 16px !important;
+}
+
+.modal {
+  background-color: #FDF6E3 !important;
+  color: #576E74 !important;
+}
+
+.useicons {
+  color: #576E74 !important;
+}
