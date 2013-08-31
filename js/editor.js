@@ -264,9 +264,10 @@ var editor = (function() {
     
     if ( !localStorage['theme'] )
     {
-      //Default theme is the original yang
-      localStorage['theme'] = 'original-yang';
+      //Default theme is the original yin
+      localStorage['theme'] = 'original-yin';
     }
+    
     changeTheme(localStorage[ 'theme' ]);
     
     

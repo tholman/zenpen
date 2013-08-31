@@ -11,3 +11,7 @@
 .useicons {
   color: #FDBB03 !important;
 }
+
+blockquote {
+  border-color: #FED603;
+}

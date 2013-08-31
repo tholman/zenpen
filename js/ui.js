@@ -46,22 +46,20 @@ var ui = (function() {
 		// Activate color switch
     
     //TODO: figure what to do with this
-		if ( localStorage['darkLayout'] === 'true' ) {
+		/*if ( localStorage['darkLayout'] === 'true' ) {
 			if ( darkLayout === false ) {
 				document.body.className = 'yang';
 			} else {
 				document.body.className = 'yin';
 			}
 			darkLayout = !darkLayout;
-		}
+		}*/
 
 	}
 
 	function saveState() {
 
 		if ( supportsHtmlStorage() ) {
-      localStorage[ 'theme' ] = editor.getActiveTheme();
-      console.log ('saving', localStorage[ 'theme' ]);
 			localStorage[ 'darkLayout' ] = darkLayout;
 			localStorage[ 'wordCount' ] = wordCountElement.value;
 		}
@@ -152,14 +150,30 @@ var ui = (function() {
 		screenSizeElement.innerHTML = expandScreenIcon;	
 	}
 
+  
+  var _tmp_curTheme = 0;
 	function onColorLayoutClick( event ) {
+    //TODO: Esto se ejecuta cuando se aprieta el boton de los themes
+    
+    var themes = ['original-yin', 'original-yang', 'solarized-light', 'solarized-dark', 'typewriter', 'autumn', 'dracula', 'friends-of-symfony'];
+    
+    ++_tmp_curTheme;
+    
+    if (_tmp_curTheme > themes.length-1) {
+      _tmp_curTheme = 0;
+    }
+    
+    console.log ('Changing to ' + themes[_tmp_curTheme]);
+    editor.changeTheme(themes[_tmp_curTheme]);
+    
+    /*
 		if ( darkLayout === false ) {
 			document.body.className = 'yang';
 		} else {
 			document.body.className = 'yin';
 		}
 		darkLayout = !darkLayout;
-
+    */
 		saveState();
 	}
 
