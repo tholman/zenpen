@@ -392,7 +392,8 @@ var editor = (function() {
 		saveState: saveState,
 		getWordCount: getWordCount,
     
-    changeTheme: changeTheme
+    changeTheme: changeTheme,
+    getActiveTheme: getActiveTheme
 	}
 
 })();

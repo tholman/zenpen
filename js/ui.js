@@ -42,19 +42,6 @@ var ui = (function() {
 			updateWordCount();
 		}
 
-      
-		// Activate color switch
-    
-    //TODO: figure what to do with this
-		/*if ( localStorage['darkLayout'] === 'true' ) {
-			if ( darkLayout === false ) {
-				document.body.className = 'yang';
-			} else {
-				document.body.className = 'yin';
-			}
-			darkLayout = !darkLayout;
-		}*/
-
 	}
 
 	function saveState() {
@@ -151,29 +138,26 @@ var ui = (function() {
 	}
 
   
-  var _tmp_curTheme = 0;
 	function onColorLayoutClick( event ) {
-    //TODO: Esto se ejecuta cuando se aprieta el boton de los themes
     
+    var curTheme = editor.getActiveTheme();
+    var curThemeIndex = 0;
     var themes = ['original-yin', 'original-yang', 'solarized-light', 'solarized-dark', 'typewriter', 'autumn', 'dracula', 'friends-of-symfony'];
     
-    ++_tmp_curTheme;
-    
-    if (_tmp_curTheme > themes.length-1) {
-      _tmp_curTheme = 0;
+    for ( var sx in themes ) {
+      if ( themes[sx] == curTheme ) {
+        curThemeIndex = sx;
+      }
     }
     
-    console.log ('Changing to ' + themes[_tmp_curTheme]);
-    editor.changeTheme(themes[_tmp_curTheme]);
+    ++curThemeIndex;
     
-    /*
-		if ( darkLayout === false ) {
-			document.body.className = 'yang';
-		} else {
-			document.body.className = 'yin';
-		}
-		darkLayout = !darkLayout;
-    */
+    if (curThemeIndex > themes.length-1) {
+      curThemeIndex = 0;
+    }
+    
+    editor.changeTheme(themes[curThemeIndex]);
+    
 		saveState();
 	}
 
