@@ -1,4 +1,4 @@
-# ZenPen - The minimal editor for the modern man
+# ZenPen - The minimal editor for the modern (wo)man
 
 Zenpen (http://zenpen.io) is a web app for writing minimally, and getting into the Zone.
 
