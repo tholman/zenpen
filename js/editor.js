@@ -1,15 +1,13 @@
 var editor = (function() {
 
 	// Editor elements
-	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
+	var headerField, contentField, lastType, currentNodeList;
 
 	// Editor Bubble elements
-	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
-
+	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput, lastSelection;
 
 	function init() {
 
-		lastRange = 0;
 		bindElements();
 
 		// Set cursor position
@@ -27,7 +25,7 @@ var editor = (function() {
 		}
 	}
 
-	function createEventBindings( on ) {
+	function createEventBindings() {
 
 		// Key up bindings
 		if ( supportsHtmlStorage() ) {
@@ -51,7 +49,7 @@ var editor = (function() {
 		};
 		
 		// Window bindings
-		window.addEventListener( 'resize', function( event ) {
+		window.addEventListener( 'resize', function() {
 			updateBubblePosition();
 		});
 
@@ -62,7 +60,7 @@ var editor = (function() {
 		document.body.addEventListener( 'scroll', function() {
 			
 			if ( !scrollEnabled ) {
-				return;
+				return false;
 			}
 			
 			scrollEnabled = true;
@@ -213,7 +211,7 @@ var editor = (function() {
 		return !!nodeList[ name ];
 	}
 
-	function saveState( event ) {
+	function saveState() {
 		
 		localStorage[ 'header' ] = headerField.innerHTML;
 		localStorage[ 'content' ] = contentField.innerHTML;
@@ -292,7 +290,7 @@ var editor = (function() {
 		}
 	}
 
-	function onUrlInputBlur( event ) {
+	function onUrlInputBlur() {
 
 		optionsBox.className = 'options';
 		applyURL( urlInput.value );
@@ -312,7 +310,7 @@ var editor = (function() {
 		if (url !== "") {
 		
 			// Insert HTTP if it doesn't exist.
-			if ( !url.match("^(http|https)://") ) {
+			if ( !url.match(/^(http|https):\/\//) ) {
 
 				url = "http://" + url;	
 			} 
