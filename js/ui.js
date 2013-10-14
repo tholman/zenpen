@@ -1,7 +1,7 @@
 var ui = (function() {
 
 	// Base elements
-	var body, article, uiContainer, overlay, aboutButton, descriptionModal;
+	var body, article, uiContainer, overlay, aboutButton, descriptionModal, saveModal;
 
 	// Buttons
 	var screenSizeElement, colorLayoutElement, targetElement, saveElement;
@@ -10,7 +10,7 @@ var ui = (function() {
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
 	
 	//save support
-	var supportSave, saveFormat, textToWrite;
+	var supportsSave, saveFormat, textToWrite;
 	
 	var expandScreenIcon = '&#xe000;';
 	var shrinkScreenIcon = '&#xe004;';
@@ -19,17 +19,15 @@ var ui = (function() {
 
 	function init() {
 		
-		supportsSave = !!new Blob()?true:false;
+		supportsSave = !!new Blob();
 		
 		bindElements();
-
-		wordCountActive = false;
 
 		if ( supportsHtmlStorage() ) {
 			loadState();
 		}
 		
-		console.log( "Checkin under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." );
+		console.log( "Checking under the hood eh? We've probably got a lot in common. You should totally check out ZenPen on github! (https://github.com/tholman/zenpen)." );
 	}
 
 	function loadState() {
@@ -128,7 +126,7 @@ var ui = (function() {
 		header.onkeypress = onHeaderKeyPress;
 	}
 
-	function onScreenSizeClick( event ) {
+	function onScreenSizeClick() {
 
 		if ( !document.fullscreenElement ) {
 			enterFullscreen();
@@ -147,7 +145,7 @@ var ui = (function() {
 		screenSizeElement.innerHTML = expandScreenIcon;	
 	}
 
-	function onColorLayoutClick( event ) {
+	function onColorLayoutClick() {
 		if ( darkLayout === false ) {
 			document.body.className = 'yang';
 		} else {
@@ -158,22 +156,22 @@ var ui = (function() {
 		saveState();
 	}
 
-	function onTargetClick( event ) {
+	function onTargetClick() {
 		overlay.style.display = "block";
 		wordCountBox.style.display = "block";
 		wordCountElement.focus();
 	}
 
-	function onAboutButtonClick( event ) {
+	function onAboutButtonClick() {
 		overlay.style.display = "block";
 		descriptionModal.style.display = "block";
 	}
 	
-	function onSaveClick( event ) {
+	function onSaveClick() {
 		overlay.style.display = "block";
 		saveModal.style.display = "block";
 	}
-	function saveText( event ) {
+	function saveText() {
 
 		if (typeof saveFormat != 'undefined' && saveFormat != '') {
 			var blob = new Blob([textToWrite], {type: "text/plain;charset=utf-8"});
@@ -205,7 +203,7 @@ var ui = (function() {
 		}
 	}
 
-	function onWordCountChange( event ) {
+	function onWordCountChange() {
 
 		setWordCount( parseInt(this.value) );
 	}
@@ -228,7 +226,7 @@ var ui = (function() {
 		saveState();
 	}
 
-	function onArticleKeyUp( event ) {
+	function onArticleKeyUp() {
 
 		if ( wordCountValue > 0 ) {
 			updateWordCount();
@@ -257,7 +255,7 @@ var ui = (function() {
 		document.querySelector('.saveoverlay h1').style.cssText = '';
 		
 		var targ;
-		if (!e) var e = window.event;
+		if (!e) e = window.event;
 		if (e.target) targ = e.target;
 		else if (e.srcElement) targ = e.srcElement;
 		
