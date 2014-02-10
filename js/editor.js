@@ -10,6 +10,7 @@ var editor = (function() {
 	function init() {
 
 		lastRange = 0;
+		composing = false;
 		bindElements();
 
 		// Set cursor position
@@ -73,6 +74,11 @@ var editor = (function() {
 				scrollEnabled = true;
 			}), 250);
 		});
+
+		// Composition bindings. We need them to distinguish
+		// IME composition from text selection
+		document.addEventListener( 'compositionstart', onCompositionStart );
+		document.addEventListener( 'compositionend', onCompositionEnd );
 	}
 
 	function bindElements() {
@@ -120,7 +126,7 @@ var editor = (function() {
 		}
 
 		// Text is selected
-		if ( selection.isCollapsed === false ) {
+		if ( selection.isCollapsed === false && composing === false ) {
 
 			currentNodeList = findNodes( selection.focusNode );
 
@@ -335,6 +341,14 @@ var editor = (function() {
 		} else {
 			return text.split(/\s+/).length;
 		}
+	}
+
+	function onCompositionStart ( event ) {
+		composing = true;
+	}
+
+	function onCompositionEnd (event) {
+		composing = false;
 	}
 
 	return {
