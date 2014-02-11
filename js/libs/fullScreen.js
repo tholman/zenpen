@@ -22,7 +22,7 @@
 			webkit: {
 				enabled: "webkitIsFullScreen",
 				element: "webkitCurrentFullScreenElement",
-				request: "webkitRequestFullScreen",
+				request: "webkitRequestFullscreen",
 				exit:    "webkitCancelFullScreen",
 				events: {
 					change: "webkitfullscreenchange",
