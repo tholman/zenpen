@@ -313,17 +313,19 @@ var ui = (function() {
 				
 				var links = text.match(/<a href="(.+)">(.+)<\/a>/gi);
 				
-				for ( var i = 0; i<links.length; i++ ) {
-					var tmpparent = document.createElement('div');
-					tmpparent.innerHTML = links[i];
-					
-					var tmp = tmpparent.firstChild;
-					
-					var href = tmp.getAttribute('href');
-					var linktext = tmp.textContent || tmp.innerText || "";
-					
-					text = text.replace(links[i],'['+linktext+']('+href+')');
-				}
+                                if (links !== null) {
+                                        for ( var i = 0; i<links.length; i++ ) {
+                                                var tmpparent = document.createElement('div');
+                                                tmpparent.innerHTML = links[i];
+                                                
+                                                var tmp = tmpparent.firstChild;
+                                                
+                                                var href = tmp.getAttribute('href');
+                                                var linktext = tmp.textContent || tmp.innerText || "";
+                                                
+                                                text = text.replace(links[i],'['+linktext+']('+href+')');
+                                        }
+                                }
 				
 				text = header +"\n\n"+ text;
 			break;
