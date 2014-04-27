@@ -29,7 +29,7 @@ var editor = (function() {
 		}
 	}
 
-	function createEventBindings( on ) {
+	function createEventBindings() {
 
 		// Key up bindings
 		if ( supportsHtmlStorage() ) {
