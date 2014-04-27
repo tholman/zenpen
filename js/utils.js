@@ -11,7 +11,7 @@ function supportsHtmlStorage() {
 }
 
 function get_text(el) {
-    ret = " ";
+    var ret = " ";
     var length = el.childNodes.length;
     for(var i = 0; i < length; i++) {
         var node = el.childNodes[i];
