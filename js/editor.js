@@ -6,11 +6,10 @@ var editor = (function() {
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
-	var lastRange, composing;
+	var composing;
 
 	function init() {
 
-		lastRange = 0;
 		composing = false;
 		bindElements();
 

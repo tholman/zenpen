@@ -173,6 +173,7 @@ var ui = (function() {
 		overlay.style.display = "block";
 		saveModal.style.display = "block";
 	}
+
 	function saveText( event ) {
 
 		if (typeof saveFormat != 'undefined' && saveFormat != '') {
@@ -182,6 +183,7 @@ var ui = (function() {
 			document.querySelector('.saveoverlay h1').style.color = '#FC1E1E';
 		}
 	}
+	
 	/* Allows the user to press enter to tab from the title */
 	function onHeaderKeyPress( event ) {
 
