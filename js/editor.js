@@ -56,23 +56,11 @@ var editor = (function() {
 			updateBubblePosition();
 		});
 
-		// Scroll bindings. We limit the events, to free the ui
-		// thread and prevent stuttering. See:
-		// http://ejohn.org/blog/learning-from-twitter
-		var scrollEnabled = true;
+
 		document.body.addEventListener( 'scroll', function() {
-			
-			if ( !scrollEnabled ) {
-				return;
-			}
-			
-			scrollEnabled = true;
-			
+
+			// TODO: Debounce update bubble position to stop excessive redraws
 			updateBubblePosition();
-			
-			return setTimeout((function() {
-				scrollEnabled = true;
-			}), 250);
 		});
 
 		// Composition bindings. We need them to distinguish
@@ -109,6 +97,7 @@ var editor = (function() {
 	function checkTextHighlighting( event ) {
 
 		var selection = window.getSelection();
+
 
 		if ( (event.target.className === "url-input" ||
 		     event.target.classList.contains( "url" ) ||
@@ -200,6 +189,13 @@ var editor = (function() {
 	function findNodes( element ) {
 
 		var nodeNames = {};
+
+		// Internal node?
+		var selection = window.getSelection();
+
+		// if( selection.containsNode( document.querySelector('b'), false ) ) {
+		// 	nodeNames[ 'B' ] = true;
+		// }
 
 		while ( element.parentNode ) {
 
