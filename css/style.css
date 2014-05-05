@@ -75,6 +75,12 @@ blockquote {
 	margin-right: 0px;
 }
 
+subtitle {
+	
+	font-size: 24px;
+	text-decoration: underline;
+}
+
 .no-overflow {
 	overflow: hidden;
 	display: block;
