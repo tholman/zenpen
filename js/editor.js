@@ -69,6 +69,7 @@ var editor = (function() {
 		document.addEventListener( 'compositionend', onCompositionEnd );
 	}
 
+
 	function bindElements() {
 
 		headerField = document.querySelector( '.header' );
@@ -100,8 +101,8 @@ var editor = (function() {
 
 
 		if ( (event.target.className === "url-input" ||
-		     event.target.classList.contains( "url" ) ||
-		     event.target.parentNode.classList.contains( "ui-inputs")) ) {
+		    event.target.classList.contains( "url" ) ||
+		    event.target.parentNode.classList.contains( "ui-inputs" ) ) ) {
 
 			currentNodeList = findNodes( selection.focusNode );
 			updateBubbleStates();
