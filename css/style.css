@@ -494,3 +494,18 @@ a:hover {
 	position: relative;
 	height: 100%;
 }
+
+/*********************************************
+ * PRINT
+ *********************************************/
+
+@media print {
+
+	body {
+		overflow: visible;
+	}
+
+	.text-options, .ui, .word-counter {
+		display: none;
+	}
+}
