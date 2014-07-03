@@ -505,6 +505,10 @@ a:hover {
 		overflow: visible;
 	}
 
+	section {
+		color: #111 !important;
+	}
+
 	.text-options, .ui, .word-counter {
 		display: none;
 	}
