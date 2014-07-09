@@ -178,7 +178,9 @@ var ui = (function() {
 
 		if (typeof saveFormat != 'undefined' && saveFormat != '') {
 			var blob = new Blob([textToWrite], {type: "text/plain;charset=utf-8"});
-			saveAs(blob, 'ZenPen.txt');
+			var header = document.querySelector('header.header');
+		    var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
+			saveAs(blob, headerText + '.txt');
 		} else {
 			document.querySelector('.saveoverlay h1').style.color = '#FC1E1E';
 		}
