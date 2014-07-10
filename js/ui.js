@@ -1,7 +1,7 @@
 var ui = (function() {
 
 	// Base elements
-	var body, article, uiContainer, overlay, aboutButton, descriptionModal;
+	var body, article, uiContainer, overlay, aboutButton, descriptionModal, header;
 
 	// Buttons
 	var screenSizeElement, colorLayoutElement, targetElement, saveElement;
@@ -178,8 +178,11 @@ var ui = (function() {
 
 		if (typeof saveFormat != 'undefined' && saveFormat != '') {
 			var blob = new Blob([textToWrite], {type: "text/plain;charset=utf-8"});
-			var header = document.querySelector('header.header');
-			var headerText = header.innerHTML.replace(/(\r\n|\n|\r)/gm,"") + "\n";
+			/* remove tabs and line breaks from header */
+			var headerText = header.innerHTML.replace(/(\t|\n|\r)/gm,"");
+			if (headerText === "") {
+			    headerText = "ZenPen";
+			}
 			saveAs(blob, headerText + '.txt');
 		} else {
 			document.querySelector('.saveoverlay h1').style.color = '#FC1E1E';
