@@ -1,4 +1,6 @@
-var ui = (function() {
+// ui functions
+ZenPen = window.ZenPen || {};
+ZenPen.ui = (function() {
 
 	// Base elements
 	var body, article, uiContainer, overlay, aboutButton, descriptionModal, header;
@@ -25,7 +27,7 @@ var ui = (function() {
 
 		wordCountActive = false;
 
-		if ( supportsHtmlStorage() ) {
+		if ( ZenPen.util.supportsHtmlStorage() ) {
 			loadState();
 		}
 		
@@ -56,7 +58,7 @@ var ui = (function() {
 
 	function saveState() {
 
-		if ( supportsHtmlStorage() ) {
+		if ( ZenPen.util.supportsHtmlStorage() ) {
 			localStorage[ 'darkLayout' ] = darkLayout;
 			localStorage[ 'wordCount' ] = wordCountElement.value;
 		}
@@ -244,7 +246,7 @@ var ui = (function() {
 
 	function updateWordCount() {
 
-		var wordCount = editor.getWordCount();
+		var wordCount = ZenPen.editor.getWordCount();
 		var percentageComplete = wordCount / wordCountValue;
 		wordCounterProgress.style.height = percentageComplete * 100 + '%';
 
