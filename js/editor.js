@@ -333,7 +333,7 @@ ZenPen.editor = (function() {
 
 	function getWordCount() {
 		
-		var text = get_text( contentField );
+		var text = Zenpen.utils.getText( contentField );
 
 		if ( text === "" ) {
 			return 0
