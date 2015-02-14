@@ -210,7 +210,12 @@ a:hover {
 }
 
 .description {
-	height: 225px;
+	height: auto;
+}
+
+.description p {
+	margin-bottom: 0px;
+	text-align: center;
 }
 
 .saveoverlay {
