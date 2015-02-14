@@ -75,18 +75,12 @@ ZenPen.ui = (function() {
 		colorLayoutElement = document.querySelector( '.color-flip' );
 		colorLayoutElement.onclick = onColorLayoutClick;
 
-		// UI element for full screen
+		// UI element for full screen		
 		screenSizeElement = document.querySelector( '.fullscreen' );
 		screenSizeElement.onclick = onScreenSizeClick;
 
 		targetElement = document.querySelector( '.target ');
 		targetElement.onclick = onTargetClick;
-
-		document.addEventListener( "fullscreenchange", function () {
-			if ( document.fullscreenEnabled === false ) {
-				exitFullscreen();
-			}
-		}, false);
 		
 		//init event listeners only if browser can save
 		if (supportsSave) {
@@ -132,22 +126,17 @@ ZenPen.ui = (function() {
 
 	function onScreenSizeClick( event ) {
 
-		if ( !document.fullscreenElement ) {
-			enterFullscreen();
-		} else {
-			exitFullscreen();
-		}
-	}
-
-	function enterFullscreen() {
-		document.body.requestFullscreen( Element.ALLOW_KEYBOARD_INPUT );
-		screenSizeElement.innerHTML = shrinkScreenIcon;	
-	}
-
-	function exitFullscreen() {
-		document.exitFullscreen();
-		screenSizeElement.innerHTML = expandScreenIcon;	
-	}
+		screenfull.toggle();
+   		if ( screenfull.enabled ) {
+			document.addEventListener( screenfull.raw.fullscreenchange, function () {
+				if ( screenfull.isFullscreen ) {
+					screenSizeElement.innerHTML = shrinkScreenIcon;
+				} else {
+					screenSizeElement.innerHTML = expandScreenIcon;	
+				}
+    		});
+    	}
+	};
 
 	function onColorLayoutClick( event ) {
 		if ( darkLayout === false ) {
