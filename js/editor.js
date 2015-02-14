@@ -1,4 +1,6 @@
-var editor = (function() {
+// editor
+ZenPen = window.ZenPen || {};
+ZenPen.editor = (function() {
 
 	// Editor elements
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
@@ -23,7 +25,7 @@ var editor = (function() {
 		createEventBindings();
 
 		// Load state if storage is supported
-		if ( supportsHtmlStorage() ) {
+		if ( ZenPen.util.supportsHtmlStorage() ) {
 			loadState();
 		}
 	}
@@ -31,7 +33,7 @@ var editor = (function() {
 	function createEventBindings() {
 
 		// Key up bindings
-		if ( supportsHtmlStorage() ) {
+		if ( ZenPen.util.supportsHtmlStorage() ) {
 
 			document.onkeyup = function( event ) {
 				checkTextHighlighting( event );
