@@ -14,12 +14,14 @@
 		<link href="css/fonts.css" rel="stylesheet">
 
 		<!-- LIBS -->
-		<script src="js/libs/head.min.js"></script>
 		<script src="js/libs/FileSaver.min.js"></script>
 		<script src="js/libs/Blob.min.js"></script>
 		<script src="js/libs/screenfull.min.js"></script>
 		
-		<!-- JS loading in footer -->
+		<!-- JS -->
+		<script src="js/utils.js"></script>
+		<script src="js/editor.js"></script>
+		<script src="js/ui.js"></script>
 
     </head>
 
@@ -134,18 +136,9 @@
 
 		<!-- JS -->
 		<script type="text/javascript">
-			// Load required scripts.	
-			head.js( 
-				"js/utils.js",
-				"js/ui.js",
-				"js/editor.js",
-	        	function(){
-	            	
-	            	// Initiate ZenPen
-	            	ZenPen.editor.init();
-	    			ZenPen.ui.init();
-	            }
-	        );
+	        // Initiate ZenPen
+	        ZenPen.editor.init();
+	    	ZenPen.ui.init();
         </script>
 	</body>
 </html>
