@@ -8,7 +8,7 @@ ZenPen.ui = (function() {
 	// Buttons
 	var screenSizeElement, colorLayoutElement, targetElement, saveElement;
 
-	// Work Counter
+	// Word Counter
 	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
 	
 	//save support
