@@ -1,146 +1,159 @@
 <!doctype html>
 <html>
 
-	<head>
+  <head>
 
-		<!-- MISC/META -->
-		<title> ZenPen ~ Minimal Distraction, Maximum Zen </title>
+    <!-- MISC/META -->
+    <title>ZenSlice</title>
         <meta charset="utf-8">
-		<meta name="description" content="Zenpen - A minimal text editor, made to stay out of the way while you get the words down.">
-        
-		<!-- CSS -->
-		<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-		<link href="css/style.css" rel="stylesheet">
-		<link href="css/fonts.css" rel="stylesheet">
+    <meta name="description" content="ZenSlice - A clone of ZenPen plus a timer.">
 
-		<!-- LIBS -->
-		<script src="js/libs/FileSaver.min.js"></script>
-		<script src="js/libs/Blob.min.js"></script>
-		<script src="js/libs/screenfull.min.js"></script>
-		
-		<!-- JS -->
-		<script src="js/utils.js"></script>
-		<script src="js/editor.js"></script>
-		<script src="js/ui.js"></script>
+    <!-- CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/fonts.css" rel="stylesheet">
+
+    <!-- LIBS -->
+    <script src="js/libs/FileSaver.min.js"></script>
+    <script src="js/libs/Blob.min.js"></script>
+    <script src="js/libs/screenfull.min.js"></script>
+    <script src="js/libs/timer.min.js"></script>
+
+    <!-- JS -->
+    <script src="js/utils.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/ui.js"></script>
 
     </head>
 
-	<body class="yin">
+  <body class="yin">
 
-		<div class="overlay">
-			<div class="wordcount modal">
-				<h1>Target Word Count</h1>
-				<div>
-					<input type="number" name="quantity" value="0" min="0"></input>
-				</div>
-			</div>
+    <div class="overlay">
+      <div class="wordcount modal">
+        <h1>Target Word Count</h1>
+        <div>
+          <input type="number" name="quantity" value="0" min="0"></input>
+        </div>
+      </div>
 
-			<div class="description modal">
-				<h1> About ZenPen </h1>
-				<p>  Zenpen is a clean and simple writing zone, made by <a href="http://tholman.com">Tim Holman</a> (<a href="http://twitter.com/twholman">@twholman</a>), to get you into that zone, where you can focus on the writing.
-				<br><br>ZenPen is open source on <a href="http://github.com/tholman/zenpen">Github</a>.
-				<br><br>If you have any questions, hit me up via <a href="mailto:timothy.w.holman@gmail.com">email</a>.</p>
-			</div>
-			
-			<div class="saveoverlay modal">
-				<h1>Select save format</h1>
-				<p class='saveselection'>
-					<span data-format='markdown'>Markdown</span>
-					<span data-format='html'>HTML</span>
-					<span data-format='plain'>Plain Text</span>
-				</p>
-				<button class='savebutton useicons'>&#xe006;</button>
-				<div> Or select format and press ctrl+c (cmd+c on mac) to copy the text. </div>
-				<textarea class='hiddentextbox'></textarea>
-			</div>
-		</div>
+      <div class="timeroverlay modal">
+        <h1>Set Your Timer</h1>
+        <div>
+          <input type="number" name="time" min="0" placeholder="Set in minutes"></input>
+        </div>
+      </div>
 
-		<div class="text-options">
-			<div class="options">
-				<span class="no-overflow">
-					<span class="lengthen ui-inputs">
-						<button class="url useicons">&#xe005;</button>
-						<input class="url-input" type="text" placeholder="Type or Paste URL here"/>
-						<button class="bold">b</button>
-						<button class="italic">i</button>
-						<button class="quote">&rdquo;</button>
-					</span>
-				</span>
-			</div>
-		</div>
+      <div class="description modal">
+        <h1> About ZenSlice </h1>
+        <p>  ZenSlice is clone of ZenPen, made by <a href="http://tholman.com">Tim Holman</a> (<a href="http://twitter.com/twholman">@twholman</a>), to get you into that zone, where you can focus on the writing.
+        <br><br>ZenSlice comes with timer functionality.</p>
+      </div>
 
-		<div class="ui">
+      <div class="saveoverlay modal">
+        <h1>Select save format</h1>
+        <p class='saveselection'>
+          <span data-format='markdown'>Markdown</span>
+          <span data-format='html'>HTML</span>
+          <span data-format='plain'>Plain Text</span>
+        </p>
+        <button class='savebutton useicons'>&#xe006;</button>
+        <div> Or select format and press ctrl+c (cmd+c on mac) to copy the text. </div>
+        <textarea class='hiddentextbox'></textarea>
+      </div>
+    </div>
 
-			<div class="wrapper">
+    <div class="text-options">
+      <div class="options">
+        <span class="no-overflow">
+          <span class="lengthen ui-inputs">
+            <button class="url useicons">&#xe005;</button>
+            <input class="url-input" type="text" placeholder="Type or Paste URL here"/>
+            <button class="bold">b</button>
+            <button class="italic">i</button>
+            <button class="quote">&rdquo;</button>
+          </span>
+        </span>
+      </div>
+    </div>
 
-				<div class="top editing">
-					<button class="fullscreen useicons" title="Toggle fullscreen">
-						&#xe000;
-					</button>
+    <div class="ui">
 
-					<button class="color-flip useicons" title="Invert colors">
-						&#xe002;
-					</button>
+      <div class="wrapper">
 
-					<button class="target useicons" title="Set target word count">
-						&#xe001;
-					</button>
-					<button class="save useicons" title="Save Text">
-						&#xe003;
-					</button>
-				</div>
+        <div class="top editing">
+          <button class="fullscreen useicons" title="Toggle fullscreen">
+            &#xe000;
+          </button>
 
-				<div class="bottom">
-					<button class="about">
-						?
-					</button>
-				</div>
-			</div>
-		</div>
+          <button class="color-flip useicons" title="Invert colors">
+            &#xe002;
+          </button>
 
-		<div class="word-counter">
-			<span class="progress"></span>
-		</div>
+          <button class="target useicons" title="Set target word count">
+            &#xe001;
+          </button>
+          <button class="save useicons" title="Save Text">
+            &#xe003;
+          </button>
+          <button class="timer useicons" title="Set timer">
+            &#xe005;
+          </button>
+        </div>
 
-		<section>
-			
-			<header contenteditable="true" class="header">
-				This is ZenPen
-			</header>
+        <div class="bottom">
+          <button class="about">
+            ?
+          </button>
+        </div>
+      </div>
+    </div>
 
-			<article contenteditable="true" class="content">
+    <div class="word-counter">
+      <span class="progress"></span>
+    </div>
 
-				<p>
-					A minimalist writing zone, where you can block out all distractions and get to what's important. The writing!
-				</p>
+    <div class="timer-set">
 
-				<p>
-					To get started, all you need to do is delete this text (seriously, just highlight it and hit delete), and fill the page with your own fantastic words.
-				</p>
+    </div>
 
-				<p>
-					You can use <b>bold</b>, <i>italics</i>, <b><i>both</i></b> and <a href="http://zenpen.io"> urls </a> just by highlighting the text and selecting them from the tiny options box that appears above it.
-				</p>
+    <section>
 
-				<blockquote>
-					Quotes are easy to add too!
-				</blockquote>
+      <header contenteditable="true" class="header">
+        This is a ZenPen Ripoff - ZenSlice
+      </header>
 
-				<p>
-					For <i>questions</i> and <b>open source info</b>, Click that little question mark at the bottom left of the screen.
-				</p>
+      <article contenteditable="true" class="content">
 
-				<p>Happy Typing! ~ <b>Tim Holman (@twholman)</b></p>
+        <p>
+          A minimalist writing zone, where you can block out all distractions and get to what's important. The writing!
+        </p>
 
-			</article>
+        <p>
+          To get started, all you need to do is delete this text (seriously, just highlight it and hit delete), and fill the page with your own fantastic words.
+        </p>
 
-		</section>
+        <p>
+          You can use <b>bold</b>, <i>italics</i>, <b><i>both</i></b> and <a href="http://zenpen.io"> urls </a> just by highlighting the text and selecting them from the tiny options box that appears above it.
+        </p>
 
-		<!-- JS -->
-		<script type="text/javascript">
-	        // Initiate ZenPen
-	        ZenPen.editor.init();
-	    	ZenPen.ui.init();
+        <blockquote>
+          Quotes are easy to add too!
+        </blockquote>
+
+        <p>
+          For <i>questions</i> and <b>open source info</b>, Click that little question mark at the bottom left of the screen.
+        </p>
+
+        <p>Start Slicing Moments!</p>
+
+      </article>
+
+    </section>
+
+    <!-- JS -->
+    <script type="text/javascript">
+          // Initiate ZenPen
+          ZenPen.editor.init();
+        ZenPen.ui.init();
         </script>
-	</body>
+  </body>
 </html>
