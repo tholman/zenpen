@@ -15,6 +15,6 @@ All information is persistent locally, using HTML5 local storage.
 
 ### License
 
-The Apache License
+The MIT License
 
 Copyright (C) 2014 ~ [Tim Holman](http://tholman.com) ~ timothy.w.holman@gmail.com
