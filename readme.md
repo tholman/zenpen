@@ -17,4 +17,4 @@ All information is persistent locally, using HTML5 local storage.
 
 The MIT License
 
-Copyright (C) 2014 ~ [Tim Holman](http://tholman.com) ~ timothy.w.holman@gmail.com
+Copyright (C) 2016 ~ [Tim Holman](http://tholman.com) ~ timothy.w.holman@gmail.com
