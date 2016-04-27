@@ -15,6 +15,14 @@ ZenPen.editor = (function() {
 		composing = false;
 		bindElements();
 
+		createEventBindings();
+
+		// Load state if storage is supported
+		if ( ZenPen.util.supportsHtmlStorage() ) {
+			loadState();
+		} else {
+			loadDefault();
+		}
 		// Set cursor position
 		var range = document.createRange();
 		var selection = window.getSelection();
@@ -22,12 +30,6 @@ ZenPen.editor = (function() {
 		selection.removeAllRanges();
 		selection.addRange(range);
 
-		createEventBindings();
-
-		// Load state if storage is supported
-		if ( ZenPen.util.supportsHtmlStorage() ) {
-			loadState();
-		}
 	}
 
 	function createEventBindings() {
@@ -228,11 +230,24 @@ ZenPen.editor = (function() {
 
 		if ( localStorage[ 'header' ] ) {
 			headerField.innerHTML = localStorage[ 'header' ];
+		} else {
+			headerField.innerHTML = defaultTitle; // in default.js
 		}
 
 		if ( localStorage[ 'content' ] ) {
 			contentField.innerHTML = localStorage[ 'content' ];
+		} else {
+			loadDefaultContent()
 		}
+	}
+
+	function loadDefault() {
+		headerField.innerHTML = defaultTitle; // in default.js
+		loadDefaultContent();
+	}
+
+	function loadDefaultContent() {
+		contentField.innerHTML = defaultContent; // in default.js
 	}
 
 	function onBoldClick() {
