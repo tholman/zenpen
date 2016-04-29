@@ -105,8 +105,8 @@ ZenPen.editor = (function() {
 
 
 		if ( (event.target.className === "url-input" ||
-			event.target.classList.contains( "url" ) ||
-			event.target.parentNode.classList.contains( "ui-inputs" ) ) ) {
+		  event.target.classList.contains( "url" ) ||
+		  event.target.parentNode.classList.contains( "ui-inputs" ) ) ) {
 
 			currentNodeList = findNodes( selection.focusNode );
 			updateBubbleStates();
@@ -199,7 +199,7 @@ ZenPen.editor = (function() {
 		var selection = window.getSelection();
 
 		// if( selection.containsNode( document.querySelector('b'), false ) ) {
-		//  nodeNames[ 'B' ] = true;
+		//	nodeNames[ 'B' ] = true;
 		// }
 
 		while ( element.parentNode ) {
@@ -334,7 +334,7 @@ ZenPen.editor = (function() {
 			// Insert HTTP if it doesn't exist.
 			if ( !url.match("^(http|https)://") ) {
 
-				url = "http://" + url;  
+				url = "http://" + url;
 			} 
 
 			document.execCommand( 'createLink', false, url );
@@ -349,7 +349,6 @@ ZenPen.editor = (function() {
 	function getWordCount() {
 		
 		var text = ZenPen.util.getText( contentField );
-		
 		if ( text === "" ) {
 			return 0
 		} else {
@@ -357,7 +356,6 @@ ZenPen.editor = (function() {
 			// console.log(splitWords.length)
 			return splitWords.length;
 		}
-		
 	}
 
 	function onCompositionStart ( event ) {
