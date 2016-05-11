@@ -6,7 +6,7 @@ ZenPen.editor = (function() {
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
 
 	// Editor Bubble elements
-	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
+	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput, subButton;
 
 	var composing;
 
@@ -97,6 +97,10 @@ ZenPen.editor = (function() {
 		urlInput = textOptions.querySelector( '.url-input' );
 		urlInput.onblur = onUrlInputBlur;
 		urlInput.onkeydown = onUrlInputKeyDown;
+
+		subButton = textOptions.querySelector( '.sub' );
+		subButton.onmousedown = onSubClick;
+
 	}
 
 	function checkTextHighlighting( event ) {
@@ -174,6 +178,12 @@ ZenPen.editor = (function() {
 			urlButton.className = "url useicons active"
 		} else {
 			urlButton.className = "url useicons"
+		}
+
+		if ( hasNode( currentNodeList, 'SUB') ) {
+			subButton.className = "sub active"
+		} else {
+			subButton.className = "sub"
 		}
 	}
 
@@ -268,6 +278,11 @@ ZenPen.editor = (function() {
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
+	}
+
+	function onSubClick() {
+		document.execCommand( 'subscript', false );
+		updateBubblePosition()
 	}
 
 	function onUrlClick() {
