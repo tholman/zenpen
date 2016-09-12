@@ -57,6 +57,7 @@ section {
 header {
 	font-weight: bold;
 	font-size: 38px;
+	word-wrap: break-word;
 }
 
 article {
@@ -66,6 +67,7 @@ article {
 	min-height: 90%;
 	font-size: 22px;
 	display: block;
+	word-wrap: break-word;
 }
 
 blockquote {
