@@ -307,7 +307,8 @@ ZenPen.ui = (function() {
 					.replace(/<blockquote>/g,"> ")
 					.replace(/<\/blockquote>/g,"")
 					.replace(/<p>|<\/p>/gi,"\n")
-					.replace(/<br>/g,"\n");
+					.replace(/<br>/g,"\n")
+					.replace(/<sub>|<\/sub>/g,"~");
 				
 				var links = text.match(/<a href="(.+)">(.+)<\/a>/gi);
 				

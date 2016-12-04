@@ -168,6 +168,10 @@ a:hover {
 	font-size: 49px !important;
 }
 
+sub {
+	font-size: 16px;
+}
+
 /*********************************************
  * MODAL
  *********************************************/
@@ -371,11 +375,11 @@ a:hover {
 	background-color: rgba(0,0,0,0.9);
 	position: absolute;
 	border-radius: 5px;
-	margin-left: -63px;
+	margin-left: -76px;
 	margin-top: -46px;
 	z-index: 1000;
 	padding: 5px 4px 5px 5px;
-	width: 125px;
+	width: 152px;
 	height: 40px;
 
 	-webkit-transition: all 300ms ease-in-out;
@@ -390,7 +394,7 @@ a:hover {
 	margin-left: -137px;
 }
 
-.options.url-mode .bold, .options.url-mode .italic, .options.url-mode .quote {
+.options.url-mode .bold, .options.url-mode .italic, .options.url-mode .quote, .options.url-mode .sub {
 	width: 0px;
 	overflow: hidden;
 	margin-right: 0px;
@@ -399,6 +403,11 @@ a:hover {
 
 .options .italic {
 	font-style: italic;
+}
+
+.options sub {
+	position: relative;
+	top: -2px;
 }
 
 .options button {
