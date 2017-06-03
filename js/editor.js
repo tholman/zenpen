@@ -6,7 +6,7 @@ ZenPen.editor = (function() {
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
 
 	// Editor Bubble elements
-	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
+	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput, subtitleButton;
 
 	var composing;
 
@@ -256,6 +256,17 @@ ZenPen.editor = (function() {
 
 	function onItalicClick() {
 		document.execCommand( 'italic', false );
+	}
+	
+	function onSubtitleClick() {
+		var nodeNames = findNodes( window.getSelection().focusNode );
+
+		if ( hasNode( nodeNames, 'SUBTITILE' ) ) {
+			document.execCommand( 'formatBlock', false, 'p' );
+			document.execCommand( 'indent' );
+		} else {
+			document.execCommand( 'formatBlock', false, 'subtitle' );
+		}
 	}
 
 	function onQuoteClick() {
