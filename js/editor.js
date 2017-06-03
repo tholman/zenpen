@@ -169,6 +169,13 @@ ZenPen.editor = (function() {
 		} else {
 			quoteButton.className = "quote"
 		}
+		
+		if ( hasNode( currentNodeList, 'SUBTITLE') ) {
+			quoteButton.className = "subtitle active"
+		} else {
+			quoteButton.className = "subtitle"
+		}
+		
 
 		if ( hasNode( currentNodeList, 'A') ) {
 			urlButton.className = "url useicons active"
