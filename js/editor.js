@@ -326,9 +326,6 @@ ZenPen.editor = (function() {
 
 		rehighlightLastSelection();
 
-		// Unlink any current links
-		document.execCommand( 'unlink', false );
-
 		if (url !== "") {
 		
 			// Insert HTTP if it doesn't exist.
@@ -338,6 +335,9 @@ ZenPen.editor = (function() {
 			} 
 
 			document.execCommand( 'createLink', false, url );
+		} else {
+			// Unlink any current links
+			document.execCommand( 'unlink', false );
 		}
 	}
 
