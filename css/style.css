@@ -279,6 +279,10 @@ a:hover {
 	margin-top: -2px;
 }
 
+.yang .savebutton {
+	color: #000;
+}
+
 .savebutton:hover {
 	opacity: .7;
 }
