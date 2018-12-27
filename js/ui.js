@@ -3,7 +3,7 @@ ZenPen = window.ZenPen || {};
 ZenPen.ui = (function() {
 
 	// Base elements
-	var body, article, uiContainer, overlay, aboutButton, descriptionModal, header;
+	var body, article, uiContainer, overlay, header;
 
 	// Buttons
 	var screenSizeElement, colorLayoutElement, targetElement, saveElement;
@@ -109,16 +109,11 @@ ZenPen.ui = (function() {
 		wordCountElement = wordCountBox.querySelector( 'input' );
 		wordCountElement.onchange = onWordCountChange;
 		wordCountElement.onkeyup = onWordCountKeyUp;
-
-		descriptionModal = overlay.querySelector( '.description' );
 		
 		saveModal = overlay.querySelector('.saveoverlay');
 
 		wordCounter = document.querySelector( '.word-counter' );
 		wordCounterProgress = wordCounter.querySelector( '.progress' );
-
-		aboutButton = document.querySelector( '.about' );
-		aboutButton.onclick = onAboutButtonClick;
 
 		header = document.querySelector( '.header' );
 		header.onkeypress = onHeaderKeyPress;
@@ -155,11 +150,6 @@ ZenPen.ui = (function() {
 		wordCountElement.focus();
 	}
 
-	function onAboutButtonClick( event ) {
-		overlay.style.display = "block";
-		descriptionModal.style.display = "block";
-	}
-	
 	function onSaveClick( event ) {
 		overlay.style.display = "block";
 		saveModal.style.display = "block";
