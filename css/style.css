@@ -116,11 +116,11 @@ blockquote {
 	top: 0;
 }
 
-.ui:hover button {
+.ui:hover button, .ui:hover .about {
 	opacity: .4;
 }
 
-.ui button:hover {
+.ui button:hover, .ui .about:hover {
 	opacity: 1;
 }
 
@@ -402,10 +402,6 @@ a:hover {
 }
 
 .options button {
-	-webkit-transition: all 250ms ease-in-out;
-	-moz-transition: all 250ms ease-in-out;
-	-ms-transition: all 250ms ease-in-out;
-	-o-transition: all 250ms ease-in-out;
 	transition: all 250ms ease-in-out;
 
 	float: left;
@@ -415,6 +411,11 @@ a:hover {
 	border-radius: 3px;
 	margin-right: 1px;
 	font-family: 'Lora', serif;
+}
+
+.about {
+	opacity: 0.4;
+	transition: opacity 250ms ease-in-out;
 }
 
 .options.url-mode input{
@@ -451,7 +452,7 @@ a:hover {
 	background-color: rgba(0,0,0,.3);
 }
 
-.options button:hover {
+.options button:hover, .about:hover {
 	opacity: .95;
 }
 
@@ -493,8 +494,9 @@ a:hover {
 }
 
 .about {
-	font-family: 'Lora', serif;
-	font-size: 28px !important
+	font-size: 28px !important;
+	filter: grayscale(1);
+	text-decoration: none !important;
 }
 
 .wrapper {
