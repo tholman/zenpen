@@ -13,6 +13,6 @@ A minimalist writing zone, where you can block out all distractions and get to w
 	Quotes are easy to add too!\
 </blockquote>\
 <p>\
-	For <i>questions</i> and <b>open source info</b>, Click that little question mark at the bottom left of the screen.\
+	For <i>questions</i> and <b>open source info</b>, Click that little question mark at the bottom-left of the screen.\
 </p>\
 <p>Happy Typing! ~ <b>Tim Holman (@twholman)</b></p>';
