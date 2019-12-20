@@ -3,7 +3,7 @@ ZenPen = window.ZenPen || {};
 ZenPen.editor = (function() {
 
 	// Editor elements
-	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
+	var headerField, contentField, lastType, currentNodeList, lastSelection;
 
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
@@ -342,8 +342,11 @@ ZenPen.editor = (function() {
 	}
 
 	function rehighlightLastSelection() {
-
-		window.getSelection().addRange( lastSelection );
+		var selection = window.getSelection();
+		if (selection.rangeCount > 0) {
+			selection.removeAllRanges();
+		}
+		selection.addRange( lastSelection );
 	}
 
 	function getWordCount() {
