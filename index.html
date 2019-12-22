@@ -1,22 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
 	<head>
-
 		<!-- MISC/META -->
-		<title> ZenPen ~ Minimal Distraction, Maximum Zen </title>
-        <meta charset="utf-8">
-		<meta name="description" content="Zenpen - A minimal text editor, made to stay out of the way while you get the words down.">
-        
-		<!-- CSS -->
-		<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-		<link href="css/style.css" rel="stylesheet">
-		<link href="css/fonts.css" rel="stylesheet">
+		<title>ZenPen ~ Minimal Distraction, Maximum Zen</title>
+		<meta charset="utf-8" />
+		<meta
+			name="description"
+			content="Zenpen - A minimal text editor, made to stay out of the way while you get the words down."
+		/>
 
-    </head>
+		<!-- CSS -->
+		<link
+			href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/fonts.css" rel="stylesheet" />
+	</head>
 
 	<body class="yin">
-
 		<div class="overlay">
 			<div class="wordcount modal">
 				<h1>Target Word Count</h1>
@@ -24,17 +27,19 @@
 					<input type="number" name="quantity" value="0" min="0" />
 				</div>
 			</div>
-			
+
 			<div class="saveoverlay modal">
 				<h1>Select save format</h1>
-				<p class='saveselection'>
-					<span data-format='markdown'>Markdown</span>
-					<span data-format='html'>HTML</span>
-					<span data-format='plain'>Plain Text</span>
+				<p class="saveselection">
+					<span data-format="markdown">Markdown</span>
+					<span data-format="html">HTML</span>
+					<span data-format="plain">Plain Text</span>
 				</p>
-				<button class='savebutton useicons'>&#xe006;</button>
-				<div> Or select format and press ctrl+c (cmd+c on mac) to copy the text. </div>
-				<textarea class='hiddentextbox'></textarea>
+				<button class="savebutton useicons">&#xe006;</button>
+				<div>
+					Or select format and press ctrl+c (cmd+c on mac) to copy the text.
+				</div>
+				<textarea class="hiddentextbox"></textarea>
 			</div>
 		</div>
 
@@ -43,7 +48,11 @@
 				<span class="no-overflow">
 					<span class="lengthen ui-inputs">
 						<button class="url useicons">&#xe005;</button>
-						<input class="url-input" type="text" placeholder="Type or Paste URL here"/>
+						<input
+							class="url-input"
+							type="text"
+							placeholder="Type or Paste URL here"
+						/>
 						<button class="bold">b</button>
 						<button class="italic">i</button>
 						<button class="quote">&rdquo;</button>
@@ -53,9 +62,7 @@
 		</div>
 
 		<div class="ui">
-
 			<div class="wrapper">
-
 				<div class="top editing">
 					<button class="fullscreen useicons" title="Toggle fullscreen">
 						&#xe000;
@@ -74,7 +81,11 @@
 				</div>
 
 				<div class="bottom">
-					<a class="about" href="https://www.buymeacoffee.com/tholman" target="_blank">
+					<a
+						class="about"
+						href="https://www.buymeacoffee.com/tholman"
+						target="_blank"
+					>
 						☕
 					</a>
 				</div>
@@ -86,26 +97,24 @@
 		</div>
 
 		<section>
-			
 			<header contenteditable="true" class="header"></header>
 			<article contenteditable="true" class="content"></article>
-
 		</section>
 
 		<!-- LIBS -->
 		<script src="js/libs/FileSaver.min.js"></script>
 		<script src="js/libs/Blob.min.js"></script>
 		<script src="js/libs/screenfull.min.js"></script>
-		
+
 		<!-- JS -->
 		<script src="js/default.js"></script>
 		<script src="js/utils.js"></script>
 		<script src="js/editor.js"></script>
 		<script src="js/ui.js"></script>
 		<script type="text/javascript">
-	        // Initiate ZenPen
-	        ZenPen.editor.init();
-	    	ZenPen.ui.init();
-        </script>
+			// Initiate ZenPen
+			ZenPen.editor.init();
+			ZenPen.ui.init();
+		</script>
 	</body>
 </html>
