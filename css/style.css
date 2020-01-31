@@ -70,6 +70,10 @@ article {
 	word-wrap: break-word;
 }
 
+article div {
+	margin-bottom: 0.7em;
+}
+
 blockquote {
 	border-left: 4px solid deepskyblue;
 	margin-left: -19px;
