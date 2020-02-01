@@ -40,6 +40,7 @@ body {
 	padding-top: 20px;
 	min-width: 800px;
 	width: 100%;
+	scrollbar-width: thin;
 
 	-webkit-transition: all 600ms;
 	-moz-transition: all 600ms;
@@ -100,11 +101,13 @@ blockquote {
 .yin {
 	background: #fdfdfd;
 	color: #111;
+	scrollbar-color: #111 #fdfdfd;
 }
 
 .yang {
 	background-color: #111;
 	color: #fafafa;
+	scrollbar-color: #fafafa #111;
 }
 
 .ui {
@@ -506,6 +509,32 @@ a:hover {
 .wrapper {
 	position: relative;
 	height: 100%;
+}
+
+/*********************************************
+ * SCROLLBAR
+ *********************************************/
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.yin::-webkit-scrollbar-track {
+  background-color: #fafafa;
+}
+
+.yin::-webkit-scrollbar-thumb {
+  background-color: #111;
+	border-right: 2px solid #fafafa;
+}
+
+.yang::-webkit-scrollbar-track {
+  background-color: #111;
+}
+
+.yang::-webkit-scrollbar-thumb {
+  background-color: #fdfdfd;
+	border-right: 2px solid #111;
 }
 
 /*********************************************
