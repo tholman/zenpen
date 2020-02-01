@@ -17,12 +17,12 @@ ZenPen.util = (function() {
 		    var node = el.childNodes[i];
 		    if(node.nodeType != 8) {
 
-			if ( node.nodeType != 1 ) {
-			    // Strip white space.
-			    ret += node.nodeValue;
-			} else {
-			    ret += getText( node );
-			}
+				if ( node.nodeType != 1 ) {
+				    // Strip white space.
+				    ret += node.nodeValue;
+				} else {
+				    ret += getText( node );
+				}
 		    }
 		}
 		return ZenPen.util.trim(ret);
