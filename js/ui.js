@@ -9,7 +9,7 @@ ZenPen.ui = (function() {
 	var screenSizeElement, colorLayoutElement, targetElement, saveElement;
 
 	// Word Counter
-	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress;
+	var wordCountValue, wordCountBox, wordCountElement, wordCounter, wordCounterProgress, wordCounterContainer, wordCounterValue;
 	
 	//save support
 	var supportsSave, saveFormat, textToWrite;
@@ -41,7 +41,7 @@ ZenPen.ui = (function() {
 			wordCountValue = parseInt(localStorage['wordCount']);
 			wordCountElement.value = localStorage['wordCount'];
 			wordCounter.className = "word-counter active";
-			updateWordCount();
+			setWordCount(wordCountValue);
 		}
 
 		// Activate color switch
@@ -114,6 +114,9 @@ ZenPen.ui = (function() {
 
 		wordCounter = document.querySelector( '.word-counter' );
 		wordCounterProgress = wordCounter.querySelector( '.progress' );
+		wordCounterContainer = document.querySelector( '.word-counter-container' );
+ 		wordCounterContainer.style.display = "none";
+ 		wordCounterValue = document.querySelector( '.word-counter-value' );
 
 		header = document.querySelector( '.header' );
 		header.onkeypress = onHeaderKeyPress;
@@ -147,6 +150,7 @@ ZenPen.ui = (function() {
 	function onTargetClick( event ) {
 		overlay.style.display = "block";
 		wordCountBox.style.display = "block";
+		saveModal.style.display = "none";
 		wordCountElement.focus();
 	}
 
@@ -205,12 +209,14 @@ ZenPen.ui = (function() {
 
 			wordCountValue = count;
 			wordCounter.className = "word-counter active";
+			wordCounterContainer.style.display = "block";
 			updateWordCount();
 
 		} else {
 
 			wordCountValue = 0;
 			wordCounter.className = "word-counter";
+			wordCounterContainer.style.display = "none";
 		}
 		
 		saveState();
@@ -227,6 +233,7 @@ ZenPen.ui = (function() {
 
 		var wordCount = ZenPen.editor.getWordCount();
 		var percentageComplete = wordCount / wordCountValue;
+		wordCounterValue.innerHTML = wordCount;
 		wordCounterProgress.style.height = percentageComplete * 100 + '%';
 
 		if ( percentageComplete >= 1 ) {
@@ -349,7 +356,6 @@ ZenPen.ui = (function() {
 		
 		overlay.style.display = "none";
 		wordCountBox.style.display = "none";
-		descriptionModal.style.display = "none";
 		saveModal.style.display = "none";
 		
 		if ( document.querySelectorAll('span.activesave' ).length > 0) {
